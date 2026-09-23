@@ -1,0 +1,196 @@
+/* =========================================
+   Expiry + Inventory Analytics (Milestone 3, Frontend 1)
+   Additive styles only — does not override anything in App.css.
+========================================= */
+
+.demo-data-note {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #92400e;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin: 0 0 20px;
+}
+
+/* Status icon tints for the summary cards */
+
+.expiry-icon-expired {
+  background: #fee2e2;
+}
+
+.expiry-icon-soon {
+  background: #fef3c7;
+}
+
+.expiry-icon-safe {
+  background: #dcfce7;
+}
+
+/* Status badges reuse .stock-status, coloured via these classes */
+
+.expiry-expired {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.expiry-soon {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.expiry-safe {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+/* Reset filters button */
+
+.reset-filter-btn {
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  color: #374151;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.reset-filter-btn:hover {
+  background: #f3f4f6;
+}
+
+/* Analytics section spacing */
+
+.analytics-section {
+  margin-bottom: 22px;
+}
+
+.analytics-section .stats-grid {
+  margin-bottom: 24px;
+}
+
+.analytics-charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.chart-card {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.chart-card h3 {
+  margin: 0 0 14px;
+  font-size: 15px;
+  color: #111827;
+}
+
+.chart-card-body {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Donut chart */
+
+.donut-chart {
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+}
+
+.donut-center-value {
+  font-size: 22px;
+  font-weight: 700;
+  fill: #111827;
+}
+
+.donut-center-label {
+  font-size: 10px;
+  fill: #6b7280;
+}
+
+.chart-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13px;
+  color: #374151;
+}
+
+.chart-legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chart-legend li strong {
+  margin-left: auto;
+  color: #111827;
+}
+
+.chart-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Bar chart */
+
+.bar-chart {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bar-chart-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 34px;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #374151;
+}
+
+.bar-chart-track {
+  background: #eef1f5;
+  border-radius: 6px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.bar-chart-fill {
+  height: 100%;
+  border-radius: 6px;
+}
+
+.bar-chart-value {
+  text-align: right;
+  font-weight: 600;
+  color: #111827;
+}
+
+@media (max-width: 900px) {
+  .analytics-charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .bar-chart-row {
+    grid-template-columns: 90px 1fr 30px;
+  }
+}
