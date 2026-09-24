@@ -670,6 +670,62 @@ const refreshAlertsData = () => {
 };
 
 // ==========================================
+// Optional External Spring Boot Proxy
+// ==========================================
+const SPRING_BACKEND_PORT = process.env.SPRING_BACKEND_PORT || '8081';
+const SPRING_BACKEND_URL = process.env.SPRING_BACKEND_URL || `http://localhost:${SPRING_BACKEND_PORT}`;
+
+let isBackendAvailable = false;
+async function checkBackendHealth() {
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 600);
+    const res = await fetch(`${SPRING_BACKEND_URL}/api/medicines`, {
+      method: 'GET',
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+    isBackendAvailable = res.ok || res.status === 401 || res.status === 403;
+  } catch {
+    isBackendAvailable = false;
+  }
+}
+
+// Check every 15 seconds
+setInterval(checkBackendHealth, 15000);
+checkBackendHealth();
+
+app.use('/api', async (req: Request, res: Response, next) => {
+  if (isBackendAvailable) {
+    try {
+      const targetUrl = `${SPRING_BACKEND_URL}${req.originalUrl}`;
+      const headers: Record<string, string> = {};
+      for (const [k, v] of Object.entries(req.headers)) {
+        if (k !== 'host' && v) headers[k] = Array.isArray(v) ? v.join(',') : v;
+      }
+      const response = await fetch(targetUrl, {
+        method: req.method,
+        headers,
+        body: ['GET', 'HEAD'].includes(req.method) ? undefined : JSON.stringify(req.body),
+      });
+
+      res.status(response.status);
+      response.headers.forEach((val, key) => {
+        if (!['content-encoding', 'content-length'].includes(key.toLowerCase())) {
+          res.setHeader(key, val);
+        }
+      });
+      const data = await response.text();
+      return res.send(data);
+    } catch {
+      // Fallback to built-in handlers if request fails
+      return next();
+    }
+  }
+  return next();
+});
+
+// ==========================================
 // API Routes
 // ==========================================
 

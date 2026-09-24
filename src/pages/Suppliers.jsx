@@ -1,276 +1,541 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Building2, CheckCircle2, Edit3, Plus, Search, Star, Trash2, Truck, X, AlertTriangle, ShieldCheck, Clock } from 'lucide-react';
+import {
+  Building2,
+  CheckCircle2,
+  Edit2,
+  Plus,
+  Search,
+  Star,
+  Trash2,
+  Truck,
+  X,
+  AlertTriangle,
+  Clock,
+  RefreshCw,
+} from 'lucide-react';
 import supplierService from '../services/supplierService';
 import authService from '../services/authService';
-import MetricCard from '../components/MetricCard';
-import StatusBadge from '../components/StatusBadge';
 
 const emptyForm = {
-  name: '', contactPerson: '', email: '', phone: '', address: '', city: '', state: '', pincode: '',
-  gstNumber: '', licenseNumber: '', status: 'ACTIVE', rating: '', leadTimeDays: ''
+  name: '',
+  contactPerson: '',
+  email: '',
+  phone: '',
+  address: '',
+  city: '',
+  state: '',
+  pincode: '',
+  gstNumber: '',
+  licenseNumber: '',
+  status: 'ACTIVE',
+  rating: '',
+  leadTimeDays: '',
 };
 
 const Suppliers = () => {
   const user = authService.getCurrentUser();
   const canWrite = ['ADMIN', 'PHARMACIST'].includes(user?.role);
   const canDelete = user?.role === 'ADMIN';
+
   const [items, setItems] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(emptyForm);
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
-  const load = async () => {
-    setLoading(true); setError('');
-    try { setItems(await supplierService.getAll()); }
-    catch (err) { setError(authService.handleError(err)); }
-    finally { setLoading(false); }
+  const load = async (isRefresh = false) => {
+    if (isRefresh) setRefreshing(true);
+    else setLoading(true);
+    setError('');
+    try {
+      const data = await supplierService.getAll();
+      setItems(data || []);
+    } catch (err) {
+      setError(authService.handleError(err));
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+  }, []);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
-    return items.filter((s) => !q || [s.name, s.contactPerson, s.email, s.phone, s.city, s.state, s.gstNumber]
-        .filter(Boolean).some((v) => String(v).toLowerCase().includes(q)));
+    return items.filter(
+      (s) =>
+        !q ||
+        [s.name, s.contactPerson, s.email, s.phone, s.city, s.state, s.gstNumber]
+          .filter(Boolean)
+          .some((v) => String(v).toLowerCase().includes(q))
+    );
   }, [items, search]);
 
-  // Analytics Metrics
   const activeCount = useMemo(() => items.filter((s) => s.status === 'ACTIVE').length, [items]);
-  const inactiveCount = items.length - activeCount;
-  const activePercent = items.length ? Math.round((activeCount / items.length) * 100) : 0;
+  const avgRating = items.length
+    ? (items.reduce((sum, s) => sum + Number(s.rating || 0), 0) / items.length).toFixed(1)
+    : '4.5';
+  const avgLead = items.length
+    ? Math.round(items.reduce((sum, s) => sum + Number(s.leadTimeDays || 0), 0) / items.length)
+    : 3;
 
-  const lowRatingSuppliers = useMemo(() => items.filter((s) => Number(s.rating) > 0 && Number(s.rating) < 3.0), [items]);
-  const highLeadTimeSuppliers = useMemo(() => items.filter((s) => Number(s.leadTimeDays) > 14), [items]);
+  const openCreate = () => {
+    setEditingId(null);
+    setForm(emptyForm);
+    setShowForm(true);
+    setMessage('');
+  };
 
-  const avgRating = items.length ? (items.reduce((sum, s) => sum + Number(s.rating || 0), 0) / items.length).toFixed(1) : '—';
-  const avgLead = items.length ? Math.round(items.reduce((sum, s) => sum + Number(s.leadTimeDays || 0), 0) / items.length) : '—';
-
-  // Bar Graph Lead-Time Bucket Data
-  const leadTimeBuckets = useMemo(() => {
-    const buckets = { '1-3 Days': 0, '4-7 Days': 0, '8-14 Days': 0, '15+ Days': 0 };
-    items.forEach((s) => {
-      const days = Number(s.leadTimeDays || 0);
-      if (days <= 3) buckets['1-3 Days']++;
-      else if (days <= 7) buckets['4-7 Days']++;
-      else if (days <= 14) buckets['8-14 Days']++;
-      else buckets['15+ Days']++;
-    });
-    return buckets;
-  }, [items]);
-
-  const maxBucketVal = Math.max(...Object.values(leadTimeBuckets), 1);
-
-  const openCreate = () => { setEditingId(null); setForm(emptyForm); setShowForm(true); setMessage(''); };
   const openEdit = (s) => {
     setEditingId(s.id);
     setForm({
-      name: s.name || '', contactPerson: s.contactPerson || '', email: s.email || '', phone: s.phone || '',
-      address: s.address || '', city: s.city || '', state: s.state || '', pincode: s.pincode || '',
-      gstNumber: s.gstNumber || '', licenseNumber: s.licenseNumber || '', status: s.status || 'ACTIVE',
-      rating: s.rating ?? '', leadTimeDays: s.leadTimeDays ?? ''
+      name: s.name || '',
+      contactPerson: s.contactPerson || '',
+      email: s.email || '',
+      phone: s.phone || '',
+      address: s.address || '',
+      city: s.city || '',
+      state: s.state || '',
+      pincode: s.pincode || '',
+      gstNumber: s.gstNumber || '',
+      licenseNumber: s.licenseNumber || '',
+      status: s.status || 'ACTIVE',
+      rating: s.rating ?? '',
+      leadTimeDays: s.leadTimeDays ?? '',
     });
-    setShowForm(true); setMessage('');
+    setShowForm(true);
+    setMessage('');
   };
 
   const save = async (e) => {
-    e.preventDefault(); setError(''); setMessage('');
-    const payload = { ...form, rating: form.rating === '' ? null : Number(form.rating), leadTimeDays: form.leadTimeDays === '' ? null : Number(form.leadTimeDays) };
+    e.preventDefault();
+    setError('');
+    setMessage('');
     try {
-      if (editingId) { await supplierService.update(editingId, payload); setMessage('Supplier updated successfully.'); }
-      else { await supplierService.create(payload); setMessage('Supplier added successfully.'); }
-      setShowForm(false); await load();
-    } catch (err) { setError(authService.handleError(err)); }
+      const payload = {
+        ...form,
+        rating: form.rating ? Number(form.rating) : null,
+        leadTimeDays: form.leadTimeDays ? Number(form.leadTimeDays) : null,
+      };
+
+      if (editingId) {
+        await supplierService.update(editingId, payload);
+        setMessage('Supplier updated successfully.');
+      } else {
+        await supplierService.create(payload);
+        setMessage('Supplier registered successfully.');
+      }
+      setShowForm(false);
+      await load();
+      setTimeout(() => setMessage(''), 4000);
+    } catch (err) {
+      setError(authService.handleError(err));
+    }
   };
 
-  const remove = async (id) => {
-    if (!window.confirm('Delete this supplier?')) return;
-    try { setError(''); await supplierService.remove(id); setMessage('Supplier deleted.'); await load(); }
-    catch (err) { setError(authService.handleError(err)); }
+  const confirmDelete = async () => {
+    if (!deleteTarget) return;
+    try {
+      setError('');
+      await supplierService.remove(deleteTarget.id);
+      setMessage('Supplier deleted successfully.');
+      setDeleteTarget(null);
+      await load();
+      setTimeout(() => setMessage(''), 4000);
+    } catch (err) {
+      setError(authService.handleError(err));
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh]">
+        <div className="w-8 h-8 border-2 border-slate-200 border-t-sky-600 rounded-full animate-spin" />
+        <p className="mt-3 text-xs font-medium text-slate-500">Loading suppliers...</p>
+      </div>
+    );
+  }
 
   return (
-      <div className="page-wrap">
-        <div className="page-header">
-          <div>
-            <p className="eyebrow"></p>
-            <h1>Welcome, {user?.name}   </h1> <h1>                  ROLE :{user?.role} </h1>
-          </div>
-          <div className="page-badge"><ShieldCheck size={17} /> {user?.role} · JWT protected</div>
+    <div className="space-y-8">
+      {/* ACTION BAR */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 className="text-xl font-bold text-slate-900 tracking-tight">Suppliers Directory</h2>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Manage authorized pharmaceutical distributors, performance ratings, and fulfillment SLAs.
+          </p>
         </div>
 
-        <div className="page-header">
-          <div><p className="eyebrow"> Supplier management</p><h1>Suppliers</h1><p>Maintain verified medical suppliers, contact details, lead time, rating, and operational status.</p></div>
-          {canWrite && <button className="action-btn" onClick={openCreate}><Plus size={17} /> Add supplier</button>}
-        </div>
-
-        {error && <div className="alert alert-error">{error}</div>}
-        {message && <div className="alert alert-success">{message}</div>}
-
-        {/* Visual Alerts */}
-        <div className="alerts-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
-          {lowRatingSuppliers.length > 0 && (
-              <div className="alert-card warning" style={{ padding: '1rem', borderRadius: '8px', borderLeft: '4px solid #f59e0b', backgroundColor: '#fffbe3', display: 'flex', gap: '0.75rem' }}>
-                <AlertTriangle className="text-amber-500" size={24} />
-                <div>
-                  <strong style={{ color: '#b45309' }}>Low Rating Alert</strong>
-                  <p style={{ margin: 0, fontSize: '0.875rem', color: '#78350f' }}>{lowRatingSuppliers.length} supplier(s) under 3.0 ★ threshold requiring review.</p>
-                </div>
-              </div>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => load(true)}
+            disabled={refreshing}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 text-xs font-medium transition cursor-pointer shadow-xs"
+          >
+            <RefreshCw size={13} className={refreshing ? 'animate-spin' : ''} />
+            <span>Refresh</span>
+          </button>
+          {canWrite && (
+            <button
+              onClick={openCreate}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold shadow-xs transition cursor-pointer"
+            >
+              <Plus size={14} />
+              <span>Add Supplier</span>
+            </button>
           )}
-          {highLeadTimeSuppliers.length > 0 && (
-              <div className="alert-card danger" style={{ padding: '1rem', borderRadius: '8px', borderLeft: '4px solid #ef4444', backgroundColor: '#fef2f2', display: 'flex', gap: '0.75rem' }}>
-                <Clock className="text-red-500" size={24} />
-                <div>
-                  <strong style={{ color: '#b91c1c' }}>Lead Time Delay Risk</strong>
-                  <p style={{ margin: 0, fontSize: '0.875rem', color: '#991b1b' }}>{highLeadTimeSuppliers.length} vendor(s) have lead times longer than 14 days.</p>
-                </div>
-              </div>
-          )}
-          <div className="alert-card info" style={{ padding: '1rem', borderRadius: '8px', borderLeft: '4px solid #10b981', backgroundColor: '#ecfdf5', display: 'flex', gap: '0.75rem' }}>
-            <ShieldCheck className="text-emerald-500" size={24} />
-            <div>
-              <strong style={{ color: '#047857' }}>Operational Status</strong>
-              <p style={{ margin: 0, fontSize: '0.875rem', color: '#065f46' }}>{activePercent}% network capacity currently operational.</p>
-            </div>
-          </div>
         </div>
-
-        <div className="metric-grid">
-          <MetricCard title="Total Suppliers" value={items.length} icon={Building2} tone="blue" subtitle="Registered in PostgreSQL" />
-          <MetricCard title="Active Suppliers" value={activeCount} icon={CheckCircle2} tone="emerald" subtitle={`${inactiveCount} inactive`} />
-          <MetricCard title="Average Rating" value={avgRating} icon={Star} tone="amber" subtitle="Out of 5.0" />
-          <MetricCard title="Avg. Lead Time" value={avgLead === '—' ? avgLead : `${avgLead}d`} icon={Truck} tone="blue" subtitle="Expected supply time" />
-        </div>
-
-        {/* Visual Analytics Graphs Panel */}
-        <div className="analytics-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem', marginBottom: '1.5rem' }}>
-
-          {/* Pie Chart Card */}
-          <div className="content-card" style={{ padding: '1.25rem' }}>
-            <h3 style={{ margin: '0 0 1rem 0', fontSize: '1rem', fontWeight: 600 }}>Supplier Operational Status</h3>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
-              <div
-                  style={{
-                    width: '120px',
-                    height: '120px',
-                    borderRadius: '50%',
-                    background: items.length
-                        ? `conic-gradient(#10b981 0% ${activePercent}%, #9ca3af ${activePercent}% 100%)`
-                        : '#e5e7eb',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}
-              >
-                <div style={{ width: '70px', height: '70px', borderRadius: '50%', backgroundColor: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
-                  {activePercent}%
-                </div>
-              </div>
-              <div style={{ fontSize: '0.875rem' }}>
-                <p style={{ margin: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ width: '12px', height: '12px', backgroundColor: '#10b981', borderRadius: '2px' }}></span> Active: <strong>{activeCount}</strong>
-                </p>
-                <p style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ width: '12px', height: '12px', backgroundColor: '#9ca3af', borderRadius: '2px' }}></span> Inactive: <strong>{inactiveCount}</strong>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Lead Time Distribution Bar Chart Card */}
-          <div className="content-card" style={{ padding: '1.25rem' }}>
-            <h3 style={{ margin: '0 0 1rem 0', fontSize: '1rem', fontWeight: 600 }}>Lead Time Distribution</h3>
-            <div style={{ display: 'flex', height: '110px', alignItems: 'flex-end', gap: '1rem', paddingBottom: '0.5rem' }}>
-              {Object.entries(leadTimeBuckets).map(([label, count]) => {
-                const heightPct = (count / maxBucketVal) * 100;
-                return (
-                    <div key={label} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'flex-end' }}>
-                      <span style={{ fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '2px' }}>{count}</span>
-                      <div
-                          style={{
-                            width: '100%',
-                            height: `${Math.max(heightPct, 5)}%`,
-                            backgroundColor: '#3b82f6',
-                            borderRadius: '4px 4px 0 0',
-                            transition: 'height 0.3s ease'
-                          }}
-                      />
-                      <span style={{ fontSize: '0.7rem', color: '#6b7280', marginTop: '4px' }}>{label}</span>
-                    </div>
-                );
-              })}
-            </div>
-          </div>
-
-        </div>
-
-        <div className="content-card">
-          <div className="table-toolbar">
-            <div className="search-box"><Search size={17} /><input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search name, contact, GST, city..." /></div>
-            <span className="muted-text">{filtered.length} supplier(s)</span>
-          </div>
-          <div className="table-scroll">
-            <table className="data-table">
-              <thead><tr><th>Supplier</th><th>Contact</th><th>Location</th><th>Rating</th><th>Status</th><th>Lead Time</th><th>Actions</th></tr></thead>
-              <tbody>
-              {loading ? <tr><td colSpan="7" className="empty-cell">Loading suppliers...</td></tr> : filtered.length === 0 ? (
-                  <tr><td colSpan="7" className="empty-cell"><Truck size={22} /> No suppliers found.</td></tr>
-              ) : filtered.map((s) => (
-                  <tr key={s.id}>
-                    <td><strong>{s.name}</strong><small>{s.gstNumber || s.licenseNumber || 'No registration number'}</small></td>
-                    <td>{s.contactPerson || '—'}<small>{s.email || s.phone || ''}</small></td>
-                    <td>{[s.city, s.state].filter(Boolean).join(', ') || '—'}<small>{s.pincode || ''}</small></td>
-                    <td>
-                    <span className="rating-cell" style={{ color: Number(s.rating) < 3.0 ? '#d97706' : 'inherit', fontWeight: Number(s.rating) < 3.0 ? 'bold' : 'normal' }}>
-                      <Star size={13} fill={Number(s.rating) >= 3.0 ? "#f59e0b" : "none"} /> {s.rating ?? '—'}
-                    </span>
-                    </td>
-                    <td><StatusBadge status={s.status} /></td>
-                    <td>
-                    <span style={{ color: Number(s.leadTimeDays) > 14 ? '#dc2626' : 'inherit', fontWeight: Number(s.leadTimeDays) > 14 ? 'bold' : 'normal' }}>
-                      {s.leadTimeDays == null ? '—' : `${s.leadTimeDays} days`}
-                    </span>
-                    </td>
-                    <td><div className="row-actions">
-                      {canWrite && <button onClick={() => openEdit(s)} title="Edit"><Edit3 size={16} /></button>}
-                      {canDelete && <button className="danger-icon" onClick={() => remove(s.id)} title="Delete"><Trash2 size={16} /></button>}
-                      {!canWrite && <span className="muted-text">View only</span>}
-                    </div></td>
-                  </tr>
-              ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {showForm && (
-            <div className="modal-backdrop" onMouseDown={() => setShowForm(false)}>
-              <div className="modal-card" onMouseDown={(e) => e.stopPropagation()}>
-                <div className="modal-head"><div><p className="eyebrow">Supplier record</p><h2>{editingId ? 'Edit supplier' : 'Add supplier'}</h2></div><button onClick={() => setShowForm(false)}><X size={20} /></button></div>
-                <form className="form-grid" onSubmit={save}>
-                  <label>Supplier name<input required maxLength="150" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></label>
-                  <label>Contact person<input value={form.contactPerson} onChange={(e) => setForm({ ...form, contactPerson: e.target.value })} /></label>
-                  <label>Email<input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></label>
-                  <label>Phone<input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></label>
-                  <label className="span-2">Address<input value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} /></label>
-                  <label>City<input value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} /></label>
-                  <label>State<input value={form.state} onChange={(e) => setForm({ ...form, state: e.target.value })} /></label>
-                  <label>Pincode<input value={form.pincode} onChange={(e) => setForm({ ...form, pincode: e.target.value })} /></label>
-                  <label>GST number<input value={form.gstNumber} onChange={(e) => setForm({ ...form, gstNumber: e.target.value })} /></label>
-                  <label>License number<input value={form.licenseNumber} onChange={(e) => setForm({ ...form, licenseNumber: e.target.value })} /></label>
-                  <label>Status<select value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })}><option value="ACTIVE">ACTIVE</option><option value="INACTIVE">INACTIVE</option></select></label>
-                  <label>Rating (0–5)<input type="number" min="0" max="5" step="0.1" value={form.rating} onChange={(e) => setForm({ ...form, rating: e.target.value })} /></label>
-                  <label>Lead time (days)<input type="number" min="0" max="365" value={form.leadTimeDays} onChange={(e) => setForm({ ...form, leadTimeDays: e.target.value })} /></label>
-                  <div className="modal-actions"><button type="button" className="secondary-btn" onClick={() => setShowForm(false)}>Cancel</button><button className="action-btn" type="submit">Save supplier</button></div>
-                </form>
-              </div>
-            </div>
-        )}
       </div>
+
+      {message && (
+        <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-800 text-xs flex items-center gap-2">
+          <CheckCircle2 size={15} className="text-emerald-600 shrink-0" />
+          <span>{message}</span>
+        </div>
+      )}
+
+      {error && (
+        <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 text-xs">
+          {error}
+        </div>
+      )}
+
+      {/* KPI METRIC CARDS */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Total Suppliers</span>
+            <div className="w-8 h-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center">
+              <Building2 size={16} />
+            </div>
+          </div>
+          <div className="text-2xl font-bold text-slate-900 mt-3 font-mono tabular-nums">
+            {items.length}
+          </div>
+          <div className="text-[11px] text-slate-400 mt-1">Authorized distributors</div>
+        </div>
+
+        <div className="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Active Network</span>
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <CheckCircle2 size={16} />
+            </div>
+          </div>
+          <div className="text-2xl font-bold text-emerald-600 mt-3 font-mono tabular-nums">
+            {activeCount}
+          </div>
+          <div className="text-[11px] text-slate-400 mt-1">Available for orders</div>
+        </div>
+
+        <div className="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Average Rating</span>
+            <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
+              <Star size={16} />
+            </div>
+          </div>
+          <div className="text-2xl font-bold text-slate-900 mt-3 font-mono tabular-nums">
+            ★ {avgRating}
+          </div>
+          <div className="text-[11px] text-slate-400 mt-1">Distributor quality score</div>
+        </div>
+
+        <div className="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500">Avg Lead Time</span>
+            <div className="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center">
+              <Clock size={16} />
+            </div>
+          </div>
+          <div className="text-2xl font-bold text-slate-900 mt-3 font-mono tabular-nums">
+            {avgLead} days
+          </div>
+          <div className="text-[11px] text-slate-400 mt-1">Delivery SLA</div>
+        </div>
+      </div>
+
+      {/* SUPPLIERS TABLE */}
+      <div className="bg-white rounded-xl border border-slate-200/80 shadow-xs overflow-hidden">
+        <div className="p-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h3 className="text-sm font-semibold text-slate-900">Distributor Accounts</h3>
+            <p className="text-[11px] text-slate-400">Showing {filtered.length} verified vendors</p>
+          </div>
+
+          <div className="relative w-full sm:w-64">
+            <Search className="absolute left-3 top-2.5 text-slate-400" size={14} />
+            <input
+              type="text"
+              placeholder="Search vendor, city, contact..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-200 rounded-lg bg-slate-50/70 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+            />
+          </div>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead>
+              <tr className="border-b border-slate-200 text-slate-500 font-semibold bg-slate-50/60">
+                <th className="py-3 px-4">Supplier Name</th>
+                <th className="py-3 px-4">Contact</th>
+                <th className="py-3 px-4">Location</th>
+                <th className="py-3 px-4 text-center">Rating</th>
+                <th className="py-3 px-4 text-center">Lead Time</th>
+                <th className="py-3 px-4">Status</th>
+                {(canWrite || canDelete) && <th className="py-3 px-4 text-right">Actions</th>}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {filtered.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="py-12 text-center text-slate-400">
+                    <Truck size={24} className="mx-auto text-slate-300 mb-2" />
+                    <p className="font-semibold text-slate-700">No suppliers found</p>
+                  </td>
+                </tr>
+              ) : (
+                filtered.map((s) => (
+                  <tr key={s.id} className="hover:bg-slate-50/50 transition">
+                    <td className="py-3 px-4">
+                      <span className="font-semibold text-slate-900 block">{s.name}</span>
+                      <span className="text-[10px] text-slate-400 font-mono">
+                        GST: {s.gstNumber || 'Unregistered'}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4">
+                      <span className="text-slate-700 font-medium block">{s.contactPerson || '—'}</span>
+                      <span className="text-[10px] text-slate-400">{s.phone || s.email || '—'}</span>
+                    </td>
+                    <td className="py-3 px-4 text-slate-600">
+                      {[s.city, s.state].filter(Boolean).join(', ') || '—'}
+                    </td>
+                    <td className="py-3 px-4 text-center font-mono font-medium text-amber-600">
+                      {s.rating ? `★ ${s.rating}` : '—'}
+                    </td>
+                    <td className="py-3 px-4 text-center font-mono text-slate-700">
+                      {s.leadTimeDays ? `${s.leadTimeDays}d` : '—'}
+                    </td>
+                    <td className="py-3 px-4">
+                      <span
+                        className={`inline-flex items-center gap-1.5 font-medium ${
+                          s.status === 'ACTIVE' ? 'text-emerald-700' : 'text-slate-400'
+                        }`}
+                      >
+                        <span
+                          className={`w-1.5 h-1.5 rounded-full ${
+                            s.status === 'ACTIVE' ? 'bg-emerald-500' : 'bg-slate-400'
+                          }`}
+                        />
+                        {s.status === 'ACTIVE' ? 'Active' : 'Inactive'}
+                      </span>
+                    </td>
+                    {(canWrite || canDelete) && (
+                      <td className="py-3 px-4 text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          {canWrite && (
+                            <button
+                              onClick={() => openEdit(s)}
+                              className="p-1 text-slate-400 hover:text-sky-600 hover:bg-sky-50 rounded transition cursor-pointer"
+                              title="Edit"
+                            >
+                              <Edit2 size={13} />
+                            </button>
+                          )}
+                          {canDelete && (
+                            <button
+                              onClick={() => setDeleteTarget(s)}
+                              className="p-1 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition cursor-pointer"
+                              title="Delete"
+                            >
+                              <Trash2 size={13} />
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    )}
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* CREATE / EDIT MODAL */}
+      {showForm && (
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-lg w-full p-6 shadow-xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                <Building2 size={16} className="text-sky-600" />
+                {editingId ? 'Edit Supplier' : 'Register New Supplier'}
+              </h3>
+              <button
+                onClick={() => setShowForm(false)}
+                className="text-slate-400 hover:text-slate-600 font-bold cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={save} className="space-y-4 pt-4 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="sm:col-span-2">
+                  <label className="block font-medium text-slate-700 mb-1">Company / Vendor Name *</label>
+                  <input
+                    required
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    className="w-full px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-medium text-slate-700 mb-1">Contact Person</label>
+                  <input
+                    value={form.contactPerson}
+                    onChange={(e) => setForm({ ...form, contactPerson: e.target.value })}
+                    className="w-full px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-medium text-slate-700 mb-1">Phone Number</label>
+                  <input
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                    className="w-full px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-medium text-slate-700 mb-1">Email</label>
+                  <input
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    className="w-full px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-medium text-slate-700 mb-1">GST Number</label>
+                  <input
+                    value={form.gstNumber}
+                    onChange={(e) => setForm({ ...form, gstNumber: e.target.value })}
+                    className="w-full px-3 py-1.5 border border-slate-200 rounded-lg font-mono focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-medium text-slate-700 mb-1">City</label>
+                  <input
+                    value={form.city}
+                    onChange={(e) => setForm({ ...form, city: e.target.value })}
+                    className="w-full px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-medium text-slate-700 mb-1">State</label>
+                  <input
+                    value={form.state}
+                    onChange={(e) => setForm({ ...form, state: e.target.value })}
+                    className="w-full px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-medium text-slate-700 mb-1">Rating (1 to 5)</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="1"
+                    max="5"
+                    value={form.rating}
+                    onChange={(e) => setForm({ ...form, rating: e.target.value })}
+                    className="w-full px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 font-mono"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-medium text-slate-700 mb-1">Lead Time (Days)</label>
+                  <input
+                    type="number"
+                    min="1"
+                    value={form.leadTimeDays}
+                    onChange={(e) => setForm({ ...form, leadTimeDays: e.target.value })}
+                    className="w-full px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 font-mono"
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowForm(false)}
+                  className="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 transition cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white font-semibold shadow-xs transition cursor-pointer"
+                >
+                  Save Supplier
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* IN-APP DELETE MODAL */}
+      {deleteTarget && (
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-sm w-full p-6 shadow-xl border border-slate-200">
+            <div className="flex items-center gap-3 text-rose-600 mb-3">
+              <div className="w-9 h-9 rounded-lg bg-rose-50 flex items-center justify-center shrink-0">
+                <AlertTriangle size={18} />
+              </div>
+              <h3 className="text-sm font-semibold text-slate-900">Delete Supplier?</h3>
+            </div>
+
+            <p className="text-xs text-slate-500 leading-relaxed mb-4">
+              Are you sure you want to remove <strong>{deleteTarget.name}</strong> from the vendor directory?
+            </p>
+
+            <div className="flex justify-end gap-2.5">
+              <button
+                type="button"
+                onClick={() => setDeleteTarget(null)}
+                className="px-3 py-1.5 text-xs font-medium rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 transition cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmDelete}
+                className="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-rose-600 hover:bg-rose-700 text-white shadow-xs transition cursor-pointer"
+              >
+                Confirm Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 

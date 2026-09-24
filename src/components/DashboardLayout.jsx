@@ -1,23 +1,20 @@
 import React, { useState } from 'react';
 import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import {
-  Activity,
   LayoutDashboard,
   Pill,
   Boxes,
   Truck,
-  BellRing,
-  LogOut,
-  ShieldCheck,
-  Calendar,
-  FileBarChart2,
-  ShoppingCart,
+  Bell,
+  FileText,
+  Clock,
+  Plus,
   Menu,
   X,
-  UserCheck,
+  LogOut,
+  ChevronDown,
 } from 'lucide-react';
 import { useAuth } from '../context/useAuth';
-import NotificationBell from './notifications/NotificationBell';
 import NotificationPopup from './notifications/NotificationPopup';
 
 const DashboardLayout = ({ children }) => {
@@ -25,17 +22,34 @@ const DashboardLayout = ({ children }) => {
   const location = useLocation();
   const { user, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate('/login', { replace: true });
   };
 
-  // Determine dashboard link according to role
   const getDashboardPath = () => {
     if (user?.role === 'ADMIN') return '/admin';
     if (user?.role === 'PHARMACIST') return '/pharmacist';
     return '/staff';
+  };
+
+  // Determine user initials
+  const getInitials = (name) => {
+    if (!name) return 'U';
+    const parts = name.trim().split(' ');
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    return name.slice(0, 2).toUpperCase();
+  };
+
+  // Map roles to clinical titles shown in the reference UI
+  const getRoleDisplayName = (role) => {
+    if (role === 'ADMIN') return 'CLINICAL ADMIN';
+    if (role === 'PHARMACIST') return 'PHARMACIST';
+    return 'DISPENSARY STAFF';
   };
 
   const navItems = [
@@ -44,7 +58,7 @@ const DashboardLayout = ({ children }) => {
       label: 'Dashboard',
       icon: LayoutDashboard,
       roles: ['ADMIN', 'PHARMACIST', 'STAFF'],
-      exact: true,
+      isDashboard: true,
     },
     {
       to: '/medicines',
@@ -59,202 +73,160 @@ const DashboardLayout = ({ children }) => {
       roles: ['ADMIN', 'PHARMACIST', 'STAFF'],
     },
     {
-      to: '/stock',
-      label: 'Stock Tracking',
-      icon: Activity,
-      roles: ['ADMIN', 'PHARMACIST', 'STAFF'],
-    },
-    {
-      to: '/expiry-analytics',
-      label: 'Expiry Analytics',
-      icon: Calendar,
-      roles: ['ADMIN', 'PHARMACIST'],
-    },
-    {
       to: '/suppliers',
       label: 'Suppliers',
       icon: Truck,
       roles: ['ADMIN', 'PHARMACIST', 'STAFF'],
     },
     {
-      to: '/purchases',
-      label: 'Purchases',
-      icon: ShoppingCart,
+      to: '/expiry-analytics',
+      label: 'Expiry & Analytics',
+      icon: Clock,
       roles: ['ADMIN', 'PHARMACIST'],
     },
     {
       to: '/alerts',
       label: 'Alerts',
-      icon: BellRing,
+      icon: Bell,
       roles: ['ADMIN', 'PHARMACIST', 'STAFF'],
     },
     {
       to: '/reports',
       label: 'Reports',
-      icon: FileBarChart2,
+      icon: FileText,
       roles: ['ADMIN', 'PHARMACIST'],
     },
   ];
 
-  const allowedNavItems = navItems.filter(
+  const visibleNavItems = navItems.filter(
     (item) => !item.roles || item.roles.includes(user?.role || 'STAFF')
   );
 
-  // Friendly title based on current path
-  const getPageTitle = () => {
-    const path = location.pathname;
-    if (path === '/admin') return 'Admin Control Center';
-    if (path === '/pharmacist') return 'Pharmacist Workspace';
-    if (path === '/staff') return 'Staff Operational Dashboard';
-    if (path === '/dashboard') return 'Inventory Overview';
-    if (path === '/medicines') return 'Medicine Catalog';
-    if (path === '/add-medicine') return 'Add New Medicine';
-    if (path === '/edit-medicine') return 'Modify Medicine Details';
-    if (path === '/inventory') return 'Inventory Management';
-    if (path === '/stock') return 'Real-Time Stock Tracking';
-    if (path === '/expiry-analytics') return 'Expiry & Expiration Tracking';
-    if (path === '/suppliers') return 'Supplier Network Management';
-    if (path === '/purchases') return 'Purchase Orders & Stock Intake';
-    if (path === '/alerts') return 'System Alerts & Notifications';
-    if (path === '/reports') return 'Inventory & Audit Reports';
-    return 'MediStock Healthcare';
-  };
-
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row font-sans text-slate-800 antialiased">
+    <div className="min-h-screen bg-[#fafaf8] flex flex-col md:flex-row text-slate-800 font-sans antialiased selection:bg-[#4d6b5e] selection:text-white">
       <NotificationPopup />
 
-      {/* MOBILE HEADER */}
-      <div className="md:hidden flex items-center justify-between bg-slate-900 text-white px-4 py-3 border-b border-slate-800 sticky top-0 z-40">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-500 to-teal-500 flex items-center justify-center text-white shadow-md">
-            <Activity size={18} />
-          </div>
-          <span className="font-extrabold text-base tracking-tight">
-            Medi<span className="text-sky-400">Stock</span>
-          </span>
-        </div>
+      {/* MOBILE TOPBAR */}
+      <div className="md:hidden flex items-center justify-between bg-[#111c24] text-white px-4 py-3 sticky top-0 z-40 border-b border-[#1b2732]">
         <div className="flex items-center gap-2">
-          <NotificationBell />
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
-          >
-            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          <div className="w-6 h-6 rounded-full bg-[#4e6b5d] text-white flex items-center justify-center text-xs font-bold">
+            <Plus size={14} strokeWidth={3} />
+          </div>
+          <span className="font-bold text-sm tracking-wider text-white">MEDISTOCK</span>
         </div>
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1a2834] transition cursor-pointer"
+          aria-label="Toggle navigation"
+        >
+          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
       </div>
 
-      {/* SIDEBAR */}
+      {/* SIDEBAR (Dark navy/slate #111c24) */}
       <aside
-        className={`fixed inset-y-0 left-0 z-30 w-64 bg-slate-900 text-white flex flex-col border-r border-slate-800 transform transition-transform duration-200 ease-in-out md:translate-x-0 md:static md:min-h-screen ${
+        className={`fixed inset-y-0 left-0 z-30 w-60 bg-[#111c24] text-slate-300 flex flex-col justify-between transform transition-transform duration-200 ease-in-out md:translate-x-0 md:static md:min-h-screen ${
           mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* Brand */}
-        <div className="p-5 border-b border-slate-800/80 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-500 to-teal-500 flex items-center justify-center text-white shadow-lg shadow-sky-500/20">
-              <Activity size={20} />
+        <div className="flex flex-col">
+          {/* LOGO */}
+          <div className="h-18 px-5 flex items-center gap-2.5">
+            <div className="w-5.5 h-5.5 rounded-full bg-[#4e6b5d] text-white flex items-center justify-center text-xs font-bold shadow-xs">
+              <Plus size={13} strokeWidth={3} />
             </div>
-            <div>
-              <div className="font-extrabold text-lg tracking-tight text-white">
-                Medi<span className="text-sky-400">Stock</span>
-              </div>
-              <p className="text-[11px] text-slate-400 font-medium">Healthcare Logistics</p>
-            </div>
+            <span className="font-bold text-sm tracking-wider text-white font-mono">MEDISTOCK</span>
           </div>
+
+          {/* NAVIGATION LINKS */}
+          <nav className="px-3 py-2 space-y-1">
+            {visibleNavItems.map((item) => {
+              const Icon = item.icon;
+              const isDashboardActive =
+                item.isDashboard &&
+                (location.pathname === '/admin' ||
+                  location.pathname === '/pharmacist' ||
+                  location.pathname === '/staff' ||
+                  location.pathname === '/dashboard');
+
+              const isDirectActive =
+                !item.isDashboard &&
+                (location.pathname === item.to ||
+                  (item.to === '/medicines' &&
+                    (location.pathname === '/add-medicine' ||
+                      location.pathname === '/edit-medicine')) ||
+                  (item.to !== '/dashboard' && location.pathname.startsWith(`${item.to}/`)));
+
+              const isActive = isDashboardActive || isDirectActive;
+
+              return (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all group ${
+                    isActive
+                      ? 'bg-[#1b2832] text-white shadow-xs font-semibold'
+                      : 'text-[#8a9ba8] hover:text-white hover:bg-[#15232d]'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Icon
+                      size={16}
+                      className={isActive ? 'text-white' : 'text-[#7d909f] group-hover:text-slate-200'}
+                    />
+                    <span>{item.label}</span>
+                  </div>
+                  {isActive && <div className="w-1 h-4 bg-[#567a6d] rounded-full" />}
+                </NavLink>
+              );
+            })}
+          </nav>
         </div>
 
-        {/* User Role Badge */}
-        <div className="px-5 pt-4 pb-2">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800/90 border border-slate-700 text-sky-300 text-xs font-semibold">
-            <ShieldCheck size={14} className="text-sky-400" />
-            <span>ROLE: {user?.role || 'STAFF'}</span>
-          </div>
-        </div>
-
-        {/* Navigation Links */}
-        <nav className="flex-1 px-3 py-3 space-y-1 overflow-y-auto">
-          {allowedNavItems.map((item) => {
-            const Icon = item.icon;
-            const isDashboard = item.to.includes('admin') || item.to.includes('pharmacist') || item.to.includes('staff');
-            const isActive = isDashboard
-              ? location.pathname === item.to || location.pathname === '/dashboard'
-              : location.pathname === item.to || location.pathname.startsWith(`${item.to}/`);
-
-            return (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                  isActive
-                    ? 'bg-sky-500/15 text-sky-400 border border-sky-500/30 shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
-                }`}
-              >
-                <Icon size={18} className={isActive ? 'text-sky-400' : 'text-slate-400'} />
-                <span>{item.label}</span>
-              </NavLink>
-            );
-          })}
-        </nav>
-
-        {/* Sidebar Footer User Info */}
-        <div className="p-4 border-t border-slate-800/80 bg-slate-950/40">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-sky-600 to-cyan-500 text-white font-bold text-sm flex items-center justify-center shadow-inner">
-              {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="text-sm font-semibold text-white truncate">{user?.name || 'Authorized User'}</div>
-              <div className="text-xs text-slate-400 truncate">{user?.email || 'user@medistock.com'}</div>
-            </div>
-          </div>
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-semibold text-rose-300 hover:text-white bg-rose-500/10 hover:bg-rose-600 border border-rose-500/20 transition-all"
+        {/* BOTTOM USER PROFILE CARD */}
+        <div className="p-3 border-t border-[#182530] relative">
+          <div
+            onClick={() => setShowUserMenu(!showUserMenu)}
+            className="flex items-center justify-between p-2 rounded-xl hover:bg-[#182631] cursor-pointer transition group"
           >
-            <LogOut size={14} />
-            <span>Sign Out</span>
-          </button>
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-8 h-8 rounded-full bg-white text-[#111c24] font-bold text-xs flex items-center justify-center shrink-0 shadow-xs">
+                {getInitials(user?.name)}
+              </div>
+              <div className="min-w-0 text-left">
+                <div className="text-xs font-semibold text-white truncate leading-tight">
+                  {user?.name || 'Dr. Eleanor Vance'}
+                </div>
+                <div className="text-[10px] text-[#718f99] font-bold tracking-wider uppercase mt-0.5">
+                  {getRoleDisplayName(user?.role)}
+                </div>
+              </div>
+            </div>
+            <ChevronDown size={14} className="text-slate-400 group-hover:text-white shrink-0 ml-1" />
+          </div>
+
+          {/* Quick Sign Out Dropup */}
+          {showUserMenu && (
+            <div className="absolute bottom-16 left-3 right-3 bg-[#172530] border border-[#223544] rounded-xl p-2 shadow-xl z-50 text-xs">
+              <div className="px-2 py-1.5 text-slate-400 text-[11px] border-b border-[#223544]">
+                Signed in as <strong className="text-white block truncate">{user?.email}</strong>
+              </div>
+              <button
+                onClick={handleLogout}
+                className="w-full flex items-center gap-2 px-2 py-2 mt-1 rounded-lg text-rose-300 hover:text-white hover:bg-rose-900/40 transition cursor-pointer font-medium"
+              >
+                <LogOut size={13} />
+                <span>Sign Out</span>
+              </button>
+            </div>
+          )}
         </div>
       </aside>
 
-      {/* MAIN CONTAINER */}
+      {/* CONTENT CANVAS */}
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-        {/* TOP BAR */}
-        <header className="hidden md:flex items-center justify-between px-8 py-4 bg-white border-b border-slate-200 sticky top-0 z-20 shadow-xs">
-          <div>
-            <h1 className="text-xl font-bold text-slate-900 tracking-tight">{getPageTitle()}</h1>
-            <p className="text-xs text-slate-500">MediStock Clinical Pharmacy & Supply Chain</p>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="hidden lg:flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-xs font-medium">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>System Online • Pharmacy DB Synchronized</span>
-            </div>
-
-            <NotificationBell />
-
-            <div className="h-6 w-px bg-slate-200" />
-
-            <div className="flex items-center gap-2.5 pl-1">
-              <div className="w-8 h-8 rounded-full bg-sky-100 text-sky-700 font-bold text-xs flex items-center justify-center border border-sky-200">
-                {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
-              </div>
-              <div className="text-left">
-                <span className="block text-xs font-bold text-slate-800 leading-none">{user?.name}</span>
-                <span className="text-[10px] text-slate-400 font-semibold uppercase">{user?.role}</span>
-              </div>
-            </div>
-          </div>
-        </header>
-
-        {/* CONTENT AREA */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+        <main className="flex-1 p-5 sm:p-7 md:p-8 max-w-7xl w-full mx-auto">
           {children || <Outlet />}
         </main>
       </div>

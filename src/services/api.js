@@ -1,7 +1,24 @@
 import axios from 'axios';
 
+// Ensure all requests use same-origin relative URLs in the browser
+const getBaseUrl = () => {
+  const envUrl = import.meta.env.VITE_API_BASE_URL;
+  if (!envUrl) return '';
+
+  if (typeof window !== 'undefined') {
+    // If accessed through web preview or HTTPS, avoid localhost/mixed-content blocks
+    if (envUrl.includes('localhost') && !window.location.hostname.includes('localhost')) {
+      return '';
+    }
+    if (window.location.protocol === 'https:' && envUrl.startsWith('http:')) {
+      return '';
+    }
+  }
+  return envUrl;
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '',
+  baseURL: getBaseUrl(),
   headers: {
     'Content-Type': 'application/json',
   },

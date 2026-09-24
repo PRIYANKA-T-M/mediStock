@@ -21,7 +21,72 @@ import StockTracking from "../pages/StockTracking";
 import Purchases from "../pages/Purchases";
 import Reports from "../pages/Reports";
 
-const API_URL = import.meta.env.VITE_API_BASE_URL ? `${import.meta.env.VITE_API_BASE_URL}/api` : "/api";
+const getApiUrl = () => {
+  const envUrl = import.meta.env.VITE_API_BASE_URL;
+  if (!envUrl) return "/api";
+  if (typeof window !== "undefined") {
+    if (envUrl.includes("localhost") && !window.location.hostname.includes("localhost")) {
+      return "/api";
+    }
+    if (window.location.protocol === "https:" && envUrl.startsWith("http:")) {
+      return "/api";
+    }
+  }
+  return `${envUrl}/api`;
+};
+
+const API_URL = getApiUrl();
+
+/* =========================================================
+   AUTH LEFT BRAND PANEL COMPONENT
+========================================================= */
+
+const AuthLeftPanel = () => (
+  <div className="hidden lg:flex lg:w-1/2 bg-[#111c24] text-white p-12 flex-col justify-between relative overflow-hidden select-none">
+    {/* TOP BRAND */}
+    <div className="flex items-center gap-2.5 z-10">
+      <div className="w-5.5 h-5.5 rounded-full bg-[#4e6b5d] text-white flex items-center justify-center text-xs font-bold shadow-xs">
+        <span className="text-xs font-bold leading-none">+</span>
+      </div>
+      <span className="font-bold text-sm tracking-wider text-white font-mono">MEDISTOCK</span>
+    </div>
+
+    {/* CENTER APOTHECARY RADIAL / CLOCK GRAPHIC */}
+    <div className="my-auto flex items-center justify-center relative py-12">
+      <div className="relative w-80 h-80 flex items-center justify-center">
+        {/* Outer subtle ring */}
+        <div className="absolute inset-0 rounded-full border border-slate-700/40" />
+        {/* Dashed middle ring */}
+        <div className="absolute inset-8 rounded-full border border-dashed border-slate-700/60" />
+        {/* Inner solid ring */}
+        <div className="absolute inset-16 rounded-full border border-slate-700/50" />
+        {/* Concentric rotating radial arms */}
+        <div className="relative w-40 h-40 flex items-center justify-center">
+          <svg className="w-48 h-48 text-[#4e6b5d]/80" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+            {/* Center hub */}
+            <circle cx="50" cy="50" r="7" fill="#4e6b5d" />
+            {/* Thick clock arms / molecule bonds */}
+            <path d="M50 20 L50 50 L75 50" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M26 35 L44 46" strokeWidth="4.5" strokeLinecap="round" opacity="0.6" />
+            <path d="M68 62 L82 72" strokeWidth="4.5" strokeLinecap="round" opacity="0.6" />
+            <path d="M32 68 L44 57" strokeWidth="4.5" strokeLinecap="round" opacity="0.4" />
+            <path d="M65 33 L78 22" strokeWidth="4.5" strokeLinecap="round" opacity="0.4" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    {/* BOTTOM TEXT */}
+    <div className="max-w-md z-10 space-y-3">
+      <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-snug">
+        Apothecary systems refined for modern clinical precision.
+      </h3>
+      <p className="text-xs sm:text-sm text-slate-400 font-normal leading-relaxed">
+        Designed with pharmaceutical standards to monitor cold-chains, track sensitive chemicals, and maintain flawless inventory streams.
+      </p>
+    </div>
+  </div>
+);
 
 /* =========================================================
    LOGIN
@@ -33,6 +98,7 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [maintainSession, setMaintainSession] = useState(true);
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -88,228 +154,148 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-slate-50 flex items-center justify-center px-6 py-10">
+    <div className="min-h-screen w-full flex bg-[#fafaf8] font-sans antialiased text-slate-800">
+      <AuthLeftPanel />
 
-      {/* Main authentication container */}
-      <div className="w-full max-w-5xl bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden flex flex-col md:flex-row">
-
-        {/* =================================================
-            LEFT BRANDING SECTION
-        ================================================= */}
-
-        <div className="hidden md:flex md:w-1/2 bg-blue-600 text-white p-10 flex-col justify-between relative overflow-hidden">
-
-          {/* Decorative circles */}
-          <div className="absolute -top-24 -right-24 w-72 h-72 bg-blue-500 rounded-full opacity-50" />
-          <div className="absolute -bottom-32 -left-20 w-72 h-72 bg-teal-500 rounded-full opacity-30" />
-
-          <div className="relative z-10">
-
-            {/* Logo */}
-            <div className="flex items-center gap-3 mb-12">
-              <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center text-xl font-bold">
-                M
-              </div>
-
-              <div>
-                <h1 className="text-2xl font-bold">
-                  MediStock
-                </h1>
-
-                <p className="text-blue-100 text-xs">
-                  Medical Inventory Management
-                </p>
-              </div>
-            </div>
-
-            {/* Main heading */}
-            <div className="max-w-md">
-
-              <p className="text-blue-100 text-sm font-semibold mb-3">
-                MEDICAL INVENTORY PLATFORM
-              </p>
-
-              <h2 className="text-4xl font-bold leading-tight mb-5">
-                Manage your medical inventory with confidence.
-              </h2>
-
-              <p className="text-blue-100 leading-relaxed">
-                Track medicines, monitor stock levels, manage
-                suppliers and stay informed about expiry and
-                inventory alerts.
-              </p>
-
-            </div>
-
-            {/* Features */}
-            <div className="mt-10 space-y-4">
-
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                  ✓
-                </div>
-
-                <span className="text-blue-50">
-                  Smart inventory management
-                </span>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                  ✓
-                </div>
-
-                <span className="text-blue-50">
-                  Stock and expiry monitoring
-                </span>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                  ✓
-                </div>
-
-                <span className="text-blue-50">
-                  Role-based secure access
-                </span>
-              </div>
-
-            </div>
+      {/* RIGHT AUTH FORM PANEL */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 md:p-16">
+        <div className="w-full max-w-md space-y-6">
+          {/* Header */}
+          <div>
+            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Access System</h1>
+            <p className="text-xs text-slate-500 mt-1.5">
+              Provide your clinical identification keys to log in.
+            </p>
           </div>
 
-          <p className="relative z-10 text-blue-200 text-xs">
-            MediStock © 2026
-          </p>
+          {/* Error Alert */}
+          {error && (
+            <div className="p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium">
+              {error}
+            </div>
+          )}
 
-        </div>
-
-
-        {/* =================================================
-            RIGHT LOGIN FORM
-        ================================================= */}
-
-        <div className="w-full md:w-1/2 p-8 sm:p-10 lg:p-12 flex items-center">
-
-          <div className="w-full max-w-md mx-auto">
-
-            {/* Mobile logo */}
-            <div className="md:hidden flex items-center gap-3 mb-8">
-
-              <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold">
-                M
-              </div>
-
-              <div>
-                <h1 className="text-xl font-bold text-slate-900">
-                  MediStock
-                </h1>
-
-                <p className="text-xs text-slate-500">
-                  Medical Inventory Management
-                </p>
-              </div>
-
+          {/* Form */}
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                Work Email
+              </label>
+              <input
+                type="email"
+                placeholder="admin@clinical.medistock.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full h-11 px-3.5 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs placeholder:text-slate-400 outline-none transition focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
+              />
             </div>
 
-
-            {/* Heading */}
-            <div className="mb-8">
-
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
-                Welcome back
-              </h2>
-
-              <p className="mt-2 text-sm text-slate-500">
-                Sign in to access your MediStock dashboard.
-              </p>
-
-            </div>
-
-
-            {/* Error */}
-            {error && (
-              <div className="mb-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                {error}
-              </div>
-            )}
-
-
-            {/* Login form */}
-            <form onSubmit={handleLogin} className="space-y-5">
-
-              {/* Email */}
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  Email
-                </label>
-
-                <input
-                  type="email"
-                  placeholder="you@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="w-full h-12 px-4 rounded-lg border border-slate-300 bg-white text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
-                />
-              </div>
-
-
-              {/* Password */}
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  Password
-                </label>
-
+            <div>
+              <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                Password
+              </label>
+              <div className="relative">
                 <input
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder="••••••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full h-12 px-4 rounded-lg border border-slate-300 bg-white text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
+                  className="w-full h-11 pl-3.5 pr-10 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs placeholder:text-slate-400 outline-none transition focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
                 />
+                <div className="absolute right-3.5 top-3.5 text-slate-400">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                </div>
               </div>
-
-
-              {/* Login button */}
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full h-12 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition shadow-sm hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                {loading ? "Logging in..." : "Login"}
-              </button>
-
-            </form>
-
-
-            {/* Register */}
-            <div className="mt-7 text-center">
-
-              <span className="text-sm text-slate-500">
-                Don't have an account?{" "}
-              </span>
-
-              <button
-                type="button"
-                onClick={() => navigate("/register")}
-                className="text-sm font-semibold text-blue-600 hover:text-blue-700 hover:underline"
-              >
-                Create an account
-              </button>
-
             </div>
 
+            <div className="flex items-center justify-between text-xs pt-1">
+              <label className="flex items-center gap-2 cursor-pointer select-none text-slate-600">
+                <input
+                  type="checkbox"
+                  checked={maintainSession}
+                  onChange={(e) => setMaintainSession(e.target.checked)}
+                  className="w-4 h-4 rounded border-slate-300 text-[#4d6b5e] focus:ring-[#4d6b5e] cursor-pointer"
+                />
+                <span>Maintain active session</span>
+              </label>
+              <button
+                type="button"
+                onClick={() => alert("Please contact your clinical pharmacy administrator to reset identification keys.")}
+                className="text-slate-500 hover:text-slate-800 text-xs font-medium cursor-pointer"
+              >
+                Recovery options
+              </button>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full h-11 rounded-lg bg-[#4d6b5e] hover:bg-[#415d51] text-white text-xs font-semibold tracking-wide transition shadow-xs disabled:opacity-60 cursor-pointer"
+            >
+              {loading ? "Authorizing..." : "Secure Authorization"}
+            </button>
+
+            {/* Quick Demo Switcher */}
+            <div className="pt-3 border-t border-slate-100 text-center">
+              <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block mb-2">
+                Quick Fill Clinical Credentials
+              </span>
+              <div className="grid grid-cols-3 gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEmail("admin@medistock.com");
+                    setPassword("admin123");
+                  }}
+                  className="py-1.5 px-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-[11px] font-medium text-slate-700 transition cursor-pointer"
+                >
+                  Admin
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEmail("pharmacist@medistock.com");
+                    setPassword("pharma123");
+                  }}
+                  className="py-1.5 px-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-[11px] font-medium text-slate-700 transition cursor-pointer"
+                >
+                  Pharmacist
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEmail("staff@medistock.com");
+                    setPassword("staff123");
+                  }}
+                  className="py-1.5 px-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-[11px] font-medium text-slate-700 transition cursor-pointer"
+                >
+                  Staff
+                </button>
+              </div>
+            </div>
+          </form>
+
+          {/* Footer */}
+          <div className="text-center pt-2 text-xs text-slate-500">
+            Unregistered clinician?{" "}
+            <button
+              type="button"
+              onClick={() => navigate("/register")}
+              className="font-semibold text-slate-800 underline hover:text-[#4d6b5e] cursor-pointer"
+            >
+              Register here
+            </button>
           </div>
-
         </div>
-
       </div>
-
     </div>
   );
 };
-
 
 /* =========================================================
    REGISTER
@@ -322,13 +308,13 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
-    role: "STAFF",
+    confirmPassword: "",
+    role: "PHARMACIST",
   });
 
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
 
   const handleChange = (e) => {
     setFormData({
@@ -337,366 +323,191 @@ const Register = () => {
     });
   };
 
-
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
 
     setMessage("");
     setError("");
     setLoading(true);
 
     try {
-
       const response = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          role: formData.role,
+        }),
       });
 
-
-      /*
-       * Backend returns plain text:
-       * "User registered successfully"
-       *
-       * Therefore use response.text()
-       * instead of response.json()
-       */
       const data = await response.text();
 
-
       if (!response.ok) {
-        throw new Error(
-          data || "Registration failed"
-        );
+        throw new Error(data || "Registration failed");
       }
 
-
-      setMessage(
-        "Registration successful. You can now login."
-      );
-
-
+      setMessage("Credentials established. Redirecting to access portal...");
       setTimeout(() => {
         navigate("/login");
       }, 1200);
-
-
     } catch (err) {
-
-      setError(
-        err.message || "Registration failed"
-      );
-
+      setError(err.message || "Registration failed");
     } finally {
-
       setLoading(false);
-
     }
   };
 
-
   return (
-    <div className="min-h-screen w-full bg-slate-50 flex items-center justify-center px-6 py-10">
+    <div className="min-h-screen w-full flex bg-[#fafaf8] font-sans antialiased text-slate-800">
+      <AuthLeftPanel />
 
-      {/* Main authentication container */}
-      <div className="w-full max-w-5xl bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden flex flex-col md:flex-row">
-
-
-        {/* =================================================
-            LEFT BRANDING SECTION
-        ================================================= */}
-
-        <div className="hidden md:flex md:w-1/2 bg-blue-600 text-white p-10 flex-col justify-between relative overflow-hidden">
-
-          <div className="absolute -top-24 -right-24 w-72 h-72 bg-blue-500 rounded-full opacity-50" />
-
-          <div className="absolute -bottom-32 -left-20 w-72 h-72 bg-teal-500 rounded-full opacity-30" />
-
-
-          <div className="relative z-10">
-
-            <div className="flex items-center gap-3 mb-12">
-
-              <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center text-xl font-bold">
-                M
-              </div>
-
-              <div>
-                <h1 className="text-2xl font-bold">
-                  MediStock
-                </h1>
-
-                <p className="text-blue-100 text-xs">
-                  Medical Inventory Management
-                </p>
-              </div>
-
-            </div>
-
-
-            <div className="max-w-md">
-
-              <p className="text-blue-100 text-sm font-semibold mb-3">
-                JOIN MEDISTOCK
-              </p>
-
-              <h2 className="text-4xl font-bold leading-tight mb-5">
-                Get started with smarter inventory management.
-              </h2>
-
-              <p className="text-blue-100 leading-relaxed">
-                Create your account and access the tools
-                you need to manage medicines, inventory and
-                stock information efficiently.
-              </p>
-
-            </div>
-
-
-            <div className="mt-10 space-y-4">
-
-              <div className="flex items-center gap-3">
-
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                  ✓
-                </div>
-
-                <span className="text-blue-50">
-                  Easy medicine management
-                </span>
-
-              </div>
-
-
-              <div className="flex items-center gap-3">
-
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                  ✓
-                </div>
-
-                <span className="text-blue-50">
-                  Real-time inventory tracking
-                </span>
-
-              </div>
-
-
-              <div className="flex items-center gap-3">
-
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                  ✓
-                </div>
-
-                <span className="text-blue-50">
-                  Secure role-based access
-                </span>
-
-              </div>
-
-            </div>
-
+      {/* RIGHT AUTH FORM PANEL */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 md:p-16">
+        <div className="w-full max-w-md space-y-6">
+          <div>
+            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Establish Credentials</h1>
+            <p className="text-xs text-slate-500 mt-1.5">
+              Create your official clinical inventory associate account.
+            </p>
           </div>
 
+          {error && (
+            <div className="p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium">
+              {error}
+            </div>
+          )}
 
-          <p className="relative z-10 text-blue-200 text-xs">
-            MediStock © 2026
-          </p>
+          {message && (
+            <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium">
+              {message}
+            </div>
+          )}
 
-        </div>
-
-
-        {/* =================================================
-            RIGHT REGISTER FORM
-        ================================================= */}
-
-        <div className="w-full md:w-1/2 p-8 sm:p-10 lg:p-12 flex items-center">
-
-          <div className="w-full max-w-md mx-auto">
-
-
-            {/* Mobile logo */}
-            <div className="md:hidden flex items-center gap-3 mb-8">
-
-              <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold">
-                M
-              </div>
-
-              <div>
-
-                <h1 className="text-xl font-bold text-slate-900">
-                  MediStock
-                </h1>
-
-                <p className="text-xs text-slate-500">
-                  Medical Inventory Management
-                </p>
-
-              </div>
-
+          <form onSubmit={handleRegister} className="space-y-4">
+            <div>
+              <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                Full Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                placeholder="Dr. Eleanor Vance"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                className="w-full h-11 px-3.5 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs placeholder:text-slate-400 outline-none transition focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
+              />
             </div>
 
-
-            {/* Heading */}
-            <div className="mb-8">
-
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
-                Create your account
-              </h2>
-
-              <p className="mt-2 text-sm text-slate-500">
-                Register to start using MediStock.
-              </p>
-
+            <div>
+              <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                Work Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder="e.vance@clinical.medistock.com"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="w-full h-11 px-3.5 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs placeholder:text-slate-400 outline-none transition focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
+              />
             </div>
 
-
-            {/* Error */}
-            {error && (
-              <div className="mb-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                {error}
-              </div>
-            )}
-
-
-            {/* Success */}
-            {message && (
-              <div className="mb-5 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
-                {message}
-              </div>
-            )}
-
-
-            {/* Register form */}
-            <form
-              onSubmit={handleRegister}
-              className="space-y-5"
-            >
-
-
-              {/* Name */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-
-                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  Full Name
-                </label>
-
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Enter your full name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full h-12 px-4 rounded-lg border border-slate-300 bg-white text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
-                />
-
-              </div>
-
-
-              {/* Email */}
-              <div>
-
-                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  Email
-                </label>
-
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="you@example.com"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full h-12 px-4 rounded-lg border border-slate-300 bg-white text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
-                />
-
-              </div>
-
-
-              {/* Password */}
-              <div>
-
-                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
                   Password
                 </label>
-
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Create a password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  className="w-full h-12 px-4 rounded-lg border border-slate-300 bg-white text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
-                />
-
+                <div className="relative">
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="••••••••••••"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                    className="w-full h-11 pl-3.5 pr-10 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs placeholder:text-slate-400 outline-none transition focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
+                  />
+                  <div className="absolute right-3.5 top-3.5 text-slate-400">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
 
-
-              {/* Role */}
               <div>
-
-                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  Role
+                <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                  Confirm Password
                 </label>
-
-                <select
-                  name="role"
-                  value={formData.role}
-                  onChange={handleChange}
-                  className="w-full h-12 px-4 rounded-lg border border-slate-300 bg-white text-slate-800 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
-                >
-
-                  <option value="STAFF">
-                    Staff
-                  </option>
-
-                  <option value="PHARMACIST">
-                    Pharmacist
-                  </option>
-
-                </select>
-
+                <div className="relative">
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="••••••••••••"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    required
+                    className="w-full h-11 pl-3.5 pr-10 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs placeholder:text-slate-400 outline-none transition focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
+                  />
+                  <div className="absolute right-3.5 top-3.5 text-slate-400">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
-
-
-              {/* Register button */}
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full h-12 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition shadow-sm hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                {loading ? "Creating..." : "Create Account"}
-              </button>
-
-            </form>
-
-
-            {/* Back to login */}
-            <div className="mt-7 text-center">
-
-              <span className="text-sm text-slate-500">
-                Already have an account?{" "}
-              </span>
-
-              <button
-                type="button"
-                onClick={() => navigate("/login")}
-                className="text-sm font-semibold text-blue-600 hover:text-blue-700 hover:underline"
-              >
-                Sign in
-              </button>
-
             </div>
 
+            <div>
+              <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                Assigned Role
+              </label>
+              <select
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                className="w-full h-11 px-3.5 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs outline-none transition focus:border-slate-400 focus:ring-1 focus:ring-slate-300 font-medium"
+              >
+                <option value="PHARMACIST">Pharmacist-in-Charge</option>
+                <option value="ADMIN">Clinical Admin</option>
+                <option value="STAFF">Dispensary Staff</option>
+              </select>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full h-11 rounded-lg bg-[#4d6b5e] hover:bg-[#415d51] text-white text-xs font-semibold tracking-wide transition shadow-xs disabled:opacity-60 cursor-pointer"
+            >
+              {loading ? "Establishing..." : "Create Official Account"}
+            </button>
+          </form>
+
+          <div className="text-center pt-2 text-xs text-slate-500">
+            Already registered?{" "}
+            <button
+              type="button"
+              onClick={() => navigate("/login")}
+              className="font-semibold text-slate-800 underline hover:text-[#4d6b5e] cursor-pointer"
+            >
+              Access Portal
+            </button>
           </div>
-
         </div>
-
       </div>
-
     </div>
   );
 };
@@ -705,13 +516,6 @@ const Register = () => {
 /* =========================================================
    APPLICATION ROUTES
 ========================================================= */
-
-const DashboardRedirect = () => {
-  const { user } = useAuth();
-  if (user?.role === "ADMIN") return <Navigate to="/admin" replace />;
-  if (user?.role === "PHARMACIST") return <Navigate to="/pharmacist" replace />;
-  return <Navigate to="/staff" replace />;
-};
 
 const AppRoutes = () => {
   return (
@@ -730,7 +534,7 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       >
-        <Route path="/dashboard" element={<DashboardRedirect />} />
+        <Route path="/dashboard" element={<MainDashboard />} />
 
         {/* ROLE ROOT DASHBOARDS */}
         <Route
