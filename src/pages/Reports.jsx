@@ -245,30 +245,30 @@ End of Certified Report • MediStock System
   return (
     <div className="space-y-8">
       {/* ACTION BAR */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-stone-200/60">
         <div>
-          <h2 className="text-xl font-bold text-slate-900 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-tight">
             Inventory & Compliance Reports
           </h2>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs sm:text-sm text-stone-500 mt-1 leading-relaxed">
             Generate certified inventory, stock movement, purchase orders, and expiry statements.
           </p>
         </div>
 
         {generatedReport && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <button
               onClick={downloadPDF}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-xs transition cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold shadow-xs transition cursor-pointer"
             >
-              <Download size={13} />
+              <Download size={14} />
               <span>Download Text/PDF</span>
             </button>
             <button
               onClick={downloadCSV}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-xs transition cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-semibold shadow-xs transition cursor-pointer"
             >
-              <FileSpreadsheet size={13} />
+              <FileSpreadsheet size={14} />
               <span>Export CSV</span>
             </button>
           </div>
@@ -276,18 +276,21 @@ End of Certified Report • MediStock System
       </div>
 
       {/* PARAMETERS CONFIGURATION */}
-      <div className="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs space-y-4">
-        <h2 className="text-sm font-semibold text-slate-900">Configure Report Parameters</h2>
+      <div className="bg-white p-7 sm:p-8 rounded-2xl border border-stone-200/80 shadow-xs space-y-6">
+        <div>
+          <h2 className="text-base font-bold text-slate-900 tracking-tight">Configure Report Parameters</h2>
+          <p className="text-xs text-stone-500 mt-0.5">Select statement parameters and evaluation date window</p>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-1">
-            <label className="block text-xs font-medium text-slate-700 mb-1">
+            <label className="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider text-[11px]">
               Report Type
             </label>
             <select
               value={reportType}
               onChange={(e) => setReportType(e.target.value)}
-              className="w-full px-3 py-1.5 text-xs font-medium border border-slate-200 rounded-lg bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+              className="w-full px-3.5 py-2.5 text-xs font-medium border border-stone-200 rounded-xl bg-stone-50/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition"
             >
               {REPORT_TYPES.map((t) => (
                 <option key={t.id} value={t.id}>
@@ -295,52 +298,52 @@ End of Certified Report • MediStock System
                 </option>
               ))}
             </select>
-            <p className="text-[11px] text-slate-400 mt-1">
+            <p className="text-xs text-stone-400 mt-1.5 leading-relaxed">
               {REPORT_TYPES.find((r) => r.id === reportType)?.desc}
             </p>
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-700 mb-1">
+            <label className="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider text-[11px]">
               From Date
             </label>
             <div className="relative">
-              <Calendar className="absolute left-3 top-2 text-slate-400" size={14} />
+              <Calendar className="absolute left-3.5 top-3 text-stone-400" size={15} />
               <input
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-200 rounded-lg bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+                className="w-full pl-9 pr-3.5 py-2.5 text-xs border border-stone-200 rounded-xl bg-stone-50/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-700 mb-1">
+            <label className="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider text-[11px]">
               To Date
             </label>
             <div className="relative">
-              <Calendar className="absolute left-3 top-2 text-slate-400" size={14} />
+              <Calendar className="absolute left-3.5 top-3 text-stone-400" size={15} />
               <input
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-200 rounded-lg bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+                className="w-full pl-9 pr-3.5 py-2.5 text-xs border border-stone-200 rounded-xl bg-stone-50/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition"
               />
             </div>
           </div>
         </div>
 
-        <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-slate-100">
-          <div className="flex items-center gap-1.5 text-xs text-slate-500">
-            <span>Presets:</span>
+        <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-stone-100">
+          <div className="flex items-center gap-2 text-xs text-stone-500">
+            <span className="font-medium text-slate-700">Quick Presets:</span>
             <button
               onClick={() => {
                 const now = new Date();
                 setEndDate(now.toISOString().split('T')[0]);
                 setStartDate(new Date(now.getTime() - 7 * 86400000).toISOString().split('T')[0]);
               }}
-              className="px-2 py-0.5 rounded text-xs text-slate-700 hover:bg-slate-100 transition cursor-pointer"
+              className="px-2.5 py-1 rounded-lg text-xs font-medium text-stone-600 bg-stone-100 hover:bg-stone-200 hover:text-slate-900 transition cursor-pointer"
             >
               7 Days
             </button>
@@ -350,7 +353,7 @@ End of Certified Report • MediStock System
                 setEndDate(now.toISOString().split('T')[0]);
                 setStartDate(new Date(now.getTime() - 30 * 86400000).toISOString().split('T')[0]);
               }}
-              className="px-2 py-0.5 rounded text-xs text-slate-700 hover:bg-slate-100 transition cursor-pointer"
+              className="px-2.5 py-1 rounded-lg text-xs font-medium text-stone-600 bg-stone-100 hover:bg-stone-200 hover:text-slate-900 transition cursor-pointer"
             >
               30 Days
             </button>
@@ -360,7 +363,7 @@ End of Certified Report • MediStock System
                 setEndDate(now.toISOString().split('T')[0]);
                 setStartDate(new Date(now.getTime() - 90 * 86400000).toISOString().split('T')[0]);
               }}
-              className="px-2 py-0.5 rounded text-xs text-slate-700 hover:bg-slate-100 transition cursor-pointer"
+              className="px-2.5 py-1 rounded-lg text-xs font-medium text-stone-600 bg-stone-100 hover:bg-stone-200 hover:text-slate-900 transition cursor-pointer"
             >
               Quarter
             </button>
@@ -369,17 +372,17 @@ End of Certified Report • MediStock System
           <button
             onClick={handleGenerateReport}
             disabled={generating}
-            className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold shadow-xs transition cursor-pointer disabled:opacity-50"
+            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-semibold shadow-xs transition cursor-pointer disabled:opacity-50"
           >
             {generating ? (
               <>
-                <RefreshCw size={13} className="animate-spin" />
-                <span>Compiling Report...</span>
+                <RefreshCw size={14} className="animate-spin" />
+                <span>Compiling Certified Report...</span>
               </>
             ) : (
               <>
-                <FileText size={13} />
-                <span>Generate Report</span>
+                <FileText size={14} />
+                <span>Compile & Generate</span>
               </>
             )}
           </button>
@@ -388,30 +391,30 @@ End of Certified Report • MediStock System
 
       {/* GENERATED REPORT RESULT */}
       {generatedReport ? (
-        <div className="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs space-y-5">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-3.5 rounded-lg bg-slate-50/70 border border-slate-100">
+        <div className="bg-white p-7 sm:p-8 rounded-2xl border border-stone-200/80 shadow-xs space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-xl bg-stone-50/80 border border-stone-200/80">
             <div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-emerald-600" />
-                <h3 className="text-sm font-bold text-slate-900">{generatedReport.typeName}</h3>
+              <div className="flex items-center gap-2.5">
+                <CheckCircle2 size={18} className="text-emerald-700" />
+                <h3 className="text-base font-bold text-slate-900">{generatedReport.typeName}</h3>
               </div>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-stone-500 mt-1 leading-relaxed">
                 Ref ID: <span className="font-mono font-medium text-slate-800">{generatedReport.id}</span> ·
                 Period: {generatedReport.dateRange} · Generated by {generatedReport.generatedBy}
               </p>
             </div>
 
-            <div className="flex items-center gap-4 text-xs">
+            <div className="flex items-center gap-6 text-xs">
               <div>
-                <span className="text-slate-400 block">Total Records</span>
-                <span className="text-base font-bold text-slate-900 font-mono">
+                <span className="text-stone-400 block uppercase tracking-wider text-[10px] font-semibold">Total Records</span>
+                <span className="text-xl font-bold text-slate-900 font-mono mt-0.5 block">
                   {generatedReport.recordCount}
                 </span>
               </div>
               {generatedReport.totalValue && (
-                <div className="pl-4 border-l border-slate-200">
-                  <span className="text-slate-400 block">Valuation</span>
-                  <span className="text-base font-bold text-emerald-600 font-mono">
+                <div className="pl-6 border-l border-stone-200">
+                  <span className="text-stone-400 block uppercase tracking-wider text-[10px] font-semibold">Valuation</span>
+                  <span className="text-xl font-bold text-emerald-800 font-mono mt-0.5 block">
                     {generatedReport.totalValue}
                   </span>
                 </div>
@@ -419,15 +422,15 @@ End of Certified Report • MediStock System
             </div>
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-xl border border-stone-200/80">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-slate-200 text-slate-500 font-semibold bg-slate-50/70">
-                  <th className="py-2.5 px-3">#</th>
-                  <th className="py-2.5 px-3">
+                <tr className="border-b border-stone-200/80 text-stone-500 font-semibold bg-stone-50/70 uppercase tracking-wider text-[11px]">
+                  <th className="py-3.5 px-5">#</th>
+                  <th className="py-3.5 px-5">
                     {generatedReport.type === 'PURCHASE' ? 'Supplier' : 'Medicine'}
                   </th>
-                  <th className="py-2.5 px-3">
+                  <th className="py-3.5 px-5">
                     {generatedReport.type === 'INVENTORY'
                       ? 'Category'
                       : generatedReport.type === 'EXPIRY'
@@ -436,7 +439,7 @@ End of Certified Report • MediStock System
                       ? 'Contact'
                       : 'Operation'}
                   </th>
-                  <th className="py-2.5 px-3">
+                  <th className="py-3.5 px-5">
                     {generatedReport.type === 'INVENTORY'
                       ? 'Batch #'
                       : generatedReport.type === 'EXPIRY'
@@ -445,7 +448,7 @@ End of Certified Report • MediStock System
                       ? 'Lead Time'
                       : 'Inflow'}
                   </th>
-                  <th className="py-2.5 px-3">
+                  <th className="py-3.5 px-5">
                     {generatedReport.type === 'INVENTORY'
                       ? 'Stock Quantity'
                       : generatedReport.type === 'EXPIRY'
@@ -454,7 +457,7 @@ End of Certified Report • MediStock System
                       ? 'Rating'
                       : 'Outflow'}
                   </th>
-                  <th className="py-2.5 px-3">
+                  <th className="py-3.5 px-5">
                     {generatedReport.type === 'INVENTORY'
                       ? 'Unit Price'
                       : generatedReport.type === 'EXPIRY'
@@ -463,7 +466,7 @@ End of Certified Report • MediStock System
                       ? 'Total Order'
                       : 'Balance'}
                   </th>
-                  <th className="py-2.5 px-3">
+                  <th className="py-3.5 px-5">
                     {generatedReport.type === 'INVENTORY'
                       ? 'Total Valuation'
                       : generatedReport.type === 'EXPIRY'
@@ -474,17 +477,17 @@ End of Certified Report • MediStock System
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-stone-100">
                 {generatedReport.records.map((r, i) => (
-                  <tr key={i} className="hover:bg-slate-50/50 transition">
-                    <td className="py-2.5 px-3 font-mono text-slate-400">{r.id}</td>
-                    <td className="py-2.5 px-3 font-semibold text-slate-900">{r.col1}</td>
-                    <td className="py-2.5 px-3 text-slate-600">{r.col2}</td>
-                    <td className="py-2.5 px-3 font-mono text-slate-500">{r.col3}</td>
-                    <td className="py-2.5 px-3 font-mono text-slate-800">{r.col4}</td>
-                    <td className="py-2.5 px-3 font-mono text-slate-900">{r.col5}</td>
-                    <td className="py-2.5 px-3">
-                      <span className="text-slate-700 font-medium">{r.col6}</span>
+                  <tr key={i} className="hover:bg-stone-50/60 transition">
+                    <td className="py-3.5 px-5 font-mono text-stone-400 font-medium">{r.id}</td>
+                    <td className="py-3.5 px-5 font-bold text-slate-900">{r.col1}</td>
+                    <td className="py-3.5 px-5 text-stone-600 font-medium">{r.col2}</td>
+                    <td className="py-3.5 px-5 font-mono text-stone-600">{r.col3}</td>
+                    <td className="py-3.5 px-5 font-mono font-medium text-slate-800">{r.col4}</td>
+                    <td className="py-3.5 px-5 font-mono text-slate-800">{r.col5}</td>
+                    <td className="py-3.5 px-5">
+                      <span className="text-slate-800 font-semibold">{r.col6}</span>
                     </td>
                   </tr>
                 ))}
@@ -493,14 +496,16 @@ End of Certified Report • MediStock System
           </div>
         </div>
       ) : (
-        <div className="bg-white p-10 rounded-xl border border-slate-200/80 shadow-xs text-center">
-          <div className="w-12 h-12 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center mx-auto mb-3">
-            <FileText size={24} />
+        <div className="bg-white p-14 rounded-2xl border border-stone-200/80 shadow-xs text-center space-y-4">
+          <div className="w-14 h-14 rounded-2xl bg-stone-100 text-stone-400 flex items-center justify-center mx-auto border border-stone-200/60">
+            <FileText size={26} />
           </div>
-          <h3 className="text-sm font-semibold text-slate-900">No Report Generated Yet</h3>
-          <p className="text-xs text-slate-500 max-w-sm mx-auto mt-1">
-            Select a report type and date range above, then click "Generate Report" to compile data.
-          </p>
+          <div className="max-w-md mx-auto space-y-1">
+            <h3 className="text-base font-bold text-slate-900">No report generated yet</h3>
+            <p className="text-xs text-stone-500 leading-relaxed">
+              Select a report type and date range above, then click "Compile & Generate" to produce certified inventory statements.
+            </p>
+          </div>
         </div>
       )}
     </div>

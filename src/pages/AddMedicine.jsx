@@ -159,22 +159,22 @@ const AddMedicine = () => {
       )}
 
       {/* FORM CARD (IMAGE 7) */}
-      <div className="bg-white rounded-2xl border border-stone-200/70 shadow-xs p-7 space-y-6">
-        <div>
-          <h2 className="text-base font-bold text-slate-900">
-            General Formulation & Stock Entry
+      <div className="bg-white rounded-2xl border border-stone-200/80 shadow-xs p-8 sm:p-10 space-y-8">
+        <div className="border-b border-stone-100 pb-5">
+          <h2 className="text-lg font-bold text-slate-900 tracking-tight">
+            General Formulation &amp; Stock Entry
           </h2>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs sm:text-sm text-slate-500 mt-1 leading-relaxed">
             Ensure all mandatory fields marked with an asterisk are accurate before committing to catalog.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5 text-xs">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <form onSubmit={handleSubmit} className="space-y-6 text-xs">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Left Column */}
-            <div className="space-y-4">
+            <div className="space-y-5">
               <div>
-                <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
                   Medicine Name *
                 </label>
                 <input
@@ -184,12 +184,12 @@ const AddMedicine = () => {
                   placeholder="Paracetamol 500mg"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full h-10 px-3.5 rounded-lg border border-stone-200 bg-[#fafaf8] text-slate-800 text-xs placeholder:text-slate-400 outline-none focus:border-slate-400 focus:bg-white"
+                  className="w-full h-11 px-4 rounded-xl border border-stone-200 bg-[#fafaf8] text-slate-800 text-xs placeholder:text-slate-400 outline-none focus:border-stone-400 focus:bg-white tracking-wide transition"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
                   Batch Number *
                 </label>
                 <input
@@ -199,19 +199,19 @@ const AddMedicine = () => {
                   placeholder="PR-8821"
                   value={formData.batchNumber}
                   onChange={handleChange}
-                  className="w-full h-10 px-3.5 rounded-lg border border-stone-200 bg-[#fafaf8] text-slate-800 text-xs placeholder:text-slate-400 font-mono outline-none focus:border-slate-400 focus:bg-white"
+                  className="w-full h-11 px-4 rounded-xl border border-stone-200 bg-[#fafaf8] text-slate-800 text-xs placeholder:text-slate-400 font-mono tracking-wider outline-none focus:border-stone-400 focus:bg-white transition"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
                   Category *
                 </label>
                 <select
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
-                  className="w-full h-10 px-3.5 rounded-lg border border-stone-200 bg-[#fafaf8] text-slate-800 text-xs outline-none focus:border-slate-400 focus:bg-white font-medium"
+                  className="w-full h-11 px-4 rounded-xl border border-stone-200 bg-[#fafaf8] text-slate-800 text-xs outline-none focus:border-stone-400 focus:bg-white font-medium tracking-wide transition cursor-pointer"
                 >
                   {CATEGORIES.map((c) => (
                     <option key={c} value={c}>{c}</option>
@@ -220,14 +220,14 @@ const AddMedicine = () => {
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
                   Preferred Supplier *
                 </label>
                 <select
                   name="supplierId"
                   value={formData.supplierId}
                   onChange={handleChange}
-                  className="w-full h-10 px-3.5 rounded-lg border border-stone-200 bg-[#fafaf8] text-slate-800 text-xs outline-none focus:border-slate-400 focus:bg-white font-medium"
+                  className="w-full h-11 px-4 rounded-xl border border-stone-200 bg-[#fafaf8] text-slate-800 text-xs outline-none focus:border-stone-400 focus:bg-white font-medium tracking-wide transition cursor-pointer"
                 >
                   {suppliers.map((s) => (
                     <option key={s.id} value={s.id}>{s.name}</option>
@@ -241,9 +241,9 @@ const AddMedicine = () => {
             </div>
 
             {/* Right Column */}
-            <div className="space-y-4">
+            <div className="space-y-5">
               <div>
-                <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
                   Quantity (Units) *
                 </label>
                 <input
@@ -253,12 +253,12 @@ const AddMedicine = () => {
                   placeholder="2400"
                   value={formData.quantity}
                   onChange={handleChange}
-                  className="w-full h-10 px-3.5 rounded-lg border border-stone-200 bg-[#fafaf8] text-slate-800 text-xs placeholder:text-slate-400 outline-none focus:border-slate-400 focus:bg-white"
+                  className="w-full h-11 px-4 rounded-xl border border-stone-200 bg-[#fafaf8] text-slate-800 text-xs placeholder:text-slate-400 font-mono outline-none focus:border-stone-400 focus:bg-white tracking-wide transition"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
                   Manufacturing Date
                 </label>
                 <input
@@ -266,12 +266,12 @@ const AddMedicine = () => {
                   name="manufacturingDate"
                   value={formData.manufacturingDate}
                   onChange={handleChange}
-                  className="w-full h-10 px-3.5 rounded-lg border border-stone-200 bg-[#fafaf8] text-slate-800 text-xs outline-none focus:border-slate-400 focus:bg-white"
+                  className="w-full h-11 px-4 rounded-xl border border-stone-200 bg-[#fafaf8] text-slate-800 text-xs outline-none focus:border-stone-400 focus:bg-white tracking-wide transition"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
                   Expiry Date *
                 </label>
                 <input
@@ -280,12 +280,12 @@ const AddMedicine = () => {
                   required
                   value={formData.expiryDate}
                   onChange={handleChange}
-                  className="w-full h-10 px-3.5 rounded-lg border border-stone-200 bg-[#fafaf8] text-slate-800 text-xs outline-none focus:border-slate-400 focus:bg-white"
+                  className="w-full h-11 px-4 rounded-xl border border-stone-200 bg-[#fafaf8] text-slate-800 text-xs outline-none focus:border-stone-400 focus:bg-white tracking-wide transition"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
                   Unit Price (INR) *
                 </label>
                 <input
@@ -296,25 +296,25 @@ const AddMedicine = () => {
                   placeholder="45.00"
                   value={formData.unitPrice}
                   onChange={handleChange}
-                  className="w-full h-10 px-3.5 rounded-lg border border-stone-200 bg-[#fafaf8] text-slate-800 text-xs placeholder:text-slate-400 outline-none focus:border-slate-400 focus:bg-white"
+                  className="w-full h-11 px-4 rounded-xl border border-stone-200 bg-[#fafaf8] text-slate-800 text-xs placeholder:text-slate-400 font-mono outline-none focus:border-stone-400 focus:bg-white tracking-wide transition"
                 />
               </div>
             </div>
           </div>
 
           {/* Form Actions */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-stone-100">
+          <div className="flex items-center justify-end gap-3.5 pt-6 border-t border-stone-100">
             <button
               type="button"
               onClick={() => navigate('/medicines')}
-              className="px-4 py-2 rounded-lg border border-slate-200 text-xs font-medium text-slate-600 hover:bg-slate-50 transition cursor-pointer"
+              className="px-5 py-2.5 rounded-xl border border-stone-200 text-xs font-semibold text-slate-600 hover:bg-stone-50 transition cursor-pointer tracking-wide"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="px-5 py-2 rounded-lg bg-[#4d6b5e] hover:bg-[#415d51] text-white text-xs font-semibold shadow-xs transition disabled:opacity-60 cursor-pointer"
+              className="px-6 py-2.5 rounded-xl bg-[#4d6b5e] hover:bg-[#415d51] text-white text-xs font-semibold shadow-xs transition disabled:opacity-60 cursor-pointer tracking-wide"
             >
               {submitting ? 'Saving...' : 'Save Medicine'}
             </button>

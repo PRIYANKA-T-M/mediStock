@@ -107,29 +107,29 @@ const StockTracking = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* HEADER */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-stone-200/60">
         <div>
-          <h1 className="text-xl font-bold text-slate-900 tracking-tight">Medicine Stock Tracking</h1>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-tight">Medicine Stock Tracking</h1>
+          <p className="text-xs sm:text-sm text-stone-500 mt-1 leading-relaxed">
             Automated stock surveillance with dynamic threshold checking and automated alert generation.
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-3">
           <button
             onClick={() => load(true)}
             disabled={refreshing}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-medium shadow-xs transition cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 text-xs font-semibold shadow-xs transition cursor-pointer"
           >
             <RefreshCw size={14} className={refreshing ? 'animate-spin' : ''} />
-            <span>Refresh</span>
+            <span>Refresh Stock</span>
           </button>
           {canAdjust && (
             <button
               onClick={refreshAlerts}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold shadow-xs transition cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-semibold shadow-xs transition cursor-pointer"
             >
               <RefreshCw size={14} />
               <span>Sync Alerts</span>
@@ -139,112 +139,112 @@ const StockTracking = () => {
       </div>
 
       {message && (
-        <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-800 text-xs flex items-center gap-2 font-medium">
-          <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+        <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs flex items-center gap-2 font-medium leading-relaxed">
+          <CheckCircle2 size={18} className="text-emerald-700 shrink-0" />
           <span>{message}</span>
         </div>
       )}
 
       {error && (
-        <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 text-xs font-medium">
+        <div className="p-4 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 text-xs font-medium">
           {error}
         </div>
       )}
 
       {/* KPI METRIC CARDS */}
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
         <div
           onClick={() => setFilter('ALL')}
-          className={`bg-white p-5 rounded-xl border shadow-xs flex items-center justify-between cursor-pointer transition ${
+          className={`bg-white p-6 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition ${
             filter === 'ALL'
-              ? 'border-sky-500 ring-2 ring-sky-100'
-              : 'border-slate-200/80 hover:border-slate-300'
+              ? 'border-emerald-700 ring-2 ring-emerald-700/10'
+              : 'border-stone-200/80 hover:border-stone-300'
           }`}
         >
           <div>
-            <div className="text-xs font-medium text-slate-500">Tracked Items</div>
-            <div className="text-2xl font-bold text-slate-900 mt-1 font-mono tabular-nums">
+            <div className="text-xs font-bold text-stone-500 uppercase tracking-wider text-[11px]">Tracked Items</div>
+            <div className="text-3xl font-bold text-slate-900 mt-2 font-mono tabular-nums tracking-tight">
               {counts.total}
             </div>
-            <span className="text-[11px] text-slate-400 mt-0.5 block">Catalog records</span>
+            <span className="text-xs text-stone-400 mt-1 block">Catalog active records</span>
           </div>
-          <div className="w-9 h-9 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center">
-            <Boxes size={18} />
+          <div className="w-10 h-10 rounded-xl bg-stone-100 text-stone-700 flex items-center justify-center">
+            <Boxes size={20} />
           </div>
         </div>
 
         <div
           onClick={() => setFilter('OPTIMAL')}
-          className={`bg-white p-5 rounded-xl border shadow-xs flex items-center justify-between cursor-pointer transition ${
+          className={`bg-white p-6 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition ${
             filter === 'OPTIMAL'
-              ? 'border-emerald-500 ring-2 ring-emerald-100'
-              : 'border-slate-200/80 hover:border-slate-300'
+              ? 'border-emerald-700 ring-2 ring-emerald-700/10'
+              : 'border-stone-200/80 hover:border-stone-300'
           }`}
         >
           <div>
-            <div className="text-xs font-medium text-slate-500">Optimal Stock</div>
-            <div className="text-2xl font-bold text-emerald-600 mt-1 font-mono tabular-nums">
+            <div className="text-xs font-bold text-stone-500 uppercase tracking-wider text-[11px]">Optimal Stock</div>
+            <div className="text-3xl font-bold text-emerald-800 mt-2 font-mono tabular-nums tracking-tight">
               {counts.optimal}
             </div>
-            <span className="text-[11px] text-emerald-700 font-medium mt-0.5 block">Above threshold</span>
+            <span className="text-xs text-emerald-700 font-medium mt-1 block">Above safety buffer</span>
           </div>
-          <div className="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
-            <PackageCheck size={18} />
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center">
+            <PackageCheck size={20} />
           </div>
         </div>
 
         <div
           onClick={() => setFilter('LOW_STOCK')}
-          className={`bg-white p-5 rounded-xl border shadow-xs flex items-center justify-between cursor-pointer transition ${
+          className={`bg-white p-6 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition ${
             filter === 'LOW_STOCK'
-              ? 'border-amber-500 ring-2 ring-amber-100'
-              : 'border-slate-200/80 hover:border-slate-300'
+              ? 'border-amber-600 ring-2 ring-amber-500/10'
+              : 'border-stone-200/80 hover:border-stone-300'
           }`}
         >
           <div>
-            <div className="text-xs font-medium text-slate-500">Low Stock</div>
-            <div className="text-2xl font-bold text-amber-600 mt-1 font-mono tabular-nums">
+            <div className="text-xs font-bold text-stone-500 uppercase tracking-wider text-[11px]">Low Stock</div>
+            <div className="text-3xl font-bold text-amber-700 mt-2 font-mono tabular-nums tracking-tight">
               {counts.low}
             </div>
-            <span className="text-[11px] text-amber-700 font-medium mt-0.5 block">Requires reorder</span>
+            <span className="text-xs text-amber-700 font-medium mt-1 block">Requires supplier reorder</span>
           </div>
-          <div className="w-9 h-9 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
-            <TriangleAlert size={18} />
+          <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
+            <TriangleAlert size={20} />
           </div>
         </div>
 
         <div
           onClick={() => setFilter('OUT_OF_STOCK')}
-          className={`bg-white p-5 rounded-xl border shadow-xs flex items-center justify-between cursor-pointer transition ${
+          className={`bg-white p-6 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition ${
             filter === 'OUT_OF_STOCK'
-              ? 'border-rose-500 ring-2 ring-rose-100'
-              : 'border-slate-200/80 hover:border-slate-300'
+              ? 'border-rose-600 ring-2 ring-rose-500/10'
+              : 'border-stone-200/80 hover:border-stone-300'
           }`}
         >
           <div>
-            <div className="text-xs font-medium text-slate-500">Out of Stock</div>
-            <div className="text-2xl font-bold text-rose-600 mt-1 font-mono tabular-nums">
+            <div className="text-xs font-bold text-stone-500 uppercase tracking-wider text-[11px]">Out of Stock</div>
+            <div className="text-3xl font-bold text-rose-700 mt-2 font-mono tabular-nums tracking-tight">
               {counts.out}
             </div>
-            <span className="text-[11px] text-rose-700 font-medium mt-0.5 block">Immediate PO</span>
+            <span className="text-xs text-rose-500/80 font-medium mt-1 block">Immediate PO critical</span>
           </div>
-          <div className="w-9 h-9 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
-            <CircleAlert size={18} />
+          <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-700 flex items-center justify-center">
+            <CircleAlert size={20} />
           </div>
         </div>
       </div>
 
       {/* FILTER & SEARCH */}
-      <div className="bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-1 overflow-x-auto">
+      <div className="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-2 overflow-x-auto">
           {['ALL', 'OPTIMAL', 'LOW_STOCK', 'OUT_OF_STOCK'].map((val) => (
             <button
               key={val}
               onClick={() => setFilter(val)}
-              className={`px-3 py-1 rounded-md text-xs font-medium transition cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${
                 filter === val
-                  ? 'bg-sky-600 text-white'
-                  : 'text-slate-600 hover:bg-slate-100'
+                  ? 'bg-stone-900 text-white shadow-xs'
+                  : 'text-stone-600 hover:bg-stone-100'
               }`}
             >
               {val.replace('_', ' ')}
@@ -252,40 +252,40 @@ const StockTracking = () => {
           ))}
         </div>
 
-        <div className="relative w-full sm:w-64">
-          <Search className="absolute left-3 top-2.5 text-slate-400" size={14} />
+        <div className="relative w-full sm:w-72">
+          <Search className="absolute left-3.5 top-3 text-stone-400" size={15} />
           <input
             type="text"
             placeholder="Search medicine, batch, supplier..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-200 rounded-lg bg-slate-50/70 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="w-full pl-9 pr-3.5 py-2 text-xs border border-stone-200 rounded-xl bg-stone-50/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition"
           />
         </div>
       </div>
 
       {/* STOCK TRACKING TABLE */}
-      <div className="bg-white rounded-xl border border-slate-200/80 shadow-xs overflow-hidden">
+      <div className="bg-white rounded-2xl border border-stone-200/80 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-slate-200 text-slate-500 font-semibold bg-slate-50/70">
-                <th className="py-3 px-3.5">Medicine</th>
-                <th className="py-3 px-3.5">Category / Batch</th>
-                <th className="py-3 px-3.5">Supplier</th>
-                <th className="py-3 px-3.5 text-center">Adjust Stock</th>
-                <th className="py-3 px-3.5 text-right">Reorder Level</th>
-                <th className="py-3 px-3.5">Status</th>
-                <th className="py-3 px-3.5">Expiry Date</th>
+              <tr className="border-b border-stone-200/80 text-stone-500 font-semibold bg-stone-50/70 uppercase tracking-wider text-[11px]">
+                <th className="py-4 px-6">Medicine Name</th>
+                <th className="py-4 px-6">Category / Batch</th>
+                <th className="py-4 px-6">Supplier</th>
+                <th className="py-4 px-6 text-center">Adjust Units</th>
+                <th className="py-4 px-6 text-right">Reorder Threshold</th>
+                <th className="py-4 px-6">Stock Status</th>
+                <th className="py-4 px-6">Expiry Date</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-stone-100">
               {visible.length === 0 ? (
                 <tr>
-                  <td colSpan="7" className="py-12 text-center text-slate-400">
-                    <Boxes size={24} className="mx-auto text-slate-300 mb-2" />
-                    <p className="font-semibold text-slate-700">No stock records found</p>
-                    <p className="text-xs text-slate-400 mt-0.5">Try selecting a different filter.</p>
+                  <td colSpan="7" className="py-16 text-center text-stone-400">
+                    <Boxes size={28} className="mx-auto text-stone-300 mb-3" />
+                    <p className="font-semibold text-slate-700 text-sm">No stock records found</p>
+                    <p className="text-xs text-stone-400 mt-1">Try switching filters or adjusting your query</p>
                   </td>
                 </tr>
               ) : (
@@ -294,71 +294,71 @@ const StockTracking = () => {
                   const isLow = item.status === 'LOW_STOCK';
 
                   let statusIndicator = (
-                    <span className="inline-flex items-center gap-1.5 text-emerald-700 font-medium">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
                       Optimal
                     </span>
                   );
                   if (isOut) {
                     statusIndicator = (
-                      <span className="inline-flex items-center gap-1.5 text-rose-700 font-medium">
-                        <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
+                        <span className="w-1.5 h-1.5 rounded-full bg-rose-600" />
                         Out of Stock
                       </span>
                     );
                   } else if (isLow) {
                     statusIndicator = (
-                      <span className="inline-flex items-center gap-1.5 text-amber-700 font-medium">
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-600" />
                         Low Stock
                       </span>
                     );
                   }
 
                   return (
-                    <tr key={item.id} className="hover:bg-slate-50/50 transition">
-                      <td className="py-3 px-3.5">
-                        <span className="font-semibold text-slate-900 block">{item.medicineName}</span>
-                        <span className="text-[10px] text-slate-400 font-mono">{item.medicineCode}</span>
+                    <tr key={item.id} className="hover:bg-stone-50/60 transition">
+                      <td className="py-4 px-6">
+                        <span className="font-bold text-slate-900 block text-sm">{item.medicineName}</span>
+                        <span className="text-[11px] text-stone-400 font-mono mt-0.5 block">{item.medicineCode}</span>
                       </td>
-                      <td className="py-3 px-3.5">
-                        <span className="text-slate-700 block">{item.category || '—'}</span>
-                        <span className="text-[10px] text-slate-400 font-mono">{item.batchNumber || 'No batch'}</span>
+                      <td className="py-4 px-6">
+                        <span className="text-slate-800 font-medium block">{item.category || '—'}</span>
+                        <span className="text-[11px] text-stone-400 font-mono mt-0.5 block">{item.batchNumber || 'No batch'}</span>
                       </td>
-                      <td className="py-3 px-3.5 text-slate-600">{item.supplierName || '—'}</td>
-                      <td className="py-3 px-3.5">
+                      <td className="py-4 px-6 text-stone-600 font-normal">{item.supplierName || '—'}</td>
+                      <td className="py-4 px-6">
                         {canAdjust ? (
-                          <div className="flex items-center justify-center gap-1.5">
+                          <div className="flex items-center justify-center gap-2">
                             <button
                               disabled={busyId === item.id || item.quantity <= 0}
                               onClick={() => updateQuantity(item, item.quantity - 1)}
-                              className="w-6 h-6 rounded border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 flex items-center justify-center transition disabled:opacity-30 cursor-pointer"
+                              className="w-7 h-7 rounded-lg border border-stone-200 bg-white hover:bg-stone-100 text-slate-700 flex items-center justify-center transition disabled:opacity-30 cursor-pointer shadow-xs"
                             >
-                              <Minus size={12} />
+                              <Minus size={13} />
                             </button>
-                            <span className="font-mono font-bold text-slate-900 w-10 text-center text-xs">
+                            <span className="font-mono font-bold text-slate-900 w-12 text-center text-sm">
                               {item.quantity}
                             </span>
                             <button
                               disabled={busyId === item.id}
                               onClick={() => updateQuantity(item, item.quantity + 1)}
-                              className="w-6 h-6 rounded border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 flex items-center justify-center transition disabled:opacity-30 cursor-pointer"
+                              className="w-7 h-7 rounded-lg border border-stone-200 bg-white hover:bg-stone-100 text-slate-700 flex items-center justify-center transition disabled:opacity-30 cursor-pointer shadow-xs"
                             >
-                              <Plus size={12} />
+                              <Plus size={13} />
                             </button>
-                            <span className="text-[10px] text-slate-400 ml-1">{item.unit}</span>
+                            <span className="text-xs text-stone-400 font-mono">{item.unit}</span>
                           </div>
                         ) : (
-                          <div className="text-center font-mono font-bold text-slate-900">
-                            {item.quantity} <span className="text-[10px] text-slate-400 font-normal">{item.unit}</span>
+                          <div className="text-center font-mono font-bold text-slate-900 text-sm">
+                            {item.quantity} <span className="text-xs text-stone-400 font-normal">{item.unit}</span>
                           </div>
                         )}
                       </td>
-                      <td className="py-3 px-3.5 font-mono text-right text-slate-600">
+                      <td className="py-4 px-6 font-mono text-right text-slate-700 font-medium">
                         {item.reorderLevel} {item.unit}
                       </td>
-                      <td className="py-3 px-3.5">{statusIndicator}</td>
-                      <td className="py-3 px-3.5 font-mono text-slate-600">{item.expiryDate || '—'}</td>
+                      <td className="py-4 px-6">{statusIndicator}</td>
+                      <td className="py-4 px-6 font-mono text-stone-600 font-medium">{item.expiryDate || '—'}</td>
                     </tr>
                   );
                 })

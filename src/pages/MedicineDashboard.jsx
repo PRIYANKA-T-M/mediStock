@@ -301,28 +301,28 @@ const MedicineDashboard = () => {
           </div>
 
           {/* 3 Detail Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* 1. BASIC INFORMATION */}
-            <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-xs space-y-4">
-              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+            <div className="bg-white p-7 rounded-2xl border border-stone-200/80 shadow-xs space-y-5">
+              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
                 Basic Information
               </h3>
-              <div className="space-y-3 text-xs">
+              <div className="space-y-4 text-xs">
                 <div>
-                  <span className="text-slate-400 block text-[11px]">Category</span>
-                  <span className="font-semibold text-slate-800">{selectedMedicine.category || 'Analgesics'}</span>
+                  <span className="text-slate-400 block text-[11px] font-semibold uppercase tracking-wider mb-0.5">Category</span>
+                  <span className="font-semibold text-slate-800 text-sm tracking-wide">{selectedMedicine.category || 'Analgesics'}</span>
                 </div>
                 <div>
-                  <span className="text-slate-400 block text-[11px]">Batch Number</span>
-                  <span className="font-semibold text-slate-800 font-mono">{selectedMedicine.batchNumber || 'P2026-001'}</span>
+                  <span className="text-slate-400 block text-[11px] font-semibold uppercase tracking-wider mb-0.5">Batch Number</span>
+                  <span className="font-semibold text-slate-800 font-mono text-sm tracking-wider">{selectedMedicine.batchNumber || 'P2026-001'}</span>
                 </div>
                 <div>
-                  <span className="text-slate-400 block text-[11px]">Supplier</span>
-                  <span className="font-semibold text-slate-800">{selectedMedicine.supplierName || 'ABC Pharma Ltd.'}</span>
+                  <span className="text-slate-400 block text-[11px] font-semibold uppercase tracking-wider mb-0.5">Supplier</span>
+                  <span className="font-semibold text-slate-800 text-sm tracking-wide">{selectedMedicine.supplierName || 'ABC Pharma Ltd.'}</span>
                 </div>
                 <div>
-                  <span className="text-slate-400 block text-[11px]">Unit Price</span>
-                  <span className="font-semibold text-slate-800">
+                  <span className="text-slate-400 block text-[11px] font-semibold uppercase tracking-wider mb-0.5">Unit Price</span>
+                  <span className="font-bold text-slate-900 text-base font-mono">
                     ₹{Number(selectedMedicine.unitPrice || 45).toFixed(2)}
                   </span>
                 </div>
@@ -330,32 +330,32 @@ const MedicineDashboard = () => {
             </div>
 
             {/* 2. STOCK INFORMATION */}
-            <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-xs space-y-4">
-              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+            <div className="bg-white p-7 rounded-2xl border border-stone-200/80 shadow-xs space-y-5">
+              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
                 Stock Information
               </h3>
-              <div className="space-y-3 text-xs">
+              <div className="space-y-4 text-xs">
                 <div>
-                  <span className="text-slate-400 block text-[11px]">Current Stock</span>
-                  <span className="font-bold text-slate-900 text-sm">
+                  <span className="text-slate-400 block text-[11px] font-semibold uppercase tracking-wider mb-0.5">Current Stock</span>
+                  <span className="font-bold text-slate-900 text-base font-mono">
                     {selectedMedicine.quantity || 0} Units
                   </span>
                 </div>
                 <div>
-                  <span className="text-slate-400 block text-[11px]">Reorder Level</span>
-                  <span className="font-semibold text-slate-800">
+                  <span className="text-slate-400 block text-[11px] font-semibold uppercase tracking-wider mb-0.5">Reorder Level</span>
+                  <span className="font-semibold text-slate-800 text-sm font-mono">
                     {selectedMedicine.reorderLevel || 500} Units
                   </span>
                 </div>
                 <div>
-                  <span className="text-slate-400 block text-[11px]">Stock Status</span>
-                  <span className={`inline-block font-semibold mt-0.5 px-2 py-0.5 rounded text-[11px] ${getStockStatus(selectedMedicine).badgeClass}`}>
+                  <span className="text-slate-400 block text-[11px] font-semibold uppercase tracking-wider mb-1">Stock Status</span>
+                  <span className={`inline-block font-semibold px-2.5 py-1 rounded-md text-[11px] tracking-wide ${getStockStatus(selectedMedicine).badgeClass}`}>
                     {getStockStatus(selectedMedicine).label}
                   </span>
                 </div>
                 <div>
-                  <span className="text-slate-400 block text-[11px]">Storage Location</span>
-                  <span className="font-semibold text-slate-800">
+                  <span className="text-slate-400 block text-[11px] font-semibold uppercase tracking-wider mb-0.5">Storage Location</span>
+                  <span className="font-semibold text-slate-800 text-sm tracking-wide">
                     {selectedMedicine.location || 'Cabinet B-Row 4'}
                   </span>
                 </div>
@@ -363,27 +363,27 @@ const MedicineDashboard = () => {
             </div>
 
             {/* 3. EXPIRY INFORMATION */}
-            <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-xs space-y-4">
-              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+            <div className="bg-white p-7 rounded-2xl border border-stone-200/80 shadow-xs space-y-5">
+              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
                 Expiry Information
               </h3>
-              <div className="space-y-3 text-xs">
+              <div className="space-y-4 text-xs">
                 <div>
-                  <span className="text-slate-400 block text-[11px]">Manufacturing Date</span>
-                  <span className="font-semibold text-slate-800">
+                  <span className="text-slate-400 block text-[11px] font-semibold uppercase tracking-wider mb-0.5">Manufacturing Date</span>
+                  <span className="font-semibold text-slate-800 text-sm font-mono">
                     {formatExpiry(selectedMedicine.mfgDate || '2026-01-10')}
                   </span>
                 </div>
                 <div>
-                  <span className="text-slate-400 block text-[11px]">Expiry Date</span>
-                  <span className="font-semibold text-slate-800">
+                  <span className="text-slate-400 block text-[11px] font-semibold uppercase tracking-wider mb-0.5">Expiry Date</span>
+                  <span className="font-bold text-slate-900 text-sm font-mono">
                     {formatExpiry(selectedMedicine.expiryDate)}
                   </span>
                 </div>
                 <div>
-                  <span className="text-slate-400 block text-[11px]">Days Remaining</span>
-                  <span className="font-bold text-slate-900 text-sm">380 Days</span>
-                  <div className="w-full bg-[#edebe7] h-2 rounded-full mt-2 overflow-hidden">
+                  <span className="text-slate-400 block text-[11px] font-semibold uppercase tracking-wider mb-1">Days Remaining</span>
+                  <span className="font-bold text-slate-900 text-base font-mono">380 Days</span>
+                  <div className="w-full bg-[#edebe7] h-2.5 rounded-full mt-2 overflow-hidden">
                     <div className="h-full bg-[#4d6b5e] rounded-full" style={{ width: '70%' }} />
                   </div>
                 </div>
@@ -392,48 +392,48 @@ const MedicineDashboard = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center gap-3 pt-2">
+          <div className="flex items-center gap-3 pt-3">
             <button
               onClick={() => {
                 setStockUpdateItem(selectedMedicine);
                 setNewStockValue(selectedMedicine.quantity || 0);
               }}
-              className="px-4 py-2 rounded-lg bg-[#4d6b5e] hover:bg-[#415d51] text-white text-xs font-semibold shadow-xs transition cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-[#4d6b5e] hover:bg-[#415d51] text-white text-xs font-semibold shadow-xs transition cursor-pointer tracking-wide"
             >
               Update Stock
             </button>
             <button
               onClick={() => navigate('/edit-medicine', { state: { medicine: selectedMedicine } })}
-              className="px-4 py-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-xs transition cursor-pointer"
+              className="px-5 py-2.5 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 text-slate-700 text-xs font-semibold shadow-xs transition cursor-pointer tracking-wide"
             >
               Edit Medicine Details
             </button>
             <button
               onClick={() => setSelectedMedicine(null)}
-              className="px-4 py-2 text-slate-500 hover:text-slate-800 text-xs font-medium cursor-pointer ml-auto"
+              className="px-4 py-2.5 text-slate-500 hover:text-slate-800 text-xs font-medium cursor-pointer ml-auto tracking-wide"
             >
-              Back to Catalog
+              &larr; Back to Catalog
             </button>
           </div>
         </div>
       ) : (
         /* MAIN MEDICINES LIST VIEW (IMAGE 6) */
-        <div className="space-y-5">
+        <div className="space-y-6">
           {/* HEADER BAR */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-stone-200/60">
             <div>
-              <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Medicines</h1>
-              <p className="text-xs text-slate-500 mt-1">
-                Manage and monitor pharmacy formulations stock
+              <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-tight">Medicines</h1>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1.5 tracking-wide leading-relaxed">
+                Manage and monitor pharmacy formulations stock with clinical precision
               </p>
             </div>
 
             {canManage && (
               <button
                 onClick={() => navigate('/add-medicine')}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#4d6b5e] hover:bg-[#415d51] text-white text-xs font-semibold shadow-xs transition cursor-pointer self-start sm:self-auto"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#4d6b5e] hover:bg-[#415d51] text-white text-xs font-semibold shadow-xs transition cursor-pointer self-start sm:self-auto tracking-wide"
               >
-                <Plus size={14} strokeWidth={2.5} />
+                <Plus size={15} strokeWidth={2.5} />
                 <span>Add Medicine</span>
               </button>
             )}
@@ -441,26 +441,26 @@ const MedicineDashboard = () => {
 
           {/* Notification Messages */}
           {successMsg && (
-            <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium">
+            <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium leading-relaxed">
               {successMsg}
             </div>
           )}
 
           {/* FILTER BAR CARD */}
-          <div className="bg-white p-4 rounded-2xl border border-stone-200/70 shadow-xs">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3">
+          <div className="bg-white p-5 rounded-2xl border border-stone-200/80 shadow-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3.5">
               {/* Search */}
               <div className="relative">
-                <Search size={14} className="absolute left-3 top-3 text-slate-400" />
+                <Search size={15} className="absolute left-3.5 top-3 text-slate-400" />
                 <input
                   type="text"
-                  placeholder="Search medicines..."
+                  placeholder="Search formulation, batch..."
                   value={searchQuery}
                   onChange={(e) => {
                     setSearchQuery(e.target.value);
                     setCurrentPage(1);
                   }}
-                  className="w-full h-9 pl-9 pr-3 rounded-lg border border-stone-200 bg-[#fafaf8] text-xs text-slate-800 placeholder:text-slate-400 outline-none focus:border-slate-400 focus:bg-white"
+                  className="w-full h-10 pl-10 pr-3.5 rounded-xl border border-stone-200 bg-[#fafaf8] text-xs text-slate-800 placeholder:text-slate-400 outline-none focus:border-stone-400 focus:bg-white tracking-wide transition"
                 />
               </div>
 
@@ -472,7 +472,7 @@ const MedicineDashboard = () => {
                     setSelectedCategory(e.target.value);
                     setCurrentPage(1);
                   }}
-                  className="w-full h-9 px-3 rounded-lg border border-stone-200 bg-[#fafaf8] text-xs text-slate-700 outline-none focus:border-slate-400"
+                  className="w-full h-10 px-3.5 rounded-xl border border-stone-200 bg-[#fafaf8] text-xs text-slate-700 outline-none focus:border-stone-400 tracking-wide font-medium"
                 >
                   <option value="ALL">All Categories</option>
                   {categories.filter((c) => c !== 'ALL').map((c) => (
@@ -489,7 +489,7 @@ const MedicineDashboard = () => {
                     setSelectedSupplier(e.target.value);
                     setCurrentPage(1);
                   }}
-                  className="w-full h-9 px-3 rounded-lg border border-stone-200 bg-[#fafaf8] text-xs text-slate-700 outline-none focus:border-slate-400"
+                  className="w-full h-10 px-3.5 rounded-xl border border-stone-200 bg-[#fafaf8] text-xs text-slate-700 outline-none focus:border-stone-400 tracking-wide font-medium"
                 >
                   <option value="ALL">All Suppliers</option>
                   {supplierNames.filter((s) => s !== 'ALL').map((s) => (
@@ -506,7 +506,7 @@ const MedicineDashboard = () => {
                     setSelectedStockStatus(e.target.value);
                     setCurrentPage(1);
                   }}
-                  className="w-full h-9 px-3 rounded-lg border border-stone-200 bg-[#fafaf8] text-xs text-slate-700 outline-none focus:border-slate-400"
+                  className="w-full h-10 px-3.5 rounded-xl border border-stone-200 bg-[#fafaf8] text-xs text-slate-700 outline-none focus:border-stone-400 tracking-wide font-medium"
                 >
                   <option value="ALL">All Stock Levels</option>
                   <option value="NORMAL">Normal</option>
@@ -520,7 +520,7 @@ const MedicineDashboard = () => {
                 <select
                   value={selectedExpiry}
                   onChange={(e) => setSelectedExpiry(e.target.value)}
-                  className="w-full h-9 px-3 rounded-lg border border-stone-200 bg-[#fafaf8] text-xs text-slate-700 outline-none focus:border-slate-400"
+                  className="w-full h-10 px-3.5 rounded-xl border border-stone-200 bg-[#fafaf8] text-xs text-slate-700 outline-none focus:border-stone-400 tracking-wide font-medium"
                 >
                   <option value="ALL">All Expiries</option>
                   <option value="NEAR">Expiring Soon (&lt; 30d)</option>
@@ -531,54 +531,54 @@ const MedicineDashboard = () => {
           </div>
 
           {/* TABLE CONTAINER */}
-          <div className="bg-white rounded-2xl border border-stone-200/70 shadow-xs overflow-hidden">
+          <div className="bg-white rounded-2xl border border-stone-200/80 shadow-xs overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-stone-100 text-slate-400 font-semibold bg-[#fafaf8]">
-                    <th className="py-3 px-4">
-                      <div className="flex items-center gap-1">
+                  <tr className="border-b border-stone-100 text-slate-400 font-bold uppercase tracking-wider bg-[#fafaf8]">
+                    <th className="py-3.5 px-5">
+                      <div className="flex items-center gap-1.5">
                         <span>MEDICINE NAME</span>
                         <ArrowUpDown size={11} className="text-slate-300" />
                       </div>
                     </th>
-                    <th className="py-3 px-4">
-                      <div className="flex items-center gap-1">
+                    <th className="py-3.5 px-5">
+                      <div className="flex items-center gap-1.5">
                         <span>BATCH</span>
                         <ArrowUpDown size={11} className="text-slate-300" />
                       </div>
                     </th>
-                    <th className="py-3 px-4">
-                      <div className="flex items-center gap-1">
+                    <th className="py-3.5 px-5">
+                      <div className="flex items-center gap-1.5">
                         <span>CATEGORY</span>
                         <ArrowUpDown size={11} className="text-slate-300" />
                       </div>
                     </th>
-                    <th className="py-3 px-4">
-                      <div className="flex items-center gap-1">
+                    <th className="py-3.5 px-5">
+                      <div className="flex items-center gap-1.5">
                         <span>STOCK LEVEL</span>
                         <ArrowUpDown size={11} className="text-slate-300" />
                       </div>
                     </th>
-                    <th className="py-3 px-4">
-                      <div className="flex items-center gap-1">
+                    <th className="py-3.5 px-5">
+                      <div className="flex items-center gap-1.5">
                         <span>EXPIRY DATE</span>
                         <ArrowUpDown size={11} className="text-slate-300" />
                       </div>
                     </th>
-                    <th className="py-3 px-4">
-                      <div className="flex items-center gap-1">
+                    <th className="py-3.5 px-5">
+                      <div className="flex items-center gap-1.5">
                         <span>STATUS</span>
                         <ArrowUpDown size={11} className="text-slate-300" />
                       </div>
                     </th>
-                    <th className="py-3 px-4 text-right">ACTIONS</th>
+                    <th className="py-3.5 px-5 text-right">ACTIONS</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-stone-100">
+                <tbody className="divide-y divide-stone-100/80">
                   {paginatedMedicines.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="py-8 text-center text-slate-400">
+                      <td colSpan={7} className="py-12 text-center text-slate-400 font-medium tracking-wide">
                         No medicines match your filter criteria.
                       </td>
                     </tr>
@@ -587,45 +587,45 @@ const MedicineDashboard = () => {
                       const status = getStockStatus(med);
                       return (
                         <tr key={med.id} className="hover:bg-[#fafaf8] transition">
-                          <td className="py-3.5 px-4 font-bold text-slate-900">
+                          <td className="py-4 px-5 font-bold text-slate-900 tracking-wide text-sm">
                             {med.name}
                           </td>
-                          <td className="py-3.5 px-4 font-mono text-slate-600">
+                          <td className="py-4 px-5 font-mono text-slate-600 text-xs tracking-wider">
                             {med.batchNumber || '—'}
                           </td>
-                          <td className="py-3.5 px-4 text-slate-600">
+                          <td className="py-4 px-5 text-slate-600 tracking-wide">
                             {med.category || 'General'}
                           </td>
-                          <td className="py-3.5 px-4 font-bold text-slate-900">
+                          <td className="py-4 px-5 font-bold text-slate-900 font-mono text-sm">
                             {Number(med.quantity || 0).toLocaleString()}
                           </td>
-                          <td className="py-3.5 px-4 text-slate-600">
+                          <td className="py-4 px-5 text-slate-600 font-mono text-xs">
                             {formatExpiry(med.expiryDate)}
                           </td>
-                          <td className="py-3.5 px-4">
-                            <span className={`inline-block px-2.5 py-0.5 rounded-md font-medium text-[11px] ${status.badgeClass}`}>
+                          <td className="py-4 px-5">
+                            <span className={`inline-block px-3 py-1 rounded-md font-semibold text-[11px] tracking-wide ${status.badgeClass}`}>
                               {status.label}
                             </span>
                           </td>
-                          <td className="py-3.5 px-4 text-right">
-                            <div className="flex items-center justify-end gap-2">
+                          <td className="py-4 px-5 text-right">
+                            <div className="flex items-center justify-end gap-2.5">
                               {/* View detail button */}
                               <button
                                 onClick={() => setSelectedMedicine(med)}
-                                className="p-1 rounded text-slate-400 hover:text-slate-800 transition cursor-pointer"
+                                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-stone-100 transition cursor-pointer"
                                 title="View Details"
                               >
-                                <Eye size={15} />
+                                <Eye size={16} />
                               </button>
 
                               {/* Edit button */}
                               {canManage && (
                                 <button
                                   onClick={() => navigate('/edit-medicine', { state: { medicine: med } })}
-                                  className="p-1 rounded text-slate-400 hover:text-slate-800 transition cursor-pointer"
+                                  className="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-stone-100 transition cursor-pointer"
                                   title="Edit Medicine"
                                 >
-                                  <Edit2 size={15} />
+                                  <Edit2 size={16} />
                                 </button>
                               )}
 
@@ -633,10 +633,10 @@ const MedicineDashboard = () => {
                               {canDelete && (
                                 <button
                                   onClick={() => setDeleteModalItem(med)}
-                                  className="p-1 rounded text-slate-400 hover:text-rose-600 transition cursor-pointer"
+                                  className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition cursor-pointer"
                                   title="Delete Formulation"
                                 >
-                                  <Trash2 size={15} />
+                                  <Trash2 size={16} />
                                 </button>
                               )}
                             </div>

@@ -99,43 +99,43 @@ const Login = () => {
       <div className="w-full max-w-md bg-white rounded-xl border border-slate-200 p-8 shadow-sm">
         
         {/* Branding */}
-        <div className="flex flex-col items-center justify-center mb-8">
-          <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-50 text-blue-600 mb-4">
-            <Activity size={28} strokeWidth={2.5} />
+        <div className="flex flex-col items-center justify-center mb-10">
+          <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-stone-100 text-stone-700 mb-4 border border-stone-200">
+            <Activity size={28} strokeWidth={2} />
           </div>
-          <h1 className="text-2xl font-bold text-slate-800">
-            Medi<span className="text-blue-600">Stock</span>
+          <h1 className="text-3xl font-bold text-slate-900 tracking-tight leading-tight">
+            Medi<span className="text-[#4e6b5d]">Stock</span>
           </h1>
-          <p className="text-sm text-slate-500 mt-2 text-center">
-            Sign in to your account to continue
+          <p className="text-xs sm:text-sm text-stone-500 mt-2 text-center leading-relaxed">
+            Clinical apothecary & pharmacy inventory control system
           </p>
         </div>
 
         {/* Success Banner */}
         {apiSuccess && (
-          <div className="mb-6 flex items-start gap-3 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
-            <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-green-600" />
+          <div className="mb-6 flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-xs text-emerald-800 leading-relaxed">
+            <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-emerald-600" />
             <div>{apiSuccess}</div>
           </div>
         )}
 
         {/* Error Banner */}
         {apiError && (
-          <div className="mb-6 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
-            <AlertCircle size={18} className="mt-0.5 shrink-0 text-red-600" />
+          <div className="mb-6 flex items-start gap-3 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-xs text-rose-800 leading-relaxed">
+            <AlertCircle size={18} className="mt-0.5 shrink-0 text-rose-600" />
             <div>{apiError}</div>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+        <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-6">
           
           {/* Email Field */}
           <div>
-            <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-1.5">
-              Email Address
+            <label htmlFor="email" className="block text-xs font-bold text-stone-600 uppercase tracking-wider mb-2">
+              Work Email Address
             </label>
             <div className="relative">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 pointer-events-none">
+              <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-stone-400 pointer-events-none">
                 <Mail size={18} />
               </span>
               <input
@@ -147,41 +147,41 @@ const Login = () => {
                 onChange={handleChange}
                 disabled={isLoading}
                 autoComplete="email"
-                className={`w-full h-11 pl-10 pr-4 rounded-lg border bg-white text-sm text-slate-800 outline-none transition-colors 
-                  ${errors.email ? 'border-red-300 focus:border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600'}`}
+                className={`w-full h-12 pl-11 pr-4 rounded-xl border bg-stone-50/50 text-sm text-slate-900 outline-none transition focus:bg-white 
+                  ${errors.email ? 'border-rose-300 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20' : 'border-stone-200 hover:border-stone-300 focus:border-stone-400 focus:ring-2 focus:ring-[#4e6b5d]/20'}`}
               />
             </div>
             {errors.email && (
-              <p className="mt-1.5 text-xs font-medium text-red-600 flex items-center gap-1">
-                <AlertCircle size={12} /> {errors.email}
+              <p className="mt-2 text-xs font-medium text-rose-600 flex items-center gap-1">
+                <AlertCircle size={13} /> {errors.email}
               </p>
             )}
           </div>
 
           {/* Password Field */}
           <div>
-            <label htmlFor="password" className="block text-sm font-semibold text-slate-700 mb-1.5">
+            <label htmlFor="password" className="block text-xs font-bold text-stone-600 uppercase tracking-wider mb-2">
               Password
             </label>
             <div className="relative">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 pointer-events-none">
+              <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-stone-400 pointer-events-none">
                 <Lock size={18} />
               </span>
               <input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
                 name="password"
-                placeholder="Enter your password"
+                placeholder="Enter your security password"
                 value={formData.password}
                 onChange={handleChange}
                 disabled={isLoading}
                 autoComplete="current-password"
-                className={`w-full h-11 pl-10 pr-10 rounded-lg border bg-white text-sm text-slate-800 outline-none transition-colors 
-                  ${errors.password ? 'border-red-300 focus:border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600'}`}
+                className={`w-full h-12 pl-11 pr-11 rounded-xl border bg-stone-50/50 text-sm text-slate-900 outline-none transition focus:bg-white 
+                  ${errors.password ? 'border-rose-300 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20' : 'border-stone-200 hover:border-stone-300 focus:border-stone-400 focus:ring-2 focus:ring-[#4e6b5d]/20'}`}
               />
               <button
                 type="button"
-                className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600 transition-colors"
+                className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-stone-400 hover:text-stone-600 transition cursor-pointer"
                 onClick={() => setShowPassword((prev) => !prev)}
                 tabIndex={-1}
               >
@@ -189,8 +189,8 @@ const Login = () => {
               </button>
             </div>
             {errors.password && (
-              <p className="mt-1.5 text-xs font-medium text-red-600 flex items-center gap-1">
-                <AlertCircle size={12} /> {errors.password}
+              <p className="mt-2 text-xs font-medium text-rose-600 flex items-center gap-1">
+                <AlertCircle size={13} /> {errors.password}
               </p>
             )}
           </div>
@@ -199,21 +199,21 @@ const Login = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full h-11 mt-2 flex items-center justify-center gap-2 rounded-lg bg-blue-600 text-white text-sm font-semibold transition-colors hover:bg-blue-700 disabled:opacity-70 disabled:cursor-not-allowed"
+            className="w-full h-12 mt-2 flex items-center justify-center gap-2 rounded-xl bg-[#4e6b5d] text-white text-sm font-semibold tracking-wide transition hover:bg-[#415b4f] disabled:opacity-70 disabled:cursor-not-allowed shadow-xs cursor-pointer"
           >
             {isLoading ? (
-              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
-              'Sign In'
+              'Sign In to Dashboard'
             )}
           </button>
         </form>
 
         {/* Footer */}
-        <div className="mt-8 text-center text-sm text-slate-500">
+        <div className="mt-8 text-center text-xs sm:text-sm text-stone-500">
           Don't have an account?{' '}
-          <Link to="/register" className="font-semibold text-blue-600 hover:text-blue-700 transition-colors">
-            Create an account
+          <Link to="/register" className="font-bold text-slate-900 underline hover:text-[#4e6b5d] transition">
+            Create an associate account
           </Link>
         </div>
       </div>

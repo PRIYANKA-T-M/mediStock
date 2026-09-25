@@ -166,127 +166,127 @@ const Alerts = () => {
   return (
     <div className="space-y-8">
       {/* ACTION BAR */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-stone-200/60">
         <div>
-          <h2 className="text-xl font-bold text-slate-900 tracking-tight">System Alerts</h2>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Operational surveillance for inventory depletion, batch expiries, and vendor delays.
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-tight">System Alerts</h2>
+          <p className="text-xs sm:text-sm text-stone-500 mt-1 leading-relaxed">
+            Operational surveillance for inventory depletion, batch expiries, and vendor supply delays.
           </p>
         </div>
 
         <button
           onClick={() => loadAlerts(false)}
           disabled={refreshing}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 text-xs font-medium transition cursor-pointer shadow-xs"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 text-xs font-semibold transition cursor-pointer shadow-xs"
         >
-          <RefreshCw size={13} className={refreshing ? 'animate-spin' : ''} />
-          <span>Refresh</span>
+          <RefreshCw size={14} className={refreshing ? 'animate-spin' : ''} />
+          <span>Refresh Incidents</span>
         </button>
       </div>
 
       {error && (
-        <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 text-xs flex items-center justify-between">
+        <div className="p-4 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 text-xs flex items-center justify-between">
           <span>{error}</span>
-          <button onClick={() => setError('')} className="text-rose-500 hover:text-rose-700 font-bold cursor-pointer">
+          <button onClick={() => setError('')} className="text-rose-600 hover:text-rose-800 font-bold cursor-pointer">
             ✕
           </button>
         </div>
       )}
 
       {/* KPI METRICS */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
         <div
           onClick={() => setStatusFilter('ALL')}
-          className={`bg-white p-5 rounded-xl border shadow-xs cursor-pointer transition ${
+          className={`bg-white p-6 rounded-2xl border shadow-xs cursor-pointer transition ${
             statusFilter === 'ALL'
-              ? 'border-sky-500 ring-2 ring-sky-100'
-              : 'border-slate-200/80 hover:border-slate-300'
+              ? 'border-emerald-700 ring-2 ring-emerald-700/10'
+              : 'border-stone-200/80 hover:border-stone-300'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Total Alerts</span>
-            <div className="w-8 h-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center">
+            <span className="text-xs font-bold text-stone-500 uppercase tracking-wider text-[11px]">Total Incidents</span>
+            <div className="w-9 h-9 rounded-xl bg-stone-100 text-stone-700 flex items-center justify-center">
               <Bell size={16} />
             </div>
           </div>
-          <div className="text-2xl font-bold text-slate-900 mt-3 font-mono tabular-nums">
+          <div className="text-3xl font-bold text-slate-900 mt-4 font-mono tabular-nums tracking-tight">
             {stats.total}
           </div>
-          <div className="text-[11px] text-slate-400 mt-1">Recorded audit incidents</div>
+          <div className="text-xs text-stone-400 mt-1.5">Recorded surveillance incidents</div>
         </div>
 
         <div
           onClick={() => setStatusFilter('OPEN')}
-          className={`bg-white p-5 rounded-xl border shadow-xs cursor-pointer transition ${
+          className={`bg-white p-6 rounded-2xl border shadow-xs cursor-pointer transition ${
             statusFilter === 'OPEN'
-              ? 'border-rose-500 ring-2 ring-rose-100'
-              : 'border-slate-200/80 hover:border-slate-300'
+              ? 'border-rose-600 ring-2 ring-rose-500/10'
+              : 'border-stone-200/80 hover:border-stone-300'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Open Incidents</span>
-            <div className="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
+            <span className="text-xs font-bold text-stone-500 uppercase tracking-wider text-[11px]">Open Incidents</span>
+            <div className="w-9 h-9 rounded-xl bg-rose-50 text-rose-700 flex items-center justify-center">
               <CircleAlert size={16} />
             </div>
           </div>
-          <div className="text-2xl font-bold text-rose-600 mt-3 font-mono tabular-nums">
+          <div className="text-3xl font-bold text-rose-700 mt-4 font-mono tabular-nums tracking-tight">
             {stats.open}
           </div>
-          <div className="text-[11px] text-slate-400 mt-1">Require immediate resolution</div>
+          <div className="text-xs text-rose-500/80 mt-1.5 font-medium">Require immediate resolution</div>
         </div>
 
         <div
           onClick={() => setStatusFilter('ACKNOWLEDGED')}
-          className={`bg-white p-5 rounded-xl border shadow-xs cursor-pointer transition ${
+          className={`bg-white p-6 rounded-2xl border shadow-xs cursor-pointer transition ${
             statusFilter === 'ACKNOWLEDGED'
-              ? 'border-amber-500 ring-2 ring-amber-100'
-              : 'border-slate-200/80 hover:border-slate-300'
+              ? 'border-amber-600 ring-2 ring-amber-500/10'
+              : 'border-stone-200/80 hover:border-stone-300'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Acknowledged</span>
-            <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
+            <span className="text-xs font-bold text-stone-500 uppercase tracking-wider text-[11px]">Acknowledged</span>
+            <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
               <Check size={16} />
             </div>
           </div>
-          <div className="text-2xl font-bold text-amber-600 mt-3 font-mono tabular-nums">
+          <div className="text-3xl font-bold text-amber-700 mt-4 font-mono tabular-nums tracking-tight">
             {stats.acknowledged}
           </div>
-          <div className="text-[11px] text-slate-400 mt-1">In review by pharmacy staff</div>
+          <div className="text-xs text-stone-400 mt-1.5">In review by pharmacy staff</div>
         </div>
 
         <div
           onClick={() => setStatusFilter('RESOLVED')}
-          className={`bg-white p-5 rounded-xl border shadow-xs cursor-pointer transition ${
+          className={`bg-white p-6 rounded-2xl border shadow-xs cursor-pointer transition ${
             statusFilter === 'RESOLVED'
-              ? 'border-emerald-500 ring-2 ring-emerald-100'
-              : 'border-slate-200/80 hover:border-slate-300'
+              ? 'border-emerald-700 ring-2 ring-emerald-700/10'
+              : 'border-stone-200/80 hover:border-stone-300'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Resolved</span>
-            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <span className="text-xs font-bold text-stone-500 uppercase tracking-wider text-[11px]">Resolved</span>
+            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center">
               <CheckCheck size={16} />
             </div>
           </div>
-          <div className="text-2xl font-bold text-emerald-600 mt-3 font-mono tabular-nums">
+          <div className="text-3xl font-bold text-emerald-800 mt-4 font-mono tabular-nums tracking-tight">
             {stats.resolved}
           </div>
-          <div className="text-[11px] text-slate-400 mt-1">Closed without issues</div>
+          <div className="text-xs text-stone-400 mt-1.5">Closed & verified healthy</div>
         </div>
       </div>
 
       {/* FILTER & SEARCH */}
-      <div className="bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-1 overflow-x-auto">
+      <div className="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-2 overflow-x-auto">
           {ALERT_STATUSES.map((status) => (
             <button
               key={status}
               onClick={() => setStatusFilter(status)}
-              className={`px-3 py-1 rounded-md text-xs font-medium transition cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${
                 statusFilter === status
-                  ? 'bg-sky-600 text-white'
-                  : 'text-slate-600 hover:bg-slate-100'
+                  ? 'bg-stone-900 text-white shadow-xs'
+                  : 'text-stone-600 hover:bg-stone-100'
               }`}
             >
               {status === 'ALL' ? 'All Alerts' : status}
@@ -294,25 +294,25 @@ const Alerts = () => {
           ))}
         </div>
 
-        <div className="relative w-full sm:w-64">
-          <Search className="absolute left-3 top-2.5 text-slate-400" size={14} />
+        <div className="relative w-full sm:w-72">
+          <Search className="absolute left-3.5 top-3 text-stone-400" size={15} />
           <input
             type="text"
             placeholder="Search alerts or medicines..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-200 rounded-lg bg-slate-50/70 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="w-full pl-9 pr-3.5 py-2 text-xs border border-stone-200 rounded-xl bg-stone-50/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition"
           />
         </div>
       </div>
 
       {/* ALERTS FEED */}
-      <div className="space-y-3">
+      <div className="space-y-4">
         {filteredAlerts.length === 0 ? (
-          <div className="bg-white rounded-xl border border-slate-200/80 p-12 text-center text-slate-400 shadow-xs">
-            <Bell size={28} className="mx-auto text-slate-300 mb-2" />
-            <p className="font-semibold text-slate-700 text-sm">No alerts match filter</p>
-            <p className="text-xs text-slate-400 mt-0.5">All monitored systems are operating smoothly.</p>
+          <div className="bg-white rounded-2xl border border-stone-200/80 p-16 text-center text-stone-400 shadow-xs">
+            <Bell size={32} className="mx-auto text-stone-300 mb-3" />
+            <p className="font-bold text-slate-800 text-base">No alerts match criteria</p>
+            <p className="text-xs text-stone-500 mt-1">All monitored storage and inventory subsystems are operating normally.</p>
           </div>
         ) : (
           filteredAlerts.map((alert) => {
@@ -324,53 +324,53 @@ const Alerts = () => {
             return (
               <div
                 key={alert.id}
-                className="bg-white rounded-xl border border-slate-200/80 p-4.5 shadow-xs hover:border-slate-300 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                className="bg-white rounded-2xl border border-stone-200/80 p-6 shadow-xs hover:border-stone-300 transition flex flex-col sm:flex-row sm:items-center justify-between gap-5"
               >
-                <div className="flex items-start gap-3.5">
+                <div className="flex items-start gap-4">
                   <div
-                    className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${
+                    className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${
                       isResolved
-                        ? 'bg-emerald-50 text-emerald-600'
+                        ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                         : isCritical
-                        ? 'bg-rose-50 text-rose-600'
-                        : 'bg-amber-50 text-amber-600'
+                        ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                        : 'bg-amber-50 text-amber-700 border border-amber-200'
                     }`}
                   >
-                    <Icon size={18} />
+                    <Icon size={20} />
                   </div>
 
-                  <div>
+                  <div className="space-y-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h4 className="font-semibold text-slate-900 text-xs">{alert.title}</h4>
-                      <span className="text-[11px] text-slate-400">·</span>
-                      <span className="text-[11px] text-slate-500 font-medium">
+                      <h4 className="font-bold text-slate-900 text-sm">{alert.title}</h4>
+                      <span className="text-stone-300">·</span>
+                      <span className="text-xs text-stone-500 font-medium">
                         {getTypeLabel(alert.type)}
                       </span>
                       {alert.medicineName && (
                         <>
-                          <span className="text-[11px] text-slate-400">·</span>
-                          <span className="text-[11px] font-mono font-medium text-slate-700">
+                          <span className="text-stone-300">·</span>
+                          <span className="text-xs font-mono font-semibold text-slate-800 bg-stone-100 px-2 py-0.5 rounded-md">
                             {alert.medicineName}
                           </span>
                         </>
                       )}
                     </div>
-                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">{alert.message}</p>
-                    <div className="text-[11px] text-slate-400 mt-1.5 flex items-center gap-2">
+                    <p className="text-xs sm:text-sm text-stone-600 leading-relaxed max-w-3xl">{alert.message}</p>
+                    <div className="text-[11px] text-stone-400 pt-1 flex items-center gap-3">
                       <span>Logged: {alert.createdAt || 'Recent'}</span>
-                      {isResolved && <span className="text-emerald-600 font-medium">· Resolved</span>}
-                      {isAcknowledged && <span className="text-amber-600 font-medium">· In Review</span>}
+                      {isResolved && <span className="text-emerald-800 font-semibold">· Verified Resolved</span>}
+                      {isAcknowledged && <span className="text-amber-800 font-semibold">· In Review</span>}
                     </div>
                   </div>
                 </div>
 
                 {!isResolved && (
-                  <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+                  <div className="flex items-center gap-2.5 shrink-0 self-end sm:self-center">
                     {!isAcknowledged && (
                       <button
                         onClick={() => handleAcknowledge(alert)}
                         disabled={actionLoading === alert.id}
-                        className="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-medium transition cursor-pointer"
+                        className="px-4 py-2 rounded-xl border border-stone-200 hover:bg-stone-50 text-stone-700 text-xs font-semibold transition cursor-pointer"
                       >
                         Acknowledge
                       </button>
@@ -378,9 +378,9 @@ const Alerts = () => {
                     <button
                       onClick={() => handleResolve(alert)}
                       disabled={actionLoading === alert.id}
-                      className="px-3.5 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold shadow-xs transition cursor-pointer"
+                      className="px-4 py-2 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-semibold shadow-xs transition cursor-pointer"
                     >
-                      Resolve
+                      Resolve Incident
                     </button>
                   </div>
                 )}

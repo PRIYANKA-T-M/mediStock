@@ -83,45 +83,45 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* HEADER BAR */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-stone-200/60">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-tight">
             Good morning, {user?.name?.split(' ')[0] || 'Admin'}
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 mt-1.5 tracking-wide leading-relaxed">
             General Wing Sector B · Monday, October 14 · 08:30 AM
           </p>
         </div>
 
         <button
           onClick={() => alert("Clinical ledger exported to CSV format.")}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-medium transition cursor-pointer shadow-xs self-start sm:self-auto"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 text-slate-700 text-xs font-semibold tracking-wide transition cursor-pointer shadow-xs self-start sm:self-auto"
         >
-          <XCircle size={14} className="text-slate-500" />
+          <XCircle size={15} className="text-slate-400" />
           <span>Export Ledger</span>
         </button>
       </div>
 
       {/* 4 METRIC CARDS WITH SPARKLINES */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {/* TOTAL CATALOGED */}
-        <div className="bg-white p-5 rounded-2xl border border-stone-200/70 shadow-xs flex flex-col justify-between">
+        <div className="bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
               Total Cataloged
             </span>
-            <div className="w-7 h-7 rounded-lg bg-[#eef3f0] text-[#4d6b5e] flex items-center justify-center">
-              <Briefcase size={14} />
+            <div className="w-8 h-8 rounded-xl bg-[#eef3f0] text-[#4d6b5e] flex items-center justify-center">
+              <Briefcase size={16} />
             </div>
           </div>
-          <div className="flex items-end justify-between mt-4">
+          <div className="flex items-end justify-between mt-5">
             <div className="text-3xl font-bold text-slate-900 font-sans tracking-tight">
               {totalCataloged}
             </div>
             {/* Green upward sparkline */}
-            <svg className="w-18 h-7 text-[#4d6b5e]" viewBox="0 0 100 40" fill="none">
+            <svg className="w-20 h-8 text-[#4d6b5e]" viewBox="0 0 100 40" fill="none">
               <path
                 d="M 5 35 Q 25 32, 40 25 T 75 15 T 95 10"
                 stroke="currentColor"
@@ -134,21 +134,21 @@ const AdminDashboard = () => {
         </div>
 
         {/* ACTIVE STOCK VOLUME */}
-        <div className="bg-white p-5 rounded-2xl border border-stone-200/70 shadow-xs flex flex-col justify-between">
+        <div className="bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
               Active Stock Volume
             </span>
-            <div className="w-7 h-7 rounded-lg bg-[#eef3f0] text-[#4d6b5e] flex items-center justify-center">
-              <Layers size={14} />
+            <div className="w-8 h-8 rounded-xl bg-[#eef3f0] text-[#4d6b5e] flex items-center justify-center">
+              <Layers size={16} />
             </div>
           </div>
-          <div className="flex items-end justify-between mt-4">
+          <div className="flex items-end justify-between mt-5">
             <div className="text-3xl font-bold text-slate-900 font-sans tracking-tight">
               {totalVolume.toLocaleString()}{' '}
-              <span className="text-xs font-normal text-slate-500">units</span>
+              <span className="text-xs font-normal text-slate-400 tracking-normal ml-1">units</span>
             </div>
-            <svg className="w-18 h-7 text-[#4d6b5e]" viewBox="0 0 100 40" fill="none">
+            <svg className="w-20 h-8 text-[#4d6b5e]" viewBox="0 0 100 40" fill="none">
               <path
                 d="M 5 30 L 25 32 L 45 20 L 65 24 L 85 12 L 95 8"
                 stroke="currentColor"
@@ -161,21 +161,21 @@ const AdminDashboard = () => {
         </div>
 
         {/* LOW STOCK TRIGGERS */}
-        <div className="bg-white p-5 rounded-2xl border border-stone-200/70 shadow-xs flex flex-col justify-between">
+        <div className="bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
               Low Stock Triggers
             </span>
-            <div className="w-7 h-7 rounded-lg bg-[#fef5ec] text-[#d97736] flex items-center justify-center">
-              <AlertTriangle size={14} />
+            <div className="w-8 h-8 rounded-xl bg-[#fef5ec] text-[#d97736] flex items-center justify-center">
+              <AlertTriangle size={16} />
             </div>
           </div>
-          <div className="flex items-end justify-between mt-4">
+          <div className="flex items-end justify-between mt-5">
             <div className="text-3xl font-bold text-slate-900 font-sans tracking-tight">
               {lowStockCount}
             </div>
             {/* Red downward sparkline */}
-            <svg className="w-18 h-7 text-[#c54b43]" viewBox="0 0 100 40" fill="none">
+            <svg className="w-20 h-8 text-[#c54b43]" viewBox="0 0 100 40" fill="none">
               <path
                 d="M 5 10 L 25 15 L 45 22 L 65 20 L 85 30 L 95 34"
                 stroke="currentColor"
@@ -188,20 +188,20 @@ const AdminDashboard = () => {
         </div>
 
         {/* EXPIRING (30 DAYS) */}
-        <div className="bg-white p-5 rounded-2xl border border-stone-200/70 shadow-xs flex flex-col justify-between">
+        <div className="bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
               Expiring (30 Days)
             </span>
-            <div className="w-7 h-7 rounded-lg bg-[#fef1f0] text-[#c54b43] flex items-center justify-center">
-              <Clock size={14} />
+            <div className="w-8 h-8 rounded-xl bg-[#fef1f0] text-[#c54b43] flex items-center justify-center">
+              <Clock size={16} />
             </div>
           </div>
-          <div className="flex items-end justify-between mt-4">
+          <div className="flex items-end justify-between mt-5">
             <div className="text-3xl font-bold text-slate-900 font-sans tracking-tight">
               {expiringCount}
             </div>
-            <svg className="w-18 h-7 text-[#c54b43]" viewBox="0 0 100 40" fill="none">
+            <svg className="w-20 h-8 text-[#c54b43]" viewBox="0 0 100 40" fill="none">
               <path
                 d="M 5 8 Q 30 12, 50 20 T 75 32 T 95 36"
                 stroke="currentColor"
@@ -215,12 +215,12 @@ const AdminDashboard = () => {
       </div>
 
       {/* MIDDLE ROW: STOCK MOVEMENT CHART & TOP SUPPLIERS */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* STOCK MOVEMENT MONTHLY */}
-        <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-xs flex flex-col justify-between">
-          <div className="flex items-center justify-between pb-3">
-            <h3 className="text-sm font-bold text-slate-900">Stock Movement (Monthly)</h3>
-            <span className="text-xs font-semibold text-[#4d6b5e] flex items-center gap-1">
+        <div className="bg-white p-7 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between pb-4">
+            <h3 className="text-base font-bold text-slate-900 tracking-tight">Stock Movement (Monthly)</h3>
+            <span className="text-xs font-semibold text-[#4d6b5e] flex items-center gap-1 tracking-wide">
               +14.2% Growth
             </span>
           </div>
@@ -251,16 +251,16 @@ const AdminDashboard = () => {
         </div>
 
         {/* TOP SUPPLIER DELIVERY PERFORMANCE */}
-        <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-xs flex flex-col justify-between">
+        <div className="bg-white p-7 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between pb-4">
-            <h3 className="text-sm font-bold text-slate-900">Top Supplier Delivery Performance</h3>
-            <span className="text-xs text-slate-400 font-medium">Rating / 5.0</span>
+            <h3 className="text-base font-bold text-slate-900 tracking-tight">Top Supplier Delivery Performance</h3>
+            <span className="text-xs text-slate-400 font-medium tracking-wide">Rating / 5.0</span>
           </div>
 
-          <div className="space-y-4 pt-1">
+          <div className="space-y-5 pt-2">
             {topSuppliers.map((sup) => (
               <div key={sup.name} className="flex items-center justify-between gap-4">
-                <span className="text-xs font-medium text-slate-700 w-36 truncate">
+                <span className="text-xs font-semibold text-slate-700 w-40 truncate tracking-wide">
                   {sup.name}
                 </span>
                 <div className="flex-1 bg-[#edebe7] h-2.5 rounded-full overflow-hidden">
@@ -279,45 +279,45 @@ const AdminDashboard = () => {
       </div>
 
       {/* AUDIT LOGS & ACTIVITY */}
-      <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-xs">
-        <div className="flex items-center justify-between pb-4">
-          <h3 className="text-sm font-bold text-slate-900">Audit Logs & Activity</h3>
+      <div className="bg-white p-7 rounded-2xl border border-stone-200/80 shadow-xs">
+        <div className="flex items-center justify-between pb-5">
+          <h3 className="text-base font-bold text-slate-900 tracking-tight">Audit Logs & Activity</h3>
           <button
             onClick={() => navigate('/alerts')}
-            className="text-xs font-medium text-slate-500 hover:text-slate-800 cursor-pointer"
+            className="text-xs font-semibold text-slate-500 hover:text-slate-800 cursor-pointer transition tracking-wide"
           >
-            View full log stream
+            View full log stream &rarr;
           </button>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-stone-100 text-slate-400 font-semibold">
-                <th className="py-2.5 px-3">Clinician</th>
-                <th className="py-2.5 px-3">Operation Executed</th>
-                <th className="py-2.5 px-3">Authorization Level</th>
-                <th className="py-2.5 px-3 text-right">Timestamp</th>
+              <tr className="border-b border-stone-100 text-slate-400 font-bold uppercase tracking-wider">
+                <th className="py-3 px-4">Clinician</th>
+                <th className="py-3 px-4">Operation Executed</th>
+                <th className="py-3 px-4">Authorization Level</th>
+                <th className="py-3 px-4 text-right">Timestamp</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-stone-100/70">
+            <tbody className="divide-y divide-stone-100/80">
               {auditLogs.map((log, idx) => (
                 <tr key={idx} className="hover:bg-[#fafaf8] transition">
-                  <td className="py-3 px-3">
-                    <div className="flex items-center gap-2.5">
+                  <td className="py-3.5 px-4">
+                    <div className="flex items-center gap-3">
                       <div className="w-7 h-7 rounded-full bg-[#edebe7] text-slate-700 font-bold text-[11px] flex items-center justify-center shrink-0">
                         {log.initials}
                       </div>
-                      <span className="font-semibold text-slate-900">{log.name}</span>
+                      <span className="font-semibold text-slate-900 tracking-wide">{log.name}</span>
                     </div>
                   </td>
-                  <td className="py-3 px-3 text-slate-600">{log.operation}</td>
-                  <td className="py-3 px-3">
-                    <span className="inline-block px-2.5 py-0.5 rounded bg-[#edf2ef] text-[#426154] font-medium text-[11px]">
+                  <td className="py-3.5 px-4 text-slate-600 leading-relaxed tracking-wide">{log.operation}</td>
+                  <td className="py-3.5 px-4">
+                    <span className="inline-block px-2.5 py-1 rounded-md bg-[#edf2ef] text-[#426154] font-semibold text-[11px] tracking-wide">
                       {log.role}
                     </span>
                   </td>
-                  <td className="py-3 px-3 text-right text-slate-400 font-medium">
+                  <td className="py-3.5 px-4 text-right text-slate-400 font-medium tracking-wide">
                     {log.timestamp}
                   </td>
                 </tr>

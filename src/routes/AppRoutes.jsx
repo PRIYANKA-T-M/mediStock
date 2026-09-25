@@ -42,27 +42,27 @@ const API_URL = getApiUrl();
 ========================================================= */
 
 const AuthLeftPanel = () => (
-  <div className="hidden lg:flex lg:w-1/2 bg-[#111c24] text-white p-12 flex-col justify-between relative overflow-hidden select-none">
+  <div className="hidden lg:flex lg:w-1/2 bg-[#111c24] text-white p-14 sm:p-16 flex-col justify-between relative overflow-hidden select-none">
     {/* TOP BRAND */}
-    <div className="flex items-center gap-2.5 z-10">
-      <div className="w-5.5 h-5.5 rounded-full bg-[#4e6b5d] text-white flex items-center justify-center text-xs font-bold shadow-xs">
-        <span className="text-xs font-bold leading-none">+</span>
+    <div className="flex items-center gap-3 z-10">
+      <div className="w-7 h-7 rounded-full bg-[#4e6b5d] text-white flex items-center justify-center text-sm font-bold shadow-xs">
+        <span className="font-bold leading-none">+</span>
       </div>
-      <span className="font-bold text-sm tracking-wider text-white font-mono">MEDISTOCK</span>
+      <span className="font-bold text-base tracking-widest text-white font-mono">MEDISTOCK</span>
     </div>
 
     {/* CENTER APOTHECARY RADIAL / CLOCK GRAPHIC */}
     <div className="my-auto flex items-center justify-center relative py-12">
-      <div className="relative w-80 h-80 flex items-center justify-center">
+      <div className="relative w-88 h-88 flex items-center justify-center">
         {/* Outer subtle ring */}
         <div className="absolute inset-0 rounded-full border border-slate-700/40" />
         {/* Dashed middle ring */}
-        <div className="absolute inset-8 rounded-full border border-dashed border-slate-700/60" />
+        <div className="absolute inset-10 rounded-full border border-dashed border-slate-700/60" />
         {/* Inner solid ring */}
-        <div className="absolute inset-16 rounded-full border border-slate-700/50" />
+        <div className="absolute inset-20 rounded-full border border-slate-700/50" />
         {/* Concentric rotating radial arms */}
-        <div className="relative w-40 h-40 flex items-center justify-center">
-          <svg className="w-48 h-48 text-[#4e6b5d]/80" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+        <div className="relative w-44 h-44 flex items-center justify-center">
+          <svg className="w-52 h-52 text-[#4e6b5d]/85" viewBox="0 0 100 100" fill="none" stroke="currentColor">
             {/* Center hub */}
             <circle cx="50" cy="50" r="7" fill="#4e6b5d" />
             {/* Thick clock arms / molecule bonds */}
@@ -77,12 +77,12 @@ const AuthLeftPanel = () => (
     </div>
 
     {/* BOTTOM TEXT */}
-    <div className="max-w-md z-10 space-y-3">
-      <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-snug">
+    <div className="max-w-lg z-10 space-y-3.5">
+      <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight">
         Apothecary systems refined for modern clinical precision.
       </h3>
-      <p className="text-xs sm:text-sm text-slate-400 font-normal leading-relaxed">
-        Designed with pharmaceutical standards to monitor cold-chains, track sensitive chemicals, and maintain flawless inventory streams.
+      <p className="text-sm text-slate-400 font-normal leading-relaxed">
+        Designed to strict pharmaceutical standards to monitor cold-chains, track sensitive chemicals, and maintain continuous inventory integrity.
       </p>
     </div>
   </div>
@@ -158,27 +158,27 @@ const Login = () => {
       <AuthLeftPanel />
 
       {/* RIGHT AUTH FORM PANEL */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 md:p-16">
-        <div className="w-full max-w-md space-y-6">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-14 lg:p-20">
+        <div className="w-full max-w-lg space-y-8">
           {/* Header */}
           <div>
-            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Access System</h1>
-            <p className="text-xs text-slate-500 mt-1.5">
-              Provide your clinical identification keys to log in.
+            <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight leading-tight">Access System</h1>
+            <p className="text-xs sm:text-sm text-stone-500 mt-2 leading-relaxed">
+              Provide your clinical identification keys to enter the pharmacy management portal.
             </p>
           </div>
 
           {/* Error Alert */}
           {error && (
-            <div className="p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium">
+            <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-medium leading-relaxed">
               {error}
             </div>
           )}
 
           {/* Form */}
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-6">
             <div>
-              <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-stone-600 uppercase tracking-wider mb-2">
                 Work Email
               </label>
               <input
@@ -187,12 +187,12 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full h-11 px-3.5 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs placeholder:text-slate-400 outline-none transition focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
+                className="w-full h-12 px-4 rounded-xl border border-stone-200 bg-stone-50/50 text-slate-900 text-sm placeholder:text-stone-400 outline-none transition focus:bg-white focus:border-stone-400 focus:ring-2 focus:ring-[#4e6b5d]/20"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-stone-600 uppercase tracking-wider mb-2">
                 Password
               </label>
               <div className="relative">
@@ -202,10 +202,10 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full h-11 pl-3.5 pr-10 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs placeholder:text-slate-400 outline-none transition focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
+                  className="w-full h-12 pl-4 pr-11 rounded-xl border border-stone-200 bg-stone-50/50 text-slate-900 text-sm placeholder:text-stone-400 outline-none transition focus:bg-white focus:border-stone-400 focus:ring-2 focus:ring-[#4e6b5d]/20"
                 />
-                <div className="absolute right-3.5 top-3.5 text-slate-400">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <div className="absolute right-4 top-4 text-stone-400">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                     <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                   </svg>
@@ -213,20 +213,20 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between text-xs pt-1">
-              <label className="flex items-center gap-2 cursor-pointer select-none text-slate-600">
+            <div className="flex items-center justify-between text-xs sm:text-sm pt-1">
+              <label className="flex items-center gap-2.5 cursor-pointer select-none text-stone-600">
                 <input
                   type="checkbox"
                   checked={maintainSession}
                   onChange={(e) => setMaintainSession(e.target.checked)}
-                  className="w-4 h-4 rounded border-slate-300 text-[#4d6b5e] focus:ring-[#4d6b5e] cursor-pointer"
+                  className="w-4 h-4 rounded border-stone-300 text-[#4e6b5d] focus:ring-[#4e6b5d] cursor-pointer"
                 />
-                <span>Maintain active session</span>
+                <span>Maintain active clinical session</span>
               </label>
               <button
                 type="button"
                 onClick={() => alert("Please contact your clinical pharmacy administrator to reset identification keys.")}
-                className="text-slate-500 hover:text-slate-800 text-xs font-medium cursor-pointer"
+                className="text-stone-500 hover:text-slate-900 font-medium cursor-pointer transition"
               >
                 Recovery options
               </button>
@@ -235,24 +235,24 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-11 rounded-lg bg-[#4d6b5e] hover:bg-[#415d51] text-white text-xs font-semibold tracking-wide transition shadow-xs disabled:opacity-60 cursor-pointer"
+              className="w-full h-12 rounded-xl bg-[#4e6b5d] hover:bg-[#415b4f] text-white text-sm font-semibold tracking-wide transition shadow-xs disabled:opacity-60 cursor-pointer"
             >
-              {loading ? "Authorizing..." : "Secure Authorization"}
+              {loading ? "Authorizing Clinical Credentials..." : "Secure Authorization"}
             </button>
 
             {/* Quick Demo Switcher */}
-            <div className="pt-3 border-t border-slate-100 text-center">
-              <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block mb-2">
+            <div className="pt-5 border-t border-stone-100 text-center space-y-3">
+              <span className="text-[11px] font-bold text-stone-400 uppercase tracking-widest block">
                 Quick Fill Clinical Credentials
               </span>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-3 gap-2.5">
                 <button
                   type="button"
                   onClick={() => {
                     setEmail("admin@medistock.com");
                     setPassword("admin123");
                   }}
-                  className="py-1.5 px-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-[11px] font-medium text-slate-700 transition cursor-pointer"
+                  className="py-2.5 px-3 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 text-xs font-semibold text-slate-800 transition cursor-pointer shadow-xs"
                 >
                   Admin
                 </button>
@@ -262,7 +262,7 @@ const Login = () => {
                     setEmail("pharmacist@medistock.com");
                     setPassword("pharma123");
                   }}
-                  className="py-1.5 px-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-[11px] font-medium text-slate-700 transition cursor-pointer"
+                  className="py-2.5 px-3 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 text-xs font-semibold text-slate-800 transition cursor-pointer shadow-xs"
                 >
                   Pharmacist
                 </button>
@@ -272,7 +272,7 @@ const Login = () => {
                     setEmail("staff@medistock.com");
                     setPassword("staff123");
                   }}
-                  className="py-1.5 px-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-[11px] font-medium text-slate-700 transition cursor-pointer"
+                  className="py-2.5 px-3 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 text-xs font-semibold text-slate-800 transition cursor-pointer shadow-xs"
                 >
                   Staff
                 </button>
@@ -281,14 +281,14 @@ const Login = () => {
           </form>
 
           {/* Footer */}
-          <div className="text-center pt-2 text-xs text-slate-500">
+          <div className="text-center pt-2 text-xs sm:text-sm text-stone-500">
             Unregistered clinician?{" "}
             <button
               type="button"
               onClick={() => navigate("/register")}
-              className="font-semibold text-slate-800 underline hover:text-[#4d6b5e] cursor-pointer"
+              className="font-bold text-slate-900 underline hover:text-[#4e6b5d] cursor-pointer"
             >
-              Register here
+              Register associate account
             </button>
           </div>
         </div>
@@ -371,45 +371,45 @@ const Register = () => {
       <AuthLeftPanel />
 
       {/* RIGHT AUTH FORM PANEL */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 md:p-16">
-        <div className="w-full max-w-md space-y-6">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-14 lg:p-20">
+        <div className="w-full max-w-lg space-y-8">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Establish Credentials</h1>
-            <p className="text-xs text-slate-500 mt-1.5">
+            <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight leading-tight">Establish Credentials</h1>
+            <p className="text-xs sm:text-sm text-stone-500 mt-2 leading-relaxed">
               Create your official clinical inventory associate account.
             </p>
           </div>
 
           {error && (
-            <div className="p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium">
+            <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-medium leading-relaxed">
               {error}
             </div>
           )}
 
           {message && (
-            <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium">
+            <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium leading-relaxed">
               {message}
             </div>
           )}
 
-          <form onSubmit={handleRegister} className="space-y-4">
+          <form onSubmit={handleRegister} className="space-y-6">
             <div>
-              <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
-                Full Name
+              <label className="block text-xs font-bold text-stone-600 uppercase tracking-wider mb-2">
+                Full Name & Title
               </label>
               <input
                 type="text"
                 name="name"
-                placeholder="Dr. Eleanor Vance"
+                placeholder="Dr. Eleanor Vance, PharmD"
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full h-11 px-3.5 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs placeholder:text-slate-400 outline-none transition focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
+                className="w-full h-12 px-4 rounded-xl border border-stone-200 bg-stone-50/50 text-slate-900 text-sm placeholder:text-stone-400 outline-none transition focus:bg-white focus:border-stone-400 focus:ring-2 focus:ring-[#4e6b5d]/20"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-stone-600 uppercase tracking-wider mb-2">
                 Work Email
               </label>
               <input
@@ -419,13 +419,13 @@ const Register = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full h-11 px-3.5 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs placeholder:text-slate-400 outline-none transition focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
+                className="w-full h-12 px-4 rounded-xl border border-stone-200 bg-stone-50/50 text-slate-900 text-sm placeholder:text-stone-400 outline-none transition focus:bg-white focus:border-stone-400 focus:ring-2 focus:ring-[#4e6b5d]/20"
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-stone-600 uppercase tracking-wider mb-2">
                   Password
                 </label>
                 <div className="relative">
@@ -436,10 +436,10 @@ const Register = () => {
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    className="w-full h-11 pl-3.5 pr-10 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs placeholder:text-slate-400 outline-none transition focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
+                    className="w-full h-12 pl-4 pr-11 rounded-xl border border-stone-200 bg-stone-50/50 text-slate-900 text-sm placeholder:text-stone-400 outline-none transition focus:bg-white focus:border-stone-400 focus:ring-2 focus:ring-[#4e6b5d]/20"
                   />
-                  <div className="absolute right-3.5 top-3.5 text-slate-400">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <div className="absolute right-4 top-4 text-stone-400">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                       <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                     </svg>
@@ -448,7 +448,7 @@ const Register = () => {
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-stone-600 uppercase tracking-wider mb-2">
                   Confirm Password
                 </label>
                 <div className="relative">
@@ -459,10 +459,10 @@ const Register = () => {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     required
-                    className="w-full h-11 pl-3.5 pr-10 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs placeholder:text-slate-400 outline-none transition focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
+                    className="w-full h-12 pl-4 pr-11 rounded-xl border border-stone-200 bg-stone-50/50 text-slate-900 text-sm placeholder:text-stone-400 outline-none transition focus:bg-white focus:border-stone-400 focus:ring-2 focus:ring-[#4e6b5d]/20"
                   />
-                  <div className="absolute right-3.5 top-3.5 text-slate-400">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <div className="absolute right-4 top-4 text-stone-400">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                       <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                     </svg>
@@ -472,17 +472,17 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
-                Assigned Role
+              <label className="block text-xs font-bold text-stone-600 uppercase tracking-wider mb-2">
+                Assigned Clinical Role
               </label>
               <select
                 name="role"
                 value={formData.role}
                 onChange={handleChange}
-                className="w-full h-11 px-3.5 rounded-lg border border-slate-200 bg-white text-slate-800 text-xs outline-none transition focus:border-slate-400 focus:ring-1 focus:ring-slate-300 font-medium"
+                className="w-full h-12 px-4 rounded-xl border border-stone-200 bg-stone-50/50 text-slate-900 text-sm outline-none transition focus:bg-white focus:border-stone-400 focus:ring-2 focus:ring-[#4e6b5d]/20 font-medium"
               >
                 <option value="PHARMACIST">Pharmacist-in-Charge</option>
-                <option value="ADMIN">Clinical Admin</option>
+                <option value="ADMIN">Clinical Administrator</option>
                 <option value="STAFF">Dispensary Staff</option>
               </select>
             </div>
@@ -490,18 +490,18 @@ const Register = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-11 rounded-lg bg-[#4d6b5e] hover:bg-[#415d51] text-white text-xs font-semibold tracking-wide transition shadow-xs disabled:opacity-60 cursor-pointer"
+              className="w-full h-12 rounded-xl bg-[#4e6b5d] hover:bg-[#415b4f] text-white text-sm font-semibold tracking-wide transition shadow-xs disabled:opacity-60 cursor-pointer"
             >
-              {loading ? "Establishing..." : "Create Official Account"}
+              {loading ? "Establishing Credentials..." : "Create Official Account"}
             </button>
           </form>
 
-          <div className="text-center pt-2 text-xs text-slate-500">
+          <div className="text-center pt-2 text-xs sm:text-sm text-stone-500">
             Already registered?{" "}
             <button
               type="button"
               onClick={() => navigate("/login")}
-              className="font-semibold text-slate-800 underline hover:text-[#4d6b5e] cursor-pointer"
+              className="font-bold text-slate-900 underline hover:text-[#4e6b5d] cursor-pointer"
             >
               Access Portal
             </button>

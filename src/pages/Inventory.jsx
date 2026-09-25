@@ -202,138 +202,138 @@ const Inventory = () => {
       )}
 
       {/* KPI METRIC CARDS */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
         <div
           onClick={() => setStatusFilter('ALL')}
-          className={`bg-white p-5 rounded-xl border shadow-xs cursor-pointer transition ${
+          className={`bg-white p-6 rounded-2xl border shadow-xs cursor-pointer transition ${
             statusFilter === 'ALL'
-              ? 'border-sky-500 ring-2 ring-sky-100'
-              : 'border-slate-200/80 hover:border-slate-300'
+              ? 'border-[#4d6b5e] ring-2 ring-[#4d6b5e]/20'
+              : 'border-stone-200/80 hover:border-stone-300'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Total Items</span>
-            <div className="w-8 h-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Total Items</span>
+            <div className="w-8 h-8 rounded-xl bg-[#eef3f0] text-[#4d6b5e] flex items-center justify-center">
               <Boxes size={16} />
             </div>
           </div>
-          <div className="text-2xl font-bold text-slate-900 mt-3 font-mono tabular-nums">
+          <div className="text-3xl font-bold text-slate-900 mt-5 font-mono tabular-nums tracking-tight">
             {totalItems}
           </div>
-          <div className="text-[11px] text-slate-400 mt-1">Catalog items tracked</div>
+          <div className="text-[11px] text-slate-400 mt-1 tracking-wide">Catalog items tracked</div>
         </div>
 
         <div
           onClick={() => setStatusFilter('AVAILABLE')}
-          className={`bg-white p-5 rounded-xl border shadow-xs cursor-pointer transition ${
+          className={`bg-white p-6 rounded-2xl border shadow-xs cursor-pointer transition ${
             statusFilter === 'AVAILABLE'
-              ? 'border-emerald-500 ring-2 ring-emerald-100'
-              : 'border-slate-200/80 hover:border-slate-300'
+              ? 'border-emerald-600 ring-2 ring-emerald-100'
+              : 'border-stone-200/80 hover:border-stone-300'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Available Stock</span>
-            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Available Stock</span>
+            <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
               <CheckCircle2 size={16} />
             </div>
           </div>
-          <div className="text-2xl font-bold text-emerald-600 mt-3 font-mono tabular-nums">
+          <div className="text-3xl font-bold text-emerald-600 mt-5 font-mono tabular-nums tracking-tight">
             {availableCount}
           </div>
-          <div className="text-[11px] text-slate-400 mt-1">Above reorder threshold</div>
+          <div className="text-[11px] text-slate-400 mt-1 tracking-wide">Above reorder threshold</div>
         </div>
 
         <div
           onClick={() => setStatusFilter('LOW_STOCK')}
-          className={`bg-white p-5 rounded-xl border shadow-xs cursor-pointer transition ${
+          className={`bg-white p-6 rounded-2xl border shadow-xs cursor-pointer transition ${
             statusFilter === 'LOW_STOCK'
               ? 'border-amber-500 ring-2 ring-amber-100'
-              : 'border-slate-200/80 hover:border-slate-300'
+              : 'border-stone-200/80 hover:border-stone-300'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Low Stock</span>
-            <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Low Stock</span>
+            <div className="w-8 h-8 rounded-xl bg-[#fef5ec] text-[#d97736] flex items-center justify-center">
               <SlidersHorizontal size={16} />
             </div>
           </div>
-          <div className="text-2xl font-bold text-amber-600 mt-3 font-mono tabular-nums">
+          <div className="text-3xl font-bold text-amber-600 mt-5 font-mono tabular-nums tracking-tight">
             {lowStockCount}
           </div>
-          <div className="text-[11px] text-slate-400 mt-1">Below safety margin</div>
+          <div className="text-[11px] text-slate-400 mt-1 tracking-wide">Below safety margin</div>
         </div>
 
         <div
           onClick={() => setStatusFilter('OUT_OF_STOCK')}
-          className={`bg-white p-5 rounded-xl border shadow-xs cursor-pointer transition ${
+          className={`bg-white p-6 rounded-2xl border shadow-xs cursor-pointer transition ${
             statusFilter === 'OUT_OF_STOCK'
               ? 'border-rose-500 ring-2 ring-rose-100'
-              : 'border-slate-200/80 hover:border-slate-300'
+              : 'border-stone-200/80 hover:border-stone-300'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Out of Stock</span>
-            <div className="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Out of Stock</span>
+            <div className="w-8 h-8 rounded-xl bg-[#fef1f0] text-[#c54b43] flex items-center justify-center">
               <Boxes size={16} />
             </div>
           </div>
-          <div className="text-2xl font-bold text-rose-600 mt-3 font-mono tabular-nums">
+          <div className="text-3xl font-bold text-rose-600 mt-5 font-mono tabular-nums tracking-tight">
             {outOfStockCount}
           </div>
-          <div className="text-[11px] text-slate-400 mt-1">Immediate action needed</div>
+          <div className="text-[11px] text-slate-400 mt-1 tracking-wide">Immediate action needed</div>
         </div>
       </div>
 
       {/* FILTER & SEARCH */}
-      <div className="bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-1 overflow-x-auto">
+      <div className="bg-white p-5 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-1.5 bg-[#fafaf8] p-1.5 rounded-xl border border-stone-200 self-start sm:self-auto overflow-x-auto">
           {['ALL', 'AVAILABLE', 'LOW_STOCK', 'OUT_OF_STOCK'].map((val) => (
             <button
               key={val}
               onClick={() => setStatusFilter(val)}
-              className={`px-3 py-1 rounded-md text-xs font-medium transition cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition cursor-pointer ${
                 statusFilter === val
-                  ? 'bg-sky-600 text-white'
-                  : 'text-slate-600 hover:bg-slate-100'
+                  ? 'bg-[#4d6b5e] text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-stone-200/50'
               }`}
             >
-              {val === 'ALL' ? 'All' : val.replace('_', ' ')}
+              {val === 'ALL' ? 'All Items' : val.replace(/_/g, ' ')}
             </button>
           ))}
         </div>
 
-        <div className="relative w-full sm:w-64">
-          <Search className="absolute left-3 top-2.5 text-slate-400" size={14} />
+        <div className="relative w-full sm:w-72">
+          <Search className="absolute left-3.5 top-3 text-slate-400" size={15} />
           <input
             type="text"
             placeholder="Search medicine or batch..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-200 rounded-lg bg-slate-50/70 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="w-full pl-10 pr-3.5 h-10 text-xs border border-stone-200 rounded-xl bg-[#fafaf8] focus:bg-white focus:outline-none focus:border-stone-400 tracking-wide transition"
           />
         </div>
       </div>
 
       {/* INVENTORY TABLE */}
-      <div className="bg-white rounded-xl border border-slate-200/80 shadow-xs overflow-hidden">
+      <div className="bg-white rounded-2xl border border-stone-200/80 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-slate-200 text-slate-500 font-semibold bg-slate-50/60">
-                <th className="py-3 px-4">Medicine</th>
-                <th className="py-3 px-4">Category</th>
-                <th className="py-3 px-4">Batch Number</th>
-                <th className="py-3 px-4 text-right">In Stock</th>
-                <th className="py-3 px-4 text-right">Reorder Threshold</th>
-                <th className="py-3 px-4">Status</th>
-                {canUpdateStock && <th className="py-3 px-4 text-right">Adjust Stock</th>}
+              <tr className="border-b border-stone-100 text-slate-400 font-bold uppercase tracking-wider bg-[#fafaf8]">
+                <th className="py-3.5 px-5">Medicine</th>
+                <th className="py-3.5 px-5">Category</th>
+                <th className="py-3.5 px-5">Batch Number</th>
+                <th className="py-3.5 px-5 text-right">In Stock</th>
+                <th className="py-3.5 px-5 text-right">Reorder Threshold</th>
+                <th className="py-3.5 px-5">Status</th>
+                {canUpdateStock && <th className="py-3.5 px-5 text-right">Adjust Stock</th>}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-stone-100/80">
               {filteredMedicines.length === 0 ? (
                 <tr>
-                  <td colSpan={canUpdateStock ? 7 : 6} className="py-12 text-center text-slate-400">
-                    <Boxes size={24} className="mx-auto text-slate-300 mb-2" />
+                  <td colSpan={canUpdateStock ? 7 : 6} className="py-14 text-center text-slate-400 font-medium">
+                    <Boxes size={28} className="mx-auto text-slate-300 mb-2.5" />
                     <p className="font-semibold text-slate-700">No inventory items match filter</p>
                   </td>
                 </tr>
@@ -343,21 +343,21 @@ const Inventory = () => {
                   const reorder = m.reorderLevel || 20;
 
                   let statusBadge = (
-                    <span className="inline-flex items-center gap-1.5 text-emerald-700 font-medium">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#edf6f1] text-[#1d523b] font-semibold text-[11px] tracking-wide">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                       In Stock
                     </span>
                   );
                   if (qty === 0) {
                     statusBadge = (
-                      <span className="inline-flex items-center gap-1.5 text-rose-700 font-medium">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#fdf2f1] text-[#8e2b24] font-semibold text-[11px] tracking-wide">
                         <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
                         Out of Stock
                       </span>
                     );
                   } else if (qty <= reorder) {
                     statusBadge = (
-                      <span className="inline-flex items-center gap-1.5 text-amber-700 font-medium">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#fef7ee] text-[#b45309] font-semibold text-[11px] tracking-wide">
                         <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                         Low Stock
                       </span>
@@ -365,22 +365,22 @@ const Inventory = () => {
                   }
 
                   return (
-                    <tr key={m.id} className="hover:bg-slate-50/50 transition">
-                      <td className="py-3 px-4 font-semibold text-slate-900">{m.name}</td>
-                      <td className="py-3 px-4 text-slate-600">{m.category}</td>
-                      <td className="py-3 px-4 font-mono text-slate-500">{m.batchNumber || 'BAT-001'}</td>
-                      <td className="py-3 px-4 text-right font-mono font-bold text-slate-900">
-                        {qty}
+                    <tr key={m.id} className="hover:bg-[#fafaf8] transition">
+                      <td className="py-4 px-5 font-bold text-slate-900 tracking-wide text-sm">{m.name}</td>
+                      <td className="py-4 px-5 text-slate-600 tracking-wide">{m.category}</td>
+                      <td className="py-4 px-5 text-slate-600 font-mono tracking-wider text-xs">{m.batchNumber || 'BAT-001'}</td>
+                      <td className="py-4 px-5 text-right font-bold text-slate-900 font-mono text-sm">
+                        {Number(qty).toLocaleString()}
                       </td>
-                      <td className="py-3 px-4 text-right font-mono text-slate-500">{reorder}</td>
-                      <td className="py-3 px-4">{statusBadge}</td>
+                      <td className="py-4 px-5 text-right text-slate-500 font-mono text-xs">{reorder}</td>
+                      <td className="py-4 px-5">{statusBadge}</td>
                       {canUpdateStock && (
-                        <td className="py-3 px-4 text-right">
+                        <td className="py-4 px-5 text-right">
                           <button
                             onClick={() => handleOpenModal(m)}
-                            className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 transition cursor-pointer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-stone-200 text-slate-700 bg-white hover:bg-stone-50 transition cursor-pointer shadow-xs tracking-wide"
                           >
-                            <SlidersHorizontal size={12} />
+                            <SlidersHorizontal size={13} className="text-slate-400" />
                             <span>Adjust</span>
                           </button>
                         </td>

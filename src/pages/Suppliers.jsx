@@ -166,11 +166,11 @@ const Suppliers = () => {
   return (
     <div className="space-y-8">
       {/* ACTION BAR */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-stone-200/60">
         <div>
-          <h2 className="text-xl font-bold text-slate-900 tracking-tight">Suppliers Directory</h2>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Manage authorized pharmaceutical distributors, performance ratings, and fulfillment SLAs.
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-tight">Suppliers Directory</h2>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1.5 tracking-wide leading-relaxed">
+            Manage authorized pharmaceutical distributors, performance ratings, and fulfillment SLAs with clinical oversight.
           </p>
         </div>
 
@@ -178,17 +178,17 @@ const Suppliers = () => {
           <button
             onClick={() => load(true)}
             disabled={refreshing}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 text-xs font-medium transition cursor-pointer shadow-xs"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 text-slate-700 text-xs font-semibold tracking-wide transition cursor-pointer shadow-xs"
           >
-            <RefreshCw size={13} className={refreshing ? 'animate-spin' : ''} />
+            <RefreshCw size={14} className={refreshing ? 'animate-spin' : ''} />
             <span>Refresh</span>
           </button>
           {canWrite && (
             <button
               onClick={openCreate}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold shadow-xs transition cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#4d6b5e] hover:bg-[#415d51] text-white text-xs font-semibold shadow-xs transition cursor-pointer tracking-wide"
             >
-              <Plus size={14} />
+              <Plus size={15} />
               <span>Add Supplier</span>
             </button>
           )}
@@ -196,89 +196,89 @@ const Suppliers = () => {
       </div>
 
       {message && (
-        <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-800 text-xs flex items-center gap-2">
-          <CheckCircle2 size={15} className="text-emerald-600 shrink-0" />
+        <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs flex items-center gap-2 leading-relaxed">
+          <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
           <span>{message}</span>
         </div>
       )}
 
       {error && (
-        <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 text-xs">
+        <div className="p-4 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-xs leading-relaxed">
           {error}
         </div>
       )}
 
       {/* KPI METRIC CARDS */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Total Suppliers</span>
-            <div className="w-8 h-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Total Suppliers</span>
+            <div className="w-8 h-8 rounded-xl bg-[#eef3f0] text-[#4d6b5e] flex items-center justify-center">
               <Building2 size={16} />
             </div>
           </div>
-          <div className="text-2xl font-bold text-slate-900 mt-3 font-mono tabular-nums">
+          <div className="text-3xl font-bold text-slate-900 mt-5 font-mono tabular-nums tracking-tight">
             {items.length}
           </div>
-          <div className="text-[11px] text-slate-400 mt-1">Authorized distributors</div>
+          <div className="text-[11px] text-slate-400 mt-1 tracking-wide">Authorized distributors</div>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs">
+        <div className="bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Active Network</span>
-            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Active Network</span>
+            <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
               <CheckCircle2 size={16} />
             </div>
           </div>
-          <div className="text-2xl font-bold text-emerald-600 mt-3 font-mono tabular-nums">
+          <div className="text-3xl font-bold text-emerald-600 mt-5 font-mono tabular-nums tracking-tight">
             {activeCount}
           </div>
-          <div className="text-[11px] text-slate-400 mt-1">Available for orders</div>
+          <div className="text-[11px] text-slate-400 mt-1 tracking-wide">Available for orders</div>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs">
+        <div className="bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Average Rating</span>
-            <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Average Rating</span>
+            <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
               <Star size={16} />
             </div>
           </div>
-          <div className="text-2xl font-bold text-slate-900 mt-3 font-mono tabular-nums">
+          <div className="text-3xl font-bold text-slate-900 mt-5 font-mono tabular-nums tracking-tight">
             ★ {avgRating}
           </div>
-          <div className="text-[11px] text-slate-400 mt-1">Distributor quality score</div>
+          <div className="text-[11px] text-slate-400 mt-1 tracking-wide">Distributor quality score</div>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs">
+        <div className="bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Avg Lead Time</span>
-            <div className="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Avg Lead Time</span>
+            <div className="w-8 h-8 rounded-xl bg-[#eef3f0] text-[#4d6b5e] flex items-center justify-center">
               <Clock size={16} />
             </div>
           </div>
-          <div className="text-2xl font-bold text-slate-900 mt-3 font-mono tabular-nums">
+          <div className="text-3xl font-bold text-slate-900 mt-5 font-mono tabular-nums tracking-tight">
             {avgLead} days
           </div>
-          <div className="text-[11px] text-slate-400 mt-1">Delivery SLA</div>
+          <div className="text-[11px] text-slate-400 mt-1 tracking-wide">Delivery SLA</div>
         </div>
       </div>
 
       {/* SUPPLIERS TABLE */}
-      <div className="bg-white rounded-xl border border-slate-200/80 shadow-xs overflow-hidden">
-        <div className="p-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="bg-white rounded-2xl border border-stone-200/80 shadow-xs overflow-hidden">
+        <div className="p-6 border-b border-stone-200/70 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h3 className="text-sm font-semibold text-slate-900">Distributor Accounts</h3>
-            <p className="text-[11px] text-slate-400">Showing {filtered.length} verified vendors</p>
+            <h3 className="text-base font-bold text-slate-900 tracking-tight">Distributor Accounts</h3>
+            <p className="text-xs text-stone-500 mt-0.5">Showing {filtered.length} verified vendors and pharmaceutical partners</p>
           </div>
 
-          <div className="relative w-full sm:w-64">
-            <Search className="absolute left-3 top-2.5 text-slate-400" size={14} />
+          <div className="relative w-full sm:w-72">
+            <Search className="absolute left-3.5 top-3 text-stone-400" size={15} />
             <input
               type="text"
               placeholder="Search vendor, city, contact..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-200 rounded-lg bg-slate-50/70 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+              className="w-full pl-9 pr-3.5 py-2 text-xs border border-stone-200 rounded-xl bg-stone-50/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition"
             />
           </div>
         </div>
@@ -286,79 +286,82 @@ const Suppliers = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-slate-200 text-slate-500 font-semibold bg-slate-50/60">
-                <th className="py-3 px-4">Supplier Name</th>
-                <th className="py-3 px-4">Contact</th>
-                <th className="py-3 px-4">Location</th>
-                <th className="py-3 px-4 text-center">Rating</th>
-                <th className="py-3 px-4 text-center">Lead Time</th>
-                <th className="py-3 px-4">Status</th>
-                {(canWrite || canDelete) && <th className="py-3 px-4 text-right">Actions</th>}
+              <tr className="border-b border-stone-200/80 text-stone-500 font-semibold bg-stone-50/70 uppercase tracking-wider text-[11px]">
+                <th className="py-4 px-6">Supplier Name</th>
+                <th className="py-4 px-6">Contact Person</th>
+                <th className="py-4 px-6">Location</th>
+                <th className="py-4 px-6 text-center">Rating</th>
+                <th className="py-4 px-6 text-center">Lead Time</th>
+                <th className="py-4 px-6">Status</th>
+                {(canWrite || canDelete) && <th className="py-4 px-6 text-right">Actions</th>}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-stone-100">
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-12 text-center text-slate-400">
-                    <Truck size={24} className="mx-auto text-slate-300 mb-2" />
-                    <p className="font-semibold text-slate-700">No suppliers found</p>
+                  <td colSpan={7} className="py-16 text-center text-stone-400">
+                    <Truck size={28} className="mx-auto text-stone-300 mb-3" />
+                    <p className="font-semibold text-slate-700 text-sm">No suppliers found</p>
+                    <p className="text-xs text-stone-400 mt-1">Try refining your search query</p>
                   </td>
                 </tr>
               ) : (
                 filtered.map((s) => (
-                  <tr key={s.id} className="hover:bg-slate-50/50 transition">
-                    <td className="py-3 px-4">
-                      <span className="font-semibold text-slate-900 block">{s.name}</span>
-                      <span className="text-[10px] text-slate-400 font-mono">
+                  <tr key={s.id} className="hover:bg-stone-50/60 transition">
+                    <td className="py-4 px-6">
+                      <span className="font-bold text-slate-900 block text-sm">{s.name}</span>
+                      <span className="text-[11px] text-stone-400 font-mono mt-0.5 block">
                         GST: {s.gstNumber || 'Unregistered'}
                       </span>
                     </td>
-                    <td className="py-3 px-4">
-                      <span className="text-slate-700 font-medium block">{s.contactPerson || '—'}</span>
-                      <span className="text-[10px] text-slate-400">{s.phone || s.email || '—'}</span>
+                    <td className="py-4 px-6">
+                      <span className="text-slate-800 font-medium block text-xs">{s.contactPerson || '—'}</span>
+                      <span className="text-[11px] text-stone-500 mt-0.5 block">{s.phone || s.email || '—'}</span>
                     </td>
-                    <td className="py-3 px-4 text-slate-600">
+                    <td className="py-4 px-6 text-slate-600 font-normal">
                       {[s.city, s.state].filter(Boolean).join(', ') || '—'}
                     </td>
-                    <td className="py-3 px-4 text-center font-mono font-medium text-amber-600">
+                    <td className="py-4 px-6 text-center font-mono font-semibold text-amber-700">
                       {s.rating ? `★ ${s.rating}` : '—'}
                     </td>
-                    <td className="py-3 px-4 text-center font-mono text-slate-700">
+                    <td className="py-4 px-6 text-center font-mono text-slate-700 font-medium">
                       {s.leadTimeDays ? `${s.leadTimeDays}d` : '—'}
                     </td>
-                    <td className="py-3 px-4">
+                    <td className="py-4 px-6">
                       <span
-                        className={`inline-flex items-center gap-1.5 font-medium ${
-                          s.status === 'ACTIVE' ? 'text-emerald-700' : 'text-slate-400'
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
+                          s.status === 'ACTIVE' 
+                            ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' 
+                            : 'bg-stone-100 text-stone-600 border border-stone-200'
                         }`}
                       >
                         <span
                           className={`w-1.5 h-1.5 rounded-full ${
-                            s.status === 'ACTIVE' ? 'bg-emerald-500' : 'bg-slate-400'
+                            s.status === 'ACTIVE' ? 'bg-emerald-600' : 'bg-stone-400'
                           }`}
                         />
                         {s.status === 'ACTIVE' ? 'Active' : 'Inactive'}
                       </span>
                     </td>
                     {(canWrite || canDelete) && (
-                      <td className="py-3 px-4 text-right">
-                        <div className="flex items-center justify-end gap-1">
+                      <td className="py-4 px-6 text-right">
+                        <div className="flex items-center justify-end gap-1.5">
                           {canWrite && (
                             <button
                               onClick={() => openEdit(s)}
-                              className="p-1 text-slate-400 hover:text-sky-600 hover:bg-sky-50 rounded transition cursor-pointer"
-                              title="Edit"
+                              className="p-1.5 text-stone-400 hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition cursor-pointer"
+                              title="Edit Supplier"
                             >
-                              <Edit2 size={13} />
+                              <Edit2 size={14} />
                             </button>
                           )}
                           {canDelete && (
                             <button
                               onClick={() => setDeleteTarget(s)}
-                              className="p-1 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition cursor-pointer"
-                              title="Delete"
+                              className="p-1.5 text-stone-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition cursor-pointer"
+                              title="Delete Supplier"
                             >
-                              <Trash2 size={13} />
+                              <Trash2 size={14} />
                             </button>
                           )}
                         </div>

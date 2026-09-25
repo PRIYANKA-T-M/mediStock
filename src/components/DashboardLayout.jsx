@@ -125,21 +125,21 @@ const DashboardLayout = ({ children }) => {
 
       {/* SIDEBAR (Dark navy/slate #111c24) */}
       <aside
-        className={`fixed inset-y-0 left-0 z-30 w-60 bg-[#111c24] text-slate-300 flex flex-col justify-between transform transition-transform duration-200 ease-in-out md:translate-x-0 md:static md:min-h-screen ${
+        className={`fixed inset-y-0 left-0 z-30 w-64 bg-[#111c24] text-slate-300 flex flex-col justify-between transform transition-transform duration-200 ease-in-out md:translate-x-0 md:static md:min-h-screen ${
           mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="flex flex-col">
           {/* LOGO */}
-          <div className="h-18 px-5 flex items-center gap-2.5">
-            <div className="w-5.5 h-5.5 rounded-full bg-[#4e6b5d] text-white flex items-center justify-center text-xs font-bold shadow-xs">
-              <Plus size={13} strokeWidth={3} />
+          <div className="h-20 px-6 flex items-center gap-3 border-b border-[#182530]">
+            <div className="w-6 h-6 rounded-full bg-[#4e6b5d] text-white flex items-center justify-center text-xs font-bold shadow-xs">
+              <Plus size={14} strokeWidth={3} />
             </div>
             <span className="font-bold text-sm tracking-wider text-white font-mono">MEDISTOCK</span>
           </div>
 
           {/* NAVIGATION LINKS */}
-          <nav className="px-3 py-2 space-y-1">
+          <nav className="px-4 py-4 space-y-1.5">
             {visibleNavItems.map((item) => {
               const Icon = item.icon;
               const isDashboardActive =
@@ -164,7 +164,7 @@ const DashboardLayout = ({ children }) => {
                   key={item.to}
                   to={item.to}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all group ${
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium tracking-wide transition-all group ${
                     isActive
                       ? 'bg-[#1b2832] text-white shadow-xs font-semibold'
                       : 'text-[#8a9ba8] hover:text-white hover:bg-[#15232d]'
@@ -172,12 +172,12 @@ const DashboardLayout = ({ children }) => {
                 >
                   <div className="flex items-center gap-3">
                     <Icon
-                      size={16}
+                      size={17}
                       className={isActive ? 'text-white' : 'text-[#7d909f] group-hover:text-slate-200'}
                     />
-                    <span>{item.label}</span>
+                    <span className="tracking-wide">{item.label}</span>
                   </div>
-                  {isActive && <div className="w-1 h-4 bg-[#567a6d] rounded-full" />}
+                  {isActive && <div className="w-1.5 h-4 bg-[#567a6d] rounded-full" />}
                 </NavLink>
               );
             })}
@@ -185,17 +185,17 @@ const DashboardLayout = ({ children }) => {
         </div>
 
         {/* BOTTOM USER PROFILE CARD */}
-        <div className="p-3 border-t border-[#182530] relative">
+        <div className="p-4 border-t border-[#182530] relative">
           <div
             onClick={() => setShowUserMenu(!showUserMenu)}
-            className="flex items-center justify-between p-2 rounded-xl hover:bg-[#182631] cursor-pointer transition group"
+            className="flex items-center justify-between p-2.5 rounded-xl hover:bg-[#182631] cursor-pointer transition group"
           >
-            <div className="flex items-center gap-2.5 min-w-0">
+            <div className="flex items-center gap-3 min-w-0">
               <div className="w-8 h-8 rounded-full bg-white text-[#111c24] font-bold text-xs flex items-center justify-center shrink-0 shadow-xs">
                 {getInitials(user?.name)}
               </div>
               <div className="min-w-0 text-left">
-                <div className="text-xs font-semibold text-white truncate leading-tight">
+                <div className="text-xs font-semibold text-white truncate leading-relaxed">
                   {user?.name || 'Dr. Eleanor Vance'}
                 </div>
                 <div className="text-[10px] text-[#718f99] font-bold tracking-wider uppercase mt-0.5">
@@ -208,13 +208,13 @@ const DashboardLayout = ({ children }) => {
 
           {/* Quick Sign Out Dropup */}
           {showUserMenu && (
-            <div className="absolute bottom-16 left-3 right-3 bg-[#172530] border border-[#223544] rounded-xl p-2 shadow-xl z-50 text-xs">
-              <div className="px-2 py-1.5 text-slate-400 text-[11px] border-b border-[#223544]">
-                Signed in as <strong className="text-white block truncate">{user?.email}</strong>
+            <div className="absolute bottom-20 left-4 right-4 bg-[#172530] border border-[#223544] rounded-xl p-2.5 shadow-xl z-50 text-xs">
+              <div className="px-2.5 py-1.5 text-slate-400 text-[11px] border-b border-[#223544] leading-relaxed">
+                Signed in as <strong className="text-white block truncate mt-0.5">{user?.email}</strong>
               </div>
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center gap-2 px-2 py-2 mt-1 rounded-lg text-rose-300 hover:text-white hover:bg-rose-900/40 transition cursor-pointer font-medium"
+                className="w-full flex items-center gap-2 px-2.5 py-2 mt-1.5 rounded-lg text-rose-300 hover:text-white hover:bg-rose-900/40 transition cursor-pointer font-medium"
               >
                 <LogOut size={13} />
                 <span>Sign Out</span>
@@ -226,7 +226,7 @@ const DashboardLayout = ({ children }) => {
 
       {/* CONTENT CANVAS */}
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-        <main className="flex-1 p-5 sm:p-7 md:p-8 max-w-7xl w-full mx-auto">
+        <main className="flex-1 px-6 py-8 sm:px-10 sm:py-10 max-w-7xl w-full mx-auto">
           {children || <Outlet />}
         </main>
       </div>

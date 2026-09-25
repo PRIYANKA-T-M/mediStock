@@ -65,105 +65,105 @@ const PharmacistDashboard = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* HEADER */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-stone-200/60">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-tight">
             Good morning, Pharmacist
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 mt-1.5 tracking-wide leading-relaxed">
             Main Dispensary Sector A · Monday, October 14
           </p>
         </div>
 
         <button
           onClick={() => navigate('/medicines')}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-medium transition cursor-pointer shadow-xs self-start sm:self-auto"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 text-slate-700 text-xs font-semibold tracking-wide transition cursor-pointer shadow-xs self-start sm:self-auto"
         >
-          <XCircle size={14} className="text-slate-500" />
+          <XCircle size={15} className="text-slate-400" />
           <span>Dispensary Log</span>
         </button>
       </div>
 
       {/* 4 METRIC CARDS */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {/* TOTAL CATALOGED */}
-        <div className="bg-white p-5 rounded-2xl border border-stone-200/70 shadow-xs flex flex-col justify-between">
+        <div className="bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
               Total Cataloged
             </span>
-            <div className="w-7 h-7 rounded-lg bg-[#eef3f0] text-[#4d6b5e] flex items-center justify-center">
-              <Briefcase size={14} />
+            <div className="w-8 h-8 rounded-xl bg-[#eef3f0] text-[#4d6b5e] flex items-center justify-center">
+              <Briefcase size={16} />
             </div>
           </div>
-          <div className="flex items-end justify-between mt-4">
+          <div className="flex items-end justify-between mt-5">
             <div className="text-3xl font-bold text-slate-900 font-sans tracking-tight">
               {totalCataloged}
             </div>
-            <svg className="w-18 h-7 text-[#4d6b5e]" viewBox="0 0 100 40" fill="none">
+            <svg className="w-20 h-8 text-[#4d6b5e]" viewBox="0 0 100 40" fill="none">
               <path d="M 5 35 Q 25 32, 40 25 T 75 15 T 95 10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
             </svg>
           </div>
         </div>
 
         {/* AVAILABLE STOCK */}
-        <div className="bg-white p-5 rounded-2xl border border-stone-200/70 shadow-xs flex flex-col justify-between">
+        <div className="bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
               Available Stock
             </span>
-            <div className="w-7 h-7 rounded-lg bg-[#eef3f0] text-[#4d6b5e] flex items-center justify-center">
-              <Layers size={14} />
+            <div className="w-8 h-8 rounded-xl bg-[#eef3f0] text-[#4d6b5e] flex items-center justify-center">
+              <Layers size={16} />
             </div>
           </div>
-          <div className="flex items-end justify-between mt-4">
+          <div className="flex items-end justify-between mt-5">
             <div className="text-3xl font-bold text-slate-900 font-sans tracking-tight">
               {availableStock.toLocaleString()}{' '}
-              <span className="text-xs font-normal text-slate-500">units</span>
+              <span className="text-xs font-normal text-slate-400 tracking-normal ml-1">units</span>
             </div>
-            <svg className="w-18 h-7 text-[#4d6b5e]" viewBox="0 0 100 40" fill="none">
+            <svg className="w-20 h-8 text-[#4d6b5e]" viewBox="0 0 100 40" fill="none">
               <path d="M 5 30 L 25 32 L 45 20 L 65 24 L 85 12 L 95 8" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
         </div>
 
         {/* LOW STOCK TRIGGERS */}
-        <div className="bg-white p-5 rounded-2xl border border-stone-200/70 shadow-xs flex flex-col justify-between">
+        <div className="bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
               Low Stock Triggers
             </span>
-            <div className="w-7 h-7 rounded-lg bg-[#fef5ec] text-[#d97736] flex items-center justify-center">
-              <AlertTriangle size={14} />
+            <div className="w-8 h-8 rounded-xl bg-[#fef5ec] text-[#d97736] flex items-center justify-center">
+              <AlertTriangle size={16} />
             </div>
           </div>
-          <div className="flex items-end justify-between mt-4">
+          <div className="flex items-end justify-between mt-5">
             <div className="text-3xl font-bold text-slate-900 font-sans tracking-tight">
               {lowStockCount}
             </div>
-            <svg className="w-18 h-7 text-[#c54b43]" viewBox="0 0 100 40" fill="none">
+            <svg className="w-20 h-8 text-[#c54b43]" viewBox="0 0 100 40" fill="none">
               <path d="M 5 10 L 25 15 L 45 22 L 65 20 L 85 30 L 95 34" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
         </div>
 
         {/* EXPIRING (30 DAYS) */}
-        <div className="bg-white p-5 rounded-2xl border border-stone-200/70 shadow-xs flex flex-col justify-between">
+        <div className="bg-white p-6 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
               Expiring (30 Days)
             </span>
-            <div className="w-7 h-7 rounded-lg bg-[#fef1f0] text-[#c54b43] flex items-center justify-center">
-              <Clock size={14} />
+            <div className="w-8 h-8 rounded-xl bg-[#fef1f0] text-[#c54b43] flex items-center justify-center">
+              <Clock size={16} />
             </div>
           </div>
-          <div className="flex items-end justify-between mt-4">
+          <div className="flex items-end justify-between mt-5">
             <div className="text-3xl font-bold text-slate-900 font-sans tracking-tight">
               {expiringCount}
             </div>
-            <svg className="w-18 h-7 text-[#c54b43]" viewBox="0 0 100 40" fill="none">
+            <svg className="w-20 h-8 text-[#c54b43]" viewBox="0 0 100 40" fill="none">
               <path d="M 5 8 Q 30 12, 50 20 T 75 32 T 95 36" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
             </svg>
           </div>
@@ -171,39 +171,39 @@ const PharmacistDashboard = () => {
       </div>
 
       {/* MIDDLE ROW: LOW STOCK ALERTS & EXPIRING SOON */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* LOW STOCK ALERTS TABLE */}
-        <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-xs flex flex-col justify-between">
-          <div className="flex items-center justify-between pb-3">
-            <h3 className="text-sm font-bold text-slate-900">Low Stock Alerts</h3>
+        <div className="bg-white p-7 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between pb-4">
+            <h3 className="text-base font-bold text-slate-900 tracking-tight">Low Stock Alerts</h3>
             <button
               onClick={() => navigate('/inventory')}
-              className="text-xs text-slate-500 hover:text-slate-800 font-medium"
+              className="text-xs font-semibold text-slate-500 hover:text-slate-800 transition tracking-wide"
             >
-              Manage stock
+              Manage stock &rarr;
             </button>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-stone-100 text-slate-400 font-semibold">
-                  <th className="py-2.5 px-3">Medicine</th>
-                  <th className="py-2.5 px-3">In Stock</th>
-                  <th className="py-2.5 px-3">Reorder Level</th>
-                  <th className="py-2.5 px-3 text-right">Action</th>
+                <tr className="border-b border-stone-100 text-slate-400 font-bold uppercase tracking-wider">
+                  <th className="py-3 px-4">Medicine</th>
+                  <th className="py-3 px-4">In Stock</th>
+                  <th className="py-3 px-4">Reorder Level</th>
+                  <th className="py-3 px-4 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-stone-100/70">
+              <tbody className="divide-y divide-stone-100/80">
                 {lowStockItems.map((item, idx) => (
                   <tr key={idx} className="hover:bg-[#fafaf8] transition">
-                    <td className="py-3 px-3 font-semibold text-slate-900">{item.name}</td>
-                    <td className="py-3 px-3 text-[#c54b43] font-semibold">{item.inStock}</td>
-                    <td className="py-3 px-3 text-slate-500">{item.reorder}</td>
-                    <td className="py-3 px-3 text-right">
+                    <td className="py-3.5 px-4 font-semibold text-slate-900 tracking-wide">{item.name}</td>
+                    <td className="py-3.5 px-4 text-[#c54b43] font-bold tracking-wide">{item.inStock}</td>
+                    <td className="py-3.5 px-4 text-slate-500 tracking-wide">{item.reorder}</td>
+                    <td className="py-3.5 px-4 text-right">
                       <button
                         onClick={() => navigate('/inventory')}
-                        className="text-xs font-semibold text-[#4d6b5e] hover:underline cursor-pointer"
+                        className="text-xs font-bold text-[#4d6b5e] hover:underline cursor-pointer tracking-wide"
                       >
                         View
                       </button>
@@ -216,32 +216,32 @@ const PharmacistDashboard = () => {
         </div>
 
         {/* EXPIRING SOON BATCHES TABLE */}
-        <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-xs flex flex-col justify-between">
-          <div className="flex items-center justify-between pb-3">
-            <h3 className="text-sm font-bold text-slate-900">Expiring Soon batches</h3>
+        <div className="bg-white p-7 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between pb-4">
+            <h3 className="text-base font-bold text-slate-900 tracking-tight">Expiring Soon Batches</h3>
             <button
               onClick={() => navigate('/expiry-analytics')}
-              className="text-xs text-slate-500 hover:text-slate-800 font-medium"
+              className="text-xs font-semibold text-slate-500 hover:text-slate-800 transition tracking-wide"
             >
-              Surveillance
+              Surveillance &rarr;
             </button>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-stone-100 text-slate-400 font-semibold">
-                  <th className="py-2.5 px-3">Medicine Batch</th>
-                  <th className="py-2.5 px-3">Expiry Date</th>
-                  <th className="py-2.5 px-3 text-right">Days Left</th>
+                <tr className="border-b border-stone-100 text-slate-400 font-bold uppercase tracking-wider">
+                  <th className="py-3 px-4">Medicine Batch</th>
+                  <th className="py-3 px-4">Expiry Date</th>
+                  <th className="py-3 px-4 text-right">Days Left</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-stone-100/70">
+              <tbody className="divide-y divide-stone-100/80">
                 {expiringBatches.map((item, idx) => (
                   <tr key={idx} className="hover:bg-[#fafaf8] transition">
-                    <td className="py-3 px-3 font-semibold text-slate-900">{item.batch}</td>
-                    <td className="py-3 px-3 text-slate-500">{item.expiry}</td>
-                    <td className={`py-3 px-3 text-right ${item.alertClass}`}>{item.days}</td>
+                    <td className="py-3.5 px-4 font-semibold text-slate-900 tracking-wide">{item.batch}</td>
+                    <td className="py-3.5 px-4 text-slate-500 tracking-wide">{item.expiry}</td>
+                    <td className={`py-3.5 px-4 text-right tracking-wide ${item.alertClass}`}>{item.days}</td>
                   </tr>
                 ))}
               </tbody>
@@ -251,23 +251,23 @@ const PharmacistDashboard = () => {
       </div>
 
       {/* BOTTOM ROW: PREFERRED SUPPLIERS & RECENT PURCHASES */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* PREFERRED SUPPLIERS */}
-        <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-xs flex flex-col justify-between">
+        <div className="bg-white p-7 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between pb-4">
-            <h3 className="text-sm font-bold text-slate-900">Preferred Supplier Ratings</h3>
+            <h3 className="text-base font-bold text-slate-900 tracking-tight">Preferred Supplier Ratings</h3>
             <button
               onClick={() => navigate('/suppliers')}
-              className="text-xs text-slate-500 hover:text-slate-800 font-medium"
+              className="text-xs font-semibold text-slate-500 hover:text-slate-800 transition tracking-wide"
             >
-              Directory
+              Directory &rarr;
             </button>
           </div>
 
-          <div className="space-y-4 pt-1">
+          <div className="space-y-5 pt-2">
             {topSuppliers.map((sup) => (
               <div key={sup.name} className="flex items-center justify-between gap-4">
-                <span className="text-xs font-medium text-slate-700 w-36 truncate">
+                <span className="text-xs font-semibold text-slate-700 w-40 truncate tracking-wide">
                   {sup.name}
                 </span>
                 <div className="flex-1 bg-[#edebe7] h-2.5 rounded-full overflow-hidden">
@@ -285,39 +285,39 @@ const PharmacistDashboard = () => {
         </div>
 
         {/* RECENT DISPENSARY PURCHASES */}
-        <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-xs flex flex-col justify-between">
+        <div className="bg-white p-7 rounded-2xl border border-stone-200/80 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between pb-4">
-            <h3 className="text-sm font-bold text-slate-900">Recent Dispensary Purchases</h3>
+            <h3 className="text-base font-bold text-slate-900 tracking-tight">Recent Dispensary Purchases</h3>
             <button
               onClick={() => navigate('/purchases')}
-              className="text-xs text-slate-500 hover:text-slate-800 font-medium"
+              className="text-xs font-semibold text-slate-500 hover:text-slate-800 transition tracking-wide"
             >
-              View ledger
+              View ledger &rarr;
             </button>
           </div>
 
-          <div className="grid grid-cols-3 gap-3 pt-2">
-            <div className="p-3.5 rounded-xl bg-[#fafaf8] border border-stone-200/60">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+          <div className="grid grid-cols-3 gap-4 pt-2">
+            <div className="p-4 rounded-xl bg-[#fafaf8] border border-stone-200/80 space-y-1">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
                 Period Gross Cost
               </span>
-              <span className="text-base font-bold text-slate-900 block mt-1">
-                $24,840.00
+              <span className="text-lg font-bold text-slate-900 block font-mono">
+                ₹24,840.00
               </span>
             </div>
-            <div className="p-3.5 rounded-xl bg-[#fafaf8] border border-stone-200/60">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+            <div className="p-4 rounded-xl bg-[#fafaf8] border border-stone-200/80 space-y-1">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
                 Items Dispatched
               </span>
-              <span className="text-base font-bold text-slate-900 block mt-1">
+              <span className="text-lg font-bold text-slate-900 block font-mono">
                 1,420 Items
               </span>
             </div>
-            <div className="p-3.5 rounded-xl bg-[#fafaf8] border border-stone-200/60">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+            <div className="p-4 rounded-xl bg-[#fafaf8] border border-stone-200/80 space-y-1">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
                 Last Order Received
               </span>
-              <span className="text-xs font-semibold text-slate-700 block mt-1.5 truncate">
+              <span className="text-xs font-semibold text-slate-700 block mt-1 truncate">
                 Today, 11:20 AM
               </span>
             </div>
